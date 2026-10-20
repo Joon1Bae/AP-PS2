@@ -26,4 +26,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** When presenting the weighting options, the AI described the monthly value-weighted block as "the Ken French default and the usual choice in the literature". It made no recommendation on units or on the LaTeX question.
 - **Type of assistance:** other (specify): identifying ambiguities in the student's empirical specification before implementation
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** f7e7d183269023dd54243c48aba64000e22c6c19
