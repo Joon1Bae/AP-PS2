@@ -8,17 +8,23 @@ Implements spec/q2b.md:
 - (a, b) solve the two sample-moment equations of the spec (E[.] = time average):
       a - b' E[xR] = 1              (normalization E[M*] = 1)
       a E[xR] - E[xR xR'] b = 0     (E[M* xR] = 0 for each decile)
+- Correlation: recover M1 = a1 - b1'xR (BE/ME, Q2(a)) and M2 = a2 - b2'xR (momentum)
+  month by month and compute their (Pearson) correlation.
 
 Outputs (output/):
 - q2b_b_scatter.pdf         scatterplot of b by momentum decile
 - q2b_sdf_coefficients.csv  estimated a and b
+- q2b_sdf_correlation.csv   correlation between M*_t from Q2(a) and Q2(b)
 
 Run from the repository root:  uv run python src/q2b.py
 """
 
 import pandas as pd
 
-from sdf import OUTPUT, load_excess_returns, plot_b, print_summary, save_coefficients, solve_sdf
+from q2a import load_bm_excess_returns
+from sdf import (
+    OUTPUT, load_excess_returns, plot_b, print_summary, save_coefficients, sdf_series, solve_sdf,
+)
 
 DECILES = [
     "Lo PRIOR", "PRIOR 2", "PRIOR 3", "PRIOR 4", "PRIOR 5",
@@ -42,6 +48,21 @@ def main() -> None:
     save_coefficients(a, b, OUTPUT / "q2b_sdf_coefficients.csv")
     plot_b(b, OUTPUT / "q2b_b_scatter.pdf", xlabel="Momentum decile (1 = Lo PRIOR, 10 = Hi PRIOR)")
     print_summary(xr, a, b)
+
+    xr_bm = load_bm_excess_returns()
+    a_bm, b_bm = solve_sdf(xr_bm)
+    m_bm = sdf_series(xr_bm, a_bm, b_bm)
+    m_mom = sdf_series(xr, a, b)
+    # The spec has no rule for aligning different samples, so require identical months.
+    if not m_bm.index.equals(m_mom.index):
+        raise ValueError("Q2(a) and Q2(b) samples differ; the spec needs a rule to align them.")
+    correlation = m_mom.corr(m_bm, method="pearson")
+
+    pd.DataFrame({
+        "statistic": ["corr(M*_2a, M*_2b)", "T", "sample_start", "sample_end"],
+        "value": [correlation, len(m_mom), str(m_mom.index[0]), str(m_mom.index[-1])],
+    }).to_csv(OUTPUT / "q2b_sdf_correlation.csv", index=False, encoding="utf-8")
+    print(f"Correlation between M*_t from Q2(a) and Q2(b) = {correlation:.6f}")
 
 
 if __name__ == "__main__":

@@ -157,3 +157,26 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** other: review of specifications, implementation, and outputs against the problem statement; code check (reproducibility rerun)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 573c85d100cb53c4b9c4db20a4b8720d331d95d0
+
+## Interaction 7 — Q2(b) — 2026-10-20 23:45
+
+- **Problem set item:** Q2(b)
+- **Substantive prompt (verbatim):** "Okay. Thank you for your confirmation. Then, let's move onto the later part of q2b. I've wrote some addition analysis on correlation in the q2b.md. Could you please take a look and proceed with it?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review the "Additional analysis on correlation" section the student added to `spec/q2b.md` and implement it: the correlation between M*_t from Q2(a) and M*_t from Q2(b).
+- **Git commit before:** c0d89818f7fc97a1ec670f4e035db662cc56e334 (includes the student's spec addition)
+- **Assistance provided:**
+  - Reviewed the new spec section (steps 1-4). It fully specifies the computation: recover M1 = a1 - b1'xR (BE/ME) and M2 = a2 - b2'xR (momentum) and correlate them.
+  - Extended `src/q2b.py`. It now loads the Q2(a) excess returns through `q2a.load_bm_excess_returns`, solves (a1, b1) with the same `solve_sdf`, builds both monthly M* series, and computes their Pearson sample correlation.
+  - The code stops with an error if the two samples ever cover different months. Currently both are 1927-07 to 2026-08, T = 1190.
+  - Writes `output/q2b_sdf_correlation.csv`.
+  - Result: corr(M*_2a, M*_2b) = 0.355498, confirmed independently with `numpy.corrcoef`. The other Q2(b) outputs are unchanged.
+  - In `tex/ps2_solution.tex`, updated only the comment above the student's correlation placeholder so that it points to the output file. No text was added to the document.
+- **Files inspected:** `spec/q2b.md` (new section), `src/q2b.py`, `src/q2a.py`, `src/sdf.py`, `tex/ps2_solution.tex`
+- **Files directly modified by AI:** `src/q2b.py` (correlation added), `output/q2b_sdf_correlation.csv` (new), `tex/ps2_solution.tex` (one LaTeX comment line changed), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. The spec says "correlation" without naming the statistic. The AI implemented the standard Pearson sample correlation, the conventional meaning of the term, and states this here and in the code (`method="pearson"`). It is not a new design choice, but the student can change it in the spec.
+  2. Sample alignment: not needed, because both M* series cover the same months. The code enforces this.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation; other: specification review
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
