@@ -298,3 +298,18 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout, float placement); other: methodological description drafted from the spec. The AI wrote this table caption in `tex/ps2_solution.tex`: "Pricing errors $\hat{\alpha}_p = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*, xR_p]$ of the 20 book-to-market and momentum decile portfolios under the SDFs $M^*_t$ estimated in 2a) (10 book-to-market deciles), 2b) (10 momentum deciles) and 2c) (all 20 portfolios). Monthly excess returns in decimal units, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$." The AI also wrote the table headers and panel labels ("SDF $M^*_t$ estimated in", "2a) BM", "2b) MOM", "2c) BM + MOM", "Panel A: book-to-market deciles", "Panel B: momentum deciles").
 - **Grouped follow-up requests:** none
 - **Git commit after:** d63028db8d78220341363f752dc514d2a8cba2a1
+
+## Interaction 13 — Q2(d) — 2026-10-21 00:52
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "The caption of Table 2 should be below of the table." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Move the caption of Table 2 (Q2(d) pricing errors) below the table.
+- **Git commit before:** 0f5c1f5f79f6f8a5e89c1008fdcf3d74354434d1 (includes the student's recompiled `tex/ps2_solution.pdf`)
+- **Assistance provided:** In `tex/ps2_solution.tex`, moved the `\input` of the generated tabular above the `\caption{...}` and `\label{tab:q2d_alpha}` inside the Table 2 environment. The caption text is unchanged. Test-compiled with tectonic into a temporary directory outside the repository and checked visually that the caption now appears below the table. Table 1 (Q2(c) Sharpe ratios) still has its caption above the table; it was not changed because the request named only Table 2.
+- **Files inspected:** `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (caption position of Table 2), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (LaTeX caption placement)
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
