@@ -180,3 +180,22 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; other: specification review
 - **Grouped follow-up requests:** none
 - **Git commit after:** e7a33036965b1139e01e94d700e9ff5d0acbb140
+
+## Interaction 8 — Q2(b) — 2026-10-20 23:47
+
+- **Problem set item:** Q2(b)
+- **Substantive prompt (verbatim):** "good good. Could you also write down the calculated correlation on the LaTeX file in a neated manner?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Report the computed correlation between M*_t from Q2(a) and Q2(b) in `tex/ps2_solution.tex`. This covers reporting only; the economic interpretation stays with the student.
+- **Git commit before:** 96b0201739bd4bd57f25ee39c9e8e28b3f2fd2a7 (includes the student's recompiled `tex/ps2_solution.pdf`)
+- **Assistance provided:**
+  - `src/q2b.py` now also writes `output/q2b_sdf_correlation.tex`, which defines two LaTeX macros: `\QtwobCorr` (the correlation, rounded to 3 decimals: 0.355) and `\QtwobT` (1190). The PDF therefore always shows the value from the latest run.
+  - `tex/ps2_solution.tex` loads the macro file in the preamble. In the 2b) subsection, the AI replaced the "report the correlation" TODO comment with a reporting sentence and a displayed equation, \widehat{Corr}(M*_{BM,t}, M*_{MOM,t}) = \QtwobCorr. The interpretation TODO placeholder for the student remains.
+  - Fixed a Python SyntaxWarning caused by backslashes in the new docstring line.
+  - Test-compiled with tectonic into a temporary directory outside the repository and checked the rendered page visually. The student's `tex/ps2_solution.pdf` was not rebuilt.
+- **Files inspected:** `tex/ps2_solution.tex`, `src/q2b.py`, `output/q2b_sdf_correlation.csv`, test build of the PDF
+- **Files directly modified by AI:** `src/q2b.py` (writes the macro file), `output/q2b_sdf_correlation.tex` (new, generated), `tex/ps2_solution.tex` (preamble `\input` line; correlation report in 2b)), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none. Displaying the correlation to 3 decimals is a presentation choice; the CSV keeps full precision.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (LaTeX layout of the reported result); other: methodological description drafted from the spec. The AI wrote this reporting sentence in `tex/ps2_solution.tex`: "The sample (Pearson) correlation between the monthly SDF series $M^*_{\mathrm{BM},t}$ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to August 2026 ($T = \QtwobT$ months), is \[ \widehat{\mathrm{Corr}}\left(M^*_{\mathrm{BM},t},\, M^*_{\mathrm{MOM},t}\right) = \QtwobCorr . \]"
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
