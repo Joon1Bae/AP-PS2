@@ -54,4 +54,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none. AI choices were limited to programming and presentation: solving the two equations jointly as one linear system; failing loudly on missing data instead of choosing a rule; module layout; output file formats; and figure styling (single blue series, a horizontal reference line at b = 0, light horizontal gridlines, serif fonts to match LaTeX).
 - **Type of assistance:** empirical implementation; formatting/translation (LaTeX skeleton layout); other: methodological description drafted from the spec (the AI wrote the figure caption in `tex/ps2_solution.tex`: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 10 value-weighted book-to-market decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units.")
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** 0b77d75c3100646aeca6798e1efb7d3df956ab9a
