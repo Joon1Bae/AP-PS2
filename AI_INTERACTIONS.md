@@ -156,4 +156,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** The problem statement does not specify value- versus equal-weighted returns or units, so the AI suggested the write-up state the student's choices (monthly value-weighted returns; decimal excess returns, which set the scale of b). The AI-drafted figure captions already mention both.
 - **Type of assistance:** other: review of specifications, implementation, and outputs against the problem statement; code check (reproducibility rerun)
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** 573c85d100cb53c4b9c4db20a4b8720d331d95d0
