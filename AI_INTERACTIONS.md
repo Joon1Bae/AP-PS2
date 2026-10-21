@@ -130,4 +130,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** The AI suggested that the student work out what E[M xR] = 0 implies for E[xR] by writing the mean of a product in terms of means and a covariance; the AI did not provide the result. It also mentioned the risk-neutral-measure interpretation as a likely source of the "E[xR] = 0" intuition.
 - **Type of assistance:** math review (check of a completed derivation); economic reasoning review (critique of the statement "in theory, E[xR] = 0")
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** 587ffc9a7fdda0024a09cd1388137418b7fd53cb
