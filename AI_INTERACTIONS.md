@@ -250,3 +250,22 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** formatting/translation (LaTeX float placement)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 2f89b3a7f0f116a57540029f1a89ee1d9c99d358
+
+## Interaction 11 — Q2(d) — 2026-10-21 00:41
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "I just completed the notes for q2d. Please take a look and follow the instruction. After generating the table, you should include it in the .tex file and placeholder for the explanation (something like [Explanation will be here])." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review `spec/q2d.md` and implement the Q2(d) pricing-error table α_p = E^[xR_p] - Cov^[-M*, xR_p] under the three SDFs of 2a)-2c), with a visible placeholder for the explanation in the `.tex`.
+- **Git commit before:** 89f1f70de3753c13558bd44f07173e3ec58a7fc5 (includes the student's new `spec/q2d.md`)
+- **Assistance provided:** Reviewed the spec against the Q2(d) statement. The method in steps 1-4 (recover M = a - b'xR; sample covariance with 1/T; α_j = E^[xR_j] - Cov^(-M, xR_j)) matches the problem statement's definition. The AI found one discrepancy and one open presentation choice and asked the student (answers below). **No code was written in this interaction.** The first decision contradicts the current spec, so per `CLAUDE.md` ("the student updates the spec before AI implements it") implementation is deferred to a new `/TP` cycle after the student updates `spec/q2d.md`. Student decisions (selected options, verbatim):
+  1. Q: "Q2(d) asks for α_p 'for each portfolio p (covering the 20 portfolios from Question (2c))' under EACH of the three M* (2a, 2b, 2c). Your spec step 4 says the index 'ends at 10' for the BE/ME-only and Mom-only cases [...]. Which do you want?" → **"All 20 under each M*"**
+  2. Q: "In which units should the table report α?" → **"Decimal per month"** (already consistent with the spec's Additional Decision 2, so no spec change is needed for this one)
+- **Files inspected:** `spec/q2d.md`, `Problem Set 2.pdf` (Q2(d) statement, read earlier in this session)
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Discrepancy with the problem statement: spec step 4 restricts M*_2a to j = 1..10 and M*_2b to j = 11..20 ("If not, index ends at 10"). The problem statement asks for α_p for each of the 20 portfolios under each M*. The student chose the problem statement's version, and the spec needs updating.
+  2. Not substantive: the section with the pricing-error steps is headed "Additional analysis on sharpe ratio". The "Outputs" section repeats the Q2(c) scatterplot instruction, which Q2(d) does not ask for (the figure already exists from Q2(c)). The Data section again names "10_Portfolios_Prior_12_2-ME.csv", which does not exist.
+- **Substantive mathematical / economic / empirical suggestions made:** none. The AI pointed out the wording of the problem statement but did not discuss what the pricing errors would show.
+- **Type of assistance:** other: specification review against the problem statement (discrepancy identified; student decisions recorded)
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
