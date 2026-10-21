@@ -235,3 +235,18 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
   - Table caption and row labels: "Monthly Sharpe ratios $\widehat{SR}(xR^*) = \widehat{\mathbb{E}}[xR^*_t] / \widehat{\sigma}(xR^*_t)$ of the portfolios $xR^*_t = b'xR_t$ implied by the SDFs of 2a)--2c), July 1927 to August 2026 ($T = \QtwocT$ months). Not annualized." The rows are labeled "10 book-to-market deciles", "10 momentum deciles", and "20 book-to-market and momentum deciles".
 - **Grouped follow-up requests:** none
 - **Git commit after:** eb7482280dedf7ec6d20217d35b89fea675d0d80
+
+## Interaction 10 — Q2(c) — 2026-10-21 00:14
+
+- **Problem set item:** Q2(c)
+- **Substantive prompt (verbatim):** "You should also make a scatterplot for question 2(c). I wrote down in the middle of the file, saying [pasted from spec/q2c.md:] The output should be a scatterplot with portfolio deciles (1 to 10) on the x-axis and the respective b coefficients in the y-axis. For this problem, one in blue (representing j = 1 to 10) and one in red (representing j = 11 to 20). Leave it as placeholder(blank) regarding the explanation why this pattern emereges." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure for the resulting formatting fix.)
+- **Purpose:** The student believed the Q2(c) scatterplot was missing. The AI explained that it already existed (`output/q2c_b_scatter.pdf`, Figure 3, created in Interaction 9), but LaTeX had floated it to page 3, after the "Question 3" and "Question 4" headings. The AI then fixed the float placement so the figure stays within Question 2.
+- **Git commit before:** e6e62be30fd0bad5744b7dc815c6122762eb6240 (includes the student's edit to `spec/q2c.md`, which deleted the first of the two duplicate output paragraphs, and the student's recompiled `tex/ps2_solution.pdf`)
+- **Assistance provided:** Checked that the figure file exists and that `tex/ps2_solution.tex` references it. Inspected the student's compiled PDF: Figure 3 appeared on page 3 below the Question 3 and Question 4 headings. Added `\usepackage[section]{placeins}` to the preamble, which places a float barrier at each `\section`, so figures and tables cannot move past the next question heading. Test-compiled with tectonic into a temporary directory outside the repository and confirmed visually that Figure 3 now appears before "Question 3". The student's edit to the spec (removing a duplicate paragraph) does not change what was implemented in Interaction 9, so no code changed. The student's PDF was not rebuilt.
+- **Files inspected:** `spec/q2c.md` (student's edit), `tex/ps2_solution.tex`, `tex/ps2_solution.pdf` (student-compiled, pages 2-3), `output/q2c_b_scatter.pdf`, test build
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (one preamble line), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none. The figure was not missing; only its position in the PDF was the problem.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (LaTeX float placement)
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
