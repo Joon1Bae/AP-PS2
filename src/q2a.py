@@ -16,128 +16,29 @@ Outputs (output/):
 Run from the repository root:  uv run python src/q2a.py
 """
 
-import logging
-from pathlib import Path
-
-import matplotlib
-
-matplotlib.use("Agg")
-logging.getLogger("fontTools").setLevel(logging.ERROR)  # harmless font-timestamp warnings on PDF export
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 
-from french_data import MISSING_CODES, read_french_block
-
-ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data"
-OUTPUT = ROOT / "output"
+from sdf import OUTPUT, load_excess_returns, plot_b, print_summary, save_coefficients, solve_sdf
 
 DECILES = ["Lo 10", "2-Dec", "3-Dec", "4-Dec", "5-Dec", "6-Dec", "7-Dec", "8-Dec", "9-Dec", "Hi 10"]
 SAMPLE_START = pd.Period("1927-07", freq="M")
 
-# Chart colors: one series on a light print surface.
-SERIES = "#2a78d6"
-SURFACE = "#ffffff"
-TEXT_PRIMARY = "#0b0b0b"
-TEXT_SECONDARY = "#52514e"
-GRID = "#e4e3df"
-ZERO_LINE = "#9a9893"
-
 
 def load_bm_excess_returns() -> pd.DataFrame:
     """Monthly decimal excess returns of the 10 value-weighted BE/ME deciles."""
-    rf = read_french_block(DATA / "F-F_Research_Data_Factors.csv")["RF"]
-    returns = read_french_block(
-        DATA / "Portfolios_Formed_on_BE-ME.csv", title="Value Weight Returns -- Monthly"
-    )[DECILES]
-    returns = returns.loc[SAMPLE_START:]
-
-    # The spec has no missing-data rule, so stop instead of silently handling gaps.
-    if returns.isin(MISSING_CODES).any().any() or returns.isna().any().any():
-        raise ValueError("Missing values in the BE/ME deciles; the spec needs a rule for them.")
-    months_without_rf = returns.index.difference(rf.index)
-    if len(months_without_rf):
-        raise ValueError(f"RF is missing for {len(months_without_rf)} sample months.")
-
-    return returns.sub(rf.loc[returns.index], axis=0) / 100.0
-
-
-def solve_sdf(xr: pd.DataFrame) -> tuple[float, pd.Series]:
-    """Solve the spec's two moment equations jointly for a and b (sample moments)."""
-    x = xr.to_numpy()
-    t, n = x.shape
-    mean_xr = x.mean(axis=0)
-    second_moment = x.T @ x / t
-
-    # Unknowns (a, b_1, ..., b_n). Row 0: a - b'E[xR] = 1. Rows 1..n: a E[xR] - E[xR xR'] b = 0.
-    lhs = np.zeros((n + 1, n + 1))
-    lhs[0, 0] = 1.0
-    lhs[0, 1:] = -mean_xr
-    lhs[1:, 0] = mean_xr
-    lhs[1:, 1:] = -second_moment
-    rhs = np.zeros(n + 1)
-    rhs[0] = 1.0
-
-    solution = np.linalg.solve(lhs, rhs)
-    return solution[0], pd.Series(solution[1:], index=xr.columns, name="b")
-
-
-def plot_b(b: pd.Series, path: Path) -> None:
-    plt.rcParams.update({
-        "font.family": "serif",
-        "font.serif": ["cmr10"],
-        "mathtext.fontset": "cm",
-        "axes.formatter.use_mathtext": True,
-        "pdf.fonttype": 42,
-    })
-    deciles = np.arange(1, len(b) + 1)
-
-    fig, ax = plt.subplots(figsize=(6.0, 3.6))
-    ax.axhline(0.0, color=ZERO_LINE, linewidth=0.8, zorder=1)
-    ax.scatter(deciles, b.to_numpy(), s=48, color=SERIES, edgecolors=SURFACE, linewidths=1.5, zorder=3)
-
-    ax.set_xticks(deciles)
-    ax.set_xlim(0.5, len(b) + 0.5)
-    ax.set_xlabel("Book-to-market decile (1 = Lo 10, 10 = Hi 10)", color=TEXT_PRIMARY)
-    ax.set_ylabel("$b$ coefficient", color=TEXT_PRIMARY)
-    ax.grid(axis="y", color=GRID, linewidth=0.6)
-    ax.set_axisbelow(True)
-    ax.tick_params(colors=TEXT_SECONDARY, length=0)
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    for side in ("left", "bottom"):
-        ax.spines[side].set_color(GRID)
-    ax.set_facecolor(SURFACE)
-
-    fig.tight_layout()
-    fig.savefig(path)
-    plt.close(fig)
+    return load_excess_returns(
+        "Portfolios_Formed_on_BE-ME.csv", "Value Weight Returns -- Monthly", DECILES, SAMPLE_START
+    )
 
 
 def main() -> None:
     xr = load_bm_excess_returns()
     a, b = solve_sdf(xr)
 
-    sdf = a - xr.to_numpy() @ b.to_numpy()
-    pricing_errors = (sdf[:, None] * xr.to_numpy()).mean(axis=0)
-
     OUTPUT.mkdir(exist_ok=True)
-    coefficients = pd.DataFrame({
-        "parameter": ["a"] + ["b"] * len(b),
-        "decile": [pd.NA] + list(range(1, len(b) + 1)),
-        "portfolio": [pd.NA] + list(b.index),
-        "value": [a] + list(b.to_numpy()),
-    })
-    coefficients.to_csv(OUTPUT / "q2a_sdf_coefficients.csv", index=False, encoding="utf-8")
-    plot_b(b, OUTPUT / "q2a_b_scatter.pdf")
-
-    print(f"Sample: {xr.index[0]} to {xr.index[-1]} (T = {len(xr)} months)")
-    print(f"a = {a:.6f}")
-    for name, value in b.items():
-        print(f"b[{name}] = {value:.6f}")
-    print(f"Check: sample mean of M* = {sdf.mean():.12f}")
-    print(f"Check: max |sample E[M* xR]| = {np.abs(pricing_errors).max():.3e}")
+    save_coefficients(a, b, OUTPUT / "q2a_sdf_coefficients.csv")
+    plot_b(b, OUTPUT / "q2a_b_scatter.pdf", xlabel="Book-to-market decile (1 = Lo 10, 10 = Hi 10)")
+    print_summary(xr, a, b)
 
 
 if __name__ == "__main__":

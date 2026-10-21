@@ -55,3 +55,33 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; formatting/translation (LaTeX skeleton layout); other: methodological description drafted from the spec (the AI wrote the figure caption in `tex/ps2_solution.tex`: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 10 value-weighted book-to-market decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units.")
 - **Grouped follow-up requests:** none
 - **Git commit after:** 0b77d75c3100646aeca6798e1efb7d3df956ab9a
+
+## Interaction 3 — Q2(b) — 2026-10-20 23:20
+
+- **Problem set item:** Q2(b)
+- **Substantive prompt (verbatim):** "I've also wrote down a spec for q2b. please check and write a code for it." (The student did not prefix the request with `/TP`; the AI reminded the student and ran the `/TP` procedure.)
+- **Purpose:** Check `spec/q2b.md` against the Q2(b) statement and implement it: the SDF M* = a - b'xR that prices the 10 momentum decile excess returns with E[M*] = 1, the scatterplot of b by decile, and the 2b) section of the LaTeX skeleton.
+- **Git commit before:** d872fba18ba92809d900f126b8bbd913f597557d (includes the student's new `spec/q2b.md` and the student-compiled `tex/ps2_solution.pdf`)
+- **Assistance provided:**
+  - Compared `spec/q2b.md` with the Q2(b) statement in `Problem Set 2.pdf`. Inspected `data/10_Portfolios_Prior_12_2.csv`: its tables, the "Value Weight Returns -- Monthly" table (1927-01 to 2026-08), and missing-value codes (none in that table).
+  - Refactor (programming only): moved the code Q2(a) and Q2(b) share into the new `src/sdf.py`, covering the excess-return loader, the joint solve of the two moment equations, the M* series, CSV output, the b scatterplot (x-axis label now a parameter), and the printed checks. `src/q2a.py` now calls these functions. After the refactor `output/q2a_sdf_coefficients.csv` is byte-identical. `output/q2a_b_scatter.pdf` was regenerated: same content, but the PDF no longer embeds a creation timestamp, so reruns produce identical files.
+  - New `src/q2b.py` implements `spec/q2b.md`:
+    - RF from the monthly table of `F-F_Research_Data_Factors.csv`; "Lo PRIOR" ... "Hi PRIOR" from the "Value Weight Returns -- Monthly" table of `10_Portfolios_Prior_12_2.csv`.
+    - Sample 1927-07 to 2026-08 (T = 1190); xR = (R_p - RF) / 100.
+    - (a, b) solve a - b'E[xR] = 1 and a E[xR] - E[xR xR'] b = 0 with time averages.
+    - Outputs: `output/q2b_b_scatter.pdf` and `output/q2b_sdf_coefficients.csv`.
+    - Checks: sample mean of M* = 1.000000000000; max |sample E[M* xR]| = 2.0e-17.
+    - Results: a = 1.066615. b (Lo PRIOR ... Hi PRIOR) = -4.019447, 1.142930, 0.102430, 1.489697, 2.531664, -0.819456, 0.277670, 0.981815, -0.941420, 3.437037.
+  - Added a 2b) subsection to `tex/ps2_solution.tex` with the figure and blank comment placeholders for the student: the pattern description, the explanation, and the M* correlation with its interpretation. Test-compiled with tectonic into a temporary directory outside the repository. The student's `tex/ps2_solution.pdf` was not rebuilt and is now out of date.
+  - **Not implemented:** the correlation between M*_t from 2b) and M*_t from 2a), because the spec does not cover it (see below).
+- **Files inspected:** `spec/q2b.md`, `Problem Set 2.pdf` (Q2(b) statement, read earlier in this session), `data/10_Portfolios_Prior_12_2.csv`, `tex/ps2_solution.tex`, `output/q2b_b_scatter.pdf` (rendered for a visual check in the test build)
+- **Files directly modified by AI:** `src/sdf.py` (new), `src/q2b.py` (new), `src/q2a.py` (refactored to use `src/sdf.py`; same results), `tex/ps2_solution.tex` (2b) subsection added), `output/q2a_b_scatter.pdf` (regenerated without a timestamp), `output/q2b_b_scatter.pdf` (generated), `output/q2b_sdf_coefficients.csv` (generated), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. **Omission (not implemented, awaiting the student's spec update):** Q2(b) asks to "Calculate and report the correlation between the M*_t from this question and the M*_t from Question (2a)". `spec/q2b.md` does not mention this. The spec needs to state what is correlated and how: which series, which months, and which correlation statistic. Data fact: the 2a) and 2b) samples are the same 1190 months (1927-07 to 2026-08).
+  2. Not substantive: the Data section names "10_Portfolios_Prior_12_2-ME.csv", which does not exist; the Pre-Processing section and the repository use `10_Portfolios_Prior_12_2.csv`. The spec also still has the "F_Research_Data_Factors.csv" and "Rf" typos (the column is "RF").
+  3. Not substantive: the value-weighted monthly table in this file is titled "Value Weight Returns -- Monthly", and the file also has "Average Equal Weighted Returns -- Monthly" and two annual tables. This matches the spec's Additional Decision 1.
+  4. Not substantive: the spec's Additional Decision 3 ("Also create a LaTeX skeleton") was read as adding a 2b) subsection to the existing skeleton.
+- **Substantive mathematical / economic / empirical suggestions made:** none. The AI's choices were limited to programming and presentation: shared-module layout, failing loudly on missing data instead of choosing a rule, reproducible PDF output, figure styling identical to Q2(a), and the x-axis label "Momentum decile (1 = Lo PRIOR, 10 = Hi PRIOR)".
+- **Type of assistance:** empirical implementation; other: specification check against the problem statement (omission identified); formatting/translation (LaTeX layout of the 2b) subsection); other: methodological description drafted from the spec (the AI wrote the figure caption in `tex/ps2_solution.tex`: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 10 value-weighted momentum (prior 12--2 month return) decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units.")
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
