@@ -268,4 +268,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none. The AI pointed out the wording of the problem statement but did not discuss what the pricing errors would show.
 - **Type of assistance:** other: specification review against the problem statement (discrepancy identified; student decisions recorded)
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** fedf3b212f8b737ee866201ea27da4a0192e200f
