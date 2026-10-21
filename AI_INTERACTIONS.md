@@ -269,3 +269,32 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** other: specification review against the problem statement (discrepancy identified; student decisions recorded)
 - **Grouped follow-up requests:** none
 - **Git commit after:** fedf3b212f8b737ee866201ea27da4a0192e200f
+
+## Interaction 12 — Q2(d) — 2026-10-21 00:50
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "I just revised the instruction file. please take a look" This continues the request logged in Interaction 11: "[...] After generating the table, you should include it in the .tex file and placeholder for the explanation (something like [Explanation will be here])." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Implement the revised `spec/q2d.md` (step 4 now covers all j = 1..20 under each of the three models). Report the pricing-error table in the `.tex` with a visible explanation placeholder.
+- **Git commit before:** 610e9ffc278e60fc4f5e7f8fcc5a130408f8c178 (includes the student's revision of spec step 4)
+- **Assistance provided:**
+  - Confirmed that the revised step 4 matches the student's decision in Interaction 11 ("All 20 under each M*"). Units remain decimal per month (spec Additional Decision 2; student answer "Decimal per month" in Interaction 11).
+  - Added `pricing_errors` to `src/sdf.py`: α_j = mean(xR_j) - (1/T) sum_t (-M_t + Mbar)(xR_j,t - xRbar_j), as in spec step 3.
+  - New `src/q2d.py`:
+    - Builds M_t for the 2a) (10 BE/ME), 2b) (10 momentum), and 2c) (all 20) models with the same `solve_sdf`.
+    - Computes α_j for all 20 portfolios under each model.
+    - Writes `output/q2d_pricing_errors.csv` (full precision) and `output/q2d_pricing_errors_table.tex`, a generated booktabs/siunitx tabular with Panel A (BE/ME deciles) and Panel B (momentum deciles), one column per SDF, and 4 decimals.
+    - The values match an independent numpy calculation (`np.cov(bias=True)`) to within 1e-16.
+  - `tex/ps2_solution.tex`:
+    - Added `siunitx`.
+    - Added a 2d) subsection with the visible placeholder "\textit{[Explanation will be here]}", as the student requested, and Table 2, which `\input`s the generated tabular.
+    - Added `\FloatBarrier` before the 2b), 2c), and 2d) subsection headings. In the test build, the 2c) figure had floated past the 2d) heading and table; with the barriers, each figure and table stays within its own sub-question.
+    - Test-compiled with tectonic into a temporary directory outside the repository and checked all pages visually. The student's PDF was not rebuilt.
+- **Files inspected:** `spec/q2d.md` (revised), `src/sdf.py`, `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `src/sdf.py` (`pricing_errors`), `src/q2d.py` (new), `output/q2d_pricing_errors.csv` (new, generated), `output/q2d_pricing_errors_table.tex` (new, generated), `tex/ps2_solution.tex` (siunitx, 2d) subsection, float barriers), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. Not substantive, still in the spec: the "Outputs" section repeats the Q2(c) scatterplot instruction. No duplicate figure was produced, because Q2(d) does not ask for one and the Q2(c) figure already exists. The pricing-error section is still headed "Additional analysis on sharpe ratio", and the Data section still names "10_Portfolios_Prior_12_2-ME.csv".
+  2. Presentation: the table shows 4 decimals, so values smaller than 0.00005 in absolute value display as 0.0000 (a displayed "-0.0000" is printed as "0.0000"). The CSV keeps full precision.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout, float placement); other: methodological description drafted from the spec. The AI wrote this table caption in `tex/ps2_solution.tex`: "Pricing errors $\hat{\alpha}_p = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*, xR_p]$ of the 20 book-to-market and momentum decile portfolios under the SDFs $M^*_t$ estimated in 2a) (10 book-to-market deciles), 2b) (10 momentum deciles) and 2c) (all 20 portfolios). Monthly excess returns in decimal units, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$." The AI also wrote the table headers and panel labels ("SDF $M^*_t$ estimated in", "2a) BM", "2b) MOM", "2c) BM + MOM", "Panel A: book-to-market deciles", "Panel B: momentum deciles").
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_

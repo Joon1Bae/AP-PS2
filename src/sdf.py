@@ -77,6 +77,14 @@ def sdf_series(xr: pd.DataFrame, a: float, b: pd.Series) -> pd.Series:
     return pd.Series(a - xr.to_numpy() @ b.to_numpy(), index=xr.index, name="M*")
 
 
+def pricing_errors(xr: pd.DataFrame, m: pd.Series) -> pd.Series:
+    """alpha_j = E[xR_j] - Cov(-M, xR_j) for each column j, with time averages (Cov divides by T)."""
+    x = xr.to_numpy()
+    neg_m = -m.to_numpy()
+    cov = ((neg_m - neg_m.mean())[:, None] * (x - x.mean(axis=0))).mean(axis=0)
+    return pd.Series(x.mean(axis=0) - cov, index=xr.columns, name="alpha")
+
+
 def sharpe_ratio(xr: pd.DataFrame, b: pd.Series) -> float:
     """Sharpe ratio E[xR*] / sigma(xR*) of xR* = b'xR, with time averages (sigma divides by T)."""
     x_star = xr.to_numpy() @ b.to_numpy()

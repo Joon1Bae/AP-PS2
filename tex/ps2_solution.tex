@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{siunitx} % decimal-aligned table columns
 \usepackage[section]{placeins} % figures/tables stay within their own question (section)
 \usepackage{hyperref}
 
@@ -40,6 +41,7 @@
   \label{fig:q2a_b}
 \end{figure}
 
+\FloatBarrier
 \subsection*{2b)}
 % Produced by src/q2b.py (spec: spec/q2b.md). Estimates: output/q2b_sdf_coefficients.csv.
 
@@ -68,6 +70,7 @@ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to 
   \label{fig:q2b_b}
 \end{figure}
 
+\FloatBarrier
 \subsection*{2c)}
 % Produced by src/q2c.py (spec: spec/q2c.md). Estimates: output/q2c_sdf_coefficients.csv.
 % Figure caption and table (layout, caption, row labels) drafted by AI (AI_INTERACTIONS.md).
@@ -105,6 +108,25 @@ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to 
     2c) & 20 book-to-market and momentum deciles  & \QtwocSRc \\
     \bottomrule
   \end{tabular}
+\end{table}
+
+\FloatBarrier
+\subsection*{2d)}
+% Produced by src/q2d.py (spec: spec/q2d.md). Values: output/q2d_pricing_errors.csv.
+% Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\textit{[Explanation will be here]}
+
+\begin{table}[htbp]
+  \centering
+  \caption{Pricing errors
+    $\hat{\alpha}_p = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*, xR_p]$ of the
+    20 book-to-market and momentum decile portfolios under the SDFs $M^*_t$ estimated in 2a)
+    (10 book-to-market deciles), 2b) (10 momentum deciles) and 2c) (all 20 portfolios).
+    Monthly excess returns in decimal units, July 1927 to August 2026 ($T = \QtwocT$ months);
+    covariances divide by $T$.}
+  \label{tab:q2d_alpha}
+  \input{../output/q2d_pricing_errors_table.tex}
 \end{table}
 
 \section*{Question 3}
