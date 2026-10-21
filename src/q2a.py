@@ -1,0 +1,45 @@
+"""Q2(a): SDF M* = a - b'xR that prices the excess returns of the 10 BE/ME deciles.
+
+Implements spec/q2a.md:
+- Data: RF from F-F_Research_Data_Factors.csv; "Lo 10" ... "Hi 10" from the
+  monthly value-weighted block of Portfolios_Formed_on_BE-ME.csv.
+- Sample: July 1927 to the latest month in the data.
+- xR = (R_p - RF) / 100, i.e. excess returns in decimal units.
+- (a, b) solve the two sample-moment equations of the spec:
+      a - b' E[xR] = 1              (normalization E[M*] = 1)
+      a E[xR] - E[xR xR'] b = 0     (E[M* xR] = 0 for each decile)
+
+Outputs (output/):
+- q2a_b_scatter.pdf         scatterplot of b by BE/ME decile
+- q2a_sdf_coefficients.csv  estimated a and b
+
+Run from the repository root:  uv run python src/q2a.py
+"""
+
+import pandas as pd
+
+from sdf import OUTPUT, load_excess_returns, plot_b, print_summary, save_coefficients, solve_sdf
+
+DECILES = ["Lo 10", "2-Dec", "3-Dec", "4-Dec", "5-Dec", "6-Dec", "7-Dec", "8-Dec", "9-Dec", "Hi 10"]
+SAMPLE_START = pd.Period("1927-07", freq="M")
+
+
+def load_bm_excess_returns() -> pd.DataFrame:
+    """Monthly decimal excess returns of the 10 value-weighted BE/ME deciles."""
+    return load_excess_returns(
+        "Portfolios_Formed_on_BE-ME.csv", "Value Weight Returns -- Monthly", DECILES, SAMPLE_START
+    )
+
+
+def main() -> None:
+    xr = load_bm_excess_returns()
+    a, b = solve_sdf(xr)
+
+    OUTPUT.mkdir(exist_ok=True)
+    save_coefficients(a, b, OUTPUT / "q2a_sdf_coefficients.csv")
+    plot_b(b, OUTPUT / "q2a_b_scatter.pdf", xlabel="Book-to-market decile (1 = Lo 10, 10 = Hi 10)")
+    print_summary(xr, a, b)
+
+
+if __name__ == "__main__":
+    main()
