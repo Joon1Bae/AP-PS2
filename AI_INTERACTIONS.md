@@ -109,4 +109,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** The AI noted that, by step 5 of the student's own spec (b = a E[xR xR']^-1 E[xR]), the proposed b equals the currently implemented b divided by the currently implemented a (1.036834 for BM, 1.066615 for MOM). The proposed scatterplots would therefore show the same pattern, rescaled.
 - **Type of assistance:** math review (diagnosis of a specific step)
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** b0808b951010c9cff3c0bab352dfed37c0700291
