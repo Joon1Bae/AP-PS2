@@ -198,4 +198,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** formatting/translation (LaTeX layout of the reported result); other: methodological description drafted from the spec. The AI wrote this reporting sentence in `tex/ps2_solution.tex`: "The sample (Pearson) correlation between the monthly SDF series $M^*_{\mathrm{BM},t}$ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to August 2026 ($T = \QtwobT$ months), is \[ \widehat{\mathrm{Corr}}\left(M^*_{\mathrm{BM},t},\, M^*_{\mathrm{MOM},t}\right) = \QtwobCorr . \]"
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** f38b86c7fc5208fffa6922097708faaf3700660a
