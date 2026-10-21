@@ -337,3 +337,27 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** code debugging (verification; no changes)
 - **Grouped follow-up requests:** none
 - **Git commit after:** af8ace5a4be1f7779382339b8511f31f83435865
+
+## Interaction 15 — Q2(d) — 2026-10-21 00:57
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "Then, could you make it in a % unit instead of current unit?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Report the Table 2 pricing errors in percent per month instead of decimal units. This changes only how the values are displayed; the computation is unchanged.
+- **Git commit before:** 4ec00cdfaa8b8c970e5f786478dca2ce26dbba24
+- **Assistance provided:**
+  - The student's verbatim instruction ("make it in a % unit instead of current unit") replaces the student's Interaction 11 display choice ("Decimal per month") for Table 2.
+  - Computation stays in decimal units, as spec Additional Decision 2 requires; only the displayed values change.
+  - `src/q2d.py`:
+    - The generated tabular now shows 100 x α with 2 decimals (the same resolution as the previous 4 decimals in decimal units). A displayed "-0.00" is shown as "0.00".
+    - The siunitx column format is now `-1.2`.
+    - The docstring and file header note the units.
+    - `output/q2d_pricing_errors.csv` is unchanged (decimal, full precision).
+  - In the AI-drafted Table 2 caption in `tex/ps2_solution.tex`, "Monthly excess returns in decimal units" became "..., in percent per month. Monthly excess returns".
+  - Regenerated `output/q2d_pricing_errors_table.tex`, test-compiled with tectonic into a temporary directory outside the repository, and checked the table visually.
+- **Files inspected:** `src/q2d.py`, `tex/ps2_solution.tex`, `output/q2d_pricing_errors_table.tex`, test build
+- **Files directly modified by AI:** `src/q2d.py` (display in percent), `output/q2d_pricing_errors_table.tex` (regenerated), `tex/ps2_solution.tex` (Table 2 caption units), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none. The AI suggested that the student may want to note the percent display of Table 2 in `spec/q2d.md`, for consistency with Additional Decision 2, which concerns computation units.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (display units of a reported table); other: methodological description drafted from the spec (revised wording of the AI-drafted Table 2 caption: "... and 2c) (all 20 portfolios), in percent per month. Monthly excess returns, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$.")
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
