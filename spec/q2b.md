@@ -32,3 +32,11 @@ Leave it as placeholder(blank) regarding the explanation why this pattern emereg
 1. Use the monthly value-weighted returns. The 10_Portfolios_Prior_12_2 file also has equal-weighted and annual versions of the same "Lo PRIOR" to "Hi PRIOR" columns.
 2. Use decimal units, dividing the percent returns by 100. This changes the size of b by a factor of 100.
 3. Also create a LaTeX skeleton, which doesn't need to go in the spec.
+
+
+# Additional analysis on correlation
+
+1. We now know that b1, b2 vector (calculated from BE/ME, Mom, repectively).
+2. We also know a1, a2.
+3. Then, we can recover M in such a way that M = a - b'xR.
+4. Write down a code for calculating correlation between M1 and M2. 
