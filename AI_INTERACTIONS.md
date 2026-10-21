@@ -234,4 +234,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
   - Figure caption: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 20 value-weighted portfolios in the merge of the book-to-market (blue circles) and momentum (red squares) decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units."
   - Table caption and row labels: "Monthly Sharpe ratios $\widehat{SR}(xR^*) = \widehat{\mathbb{E}}[xR^*_t] / \widehat{\sigma}(xR^*_t)$ of the portfolios $xR^*_t = b'xR_t$ implied by the SDFs of 2a)--2c), July 1927 to August 2026 ($T = \QtwocT$ months). Not annualized." The rows are labeled "10 book-to-market deciles", "10 momentum deciles", and "20 book-to-market and momentum deciles".
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** eb7482280dedf7ec6d20217d35b89fea675d0d80
