@@ -360,4 +360,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** formatting/translation (display units of a reported table); other: methodological description drafted from the spec (revised wording of the AI-drafted Table 2 caption: "... and 2c) (all 20 portfolios), in percent per month. Monthly excess returns, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$.")
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** a314c81adeb35c875a31316f803b3dca9a7e3b2b
