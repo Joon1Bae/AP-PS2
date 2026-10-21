@@ -336,4 +336,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** The AI pointed the student to their own spec steps 1 and 3 (E[M] = 1 and E[M xR_j] = 0) as the source of the zeros, and to the definition of α, leaving the derivation and interpretation to the student.
 - **Type of assistance:** code debugging (verification; no changes)
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** af8ace5a4be1f7779382339b8511f31f83435865
