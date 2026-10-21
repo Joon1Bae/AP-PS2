@@ -199,3 +199,39 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** formatting/translation (LaTeX layout of the reported result); other: methodological description drafted from the spec. The AI wrote this reporting sentence in `tex/ps2_solution.tex`: "The sample (Pearson) correlation between the monthly SDF series $M^*_{\mathrm{BM},t}$ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to August 2026 ($T = \QtwobT$ months), is \[ \widehat{\mathrm{Corr}}\left(M^*_{\mathrm{BM},t},\, M^*_{\mathrm{MOM},t}\right) = \QtwobCorr . \]"
 - **Grouped follow-up requests:** none
 - **Git commit after:** f38b86c7fc5208fffa6922097708faaf3700660a
+
+## Interaction 9 — Q2(c) — 2026-10-21 00:10
+
+- **Problem set item:** Q2(c)
+- **Substantive prompt (verbatim):** "I've write down a spec for q2c. Please take a look and follow the instruction on it." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review `spec/q2c.md` and implement it: the SDF for the 20 merged BE/ME + momentum deciles, the blue/red scatterplot of b, and the Sharpe ratios of xR* = b'xR for Q2(a)-(c), reported in the LaTeX file.
+- **Git commit before:** 492eadabba6762affb3ee473427c65e92abe3d36 (includes the student's new `spec/q2c.md` and the recompiled `tex/ps2_solution.pdf`)
+- **Assistance provided:**
+  - Reviewed the spec against the Q2(c) statement. It covers every required output: the 20-portfolio SDF, a scatterplot over deciles 1-10 with blue for BM and red for MOM, and the Sharpe ratios of the xR* portfolios from 2a), 2b), and 2c).
+  - New `src/q2c.py`:
+    - Merges the Q2(a) and Q2(b) excess returns (j = 1..10 BE/ME, 11..20 momentum; same 1190 months, enforced) and solves the spec's two moment equations for (a, b).
+    - Writes `output/q2c_sdf_coefficients.csv` (with j, sort, decile) and `output/q2c_b_scatter.pdf`: blue circles for BE/ME, red squares for momentum, with a legend.
+    - Checks: sample mean of M* = 1.000000000000; max |sample E[M* xR]| = 8.0e-17. Result: a = 1.092736.
+    - Computes SR(xR*) = E[xR*] / sigma(xR*) for the 2a), 2b), and 2c) SDFs: 0.191921, 0.258099, 0.304526 (monthly). These match an independent numpy calculation.
+    - Writes `output/q2c_sharpe_ratios.csv` and `output/q2c_sharpe_ratios.tex` (LaTeX macros, displayed to 3 decimals).
+  - `src/sdf.py`:
+    - Added `sharpe_ratio`.
+    - Generalized the scatterplot into `plot_b_groups` (several sorts, each with its own color, marker, and legend label); `plot_b` now calls it.
+    - All Q2(a) and Q2(b) outputs regenerate byte-identically.
+  - Checked the blue/red pair for color-vision deficiencies with a Python OKLab computation, because Node was not available for the validator script. Delta E x100: 32.3 (normal vision), 21.6 (protan), 27.3 (deutan), 34.5 (tritan), all above the target of 8. Different marker shapes were added so the sorts stay distinguishable in grayscale print.
+  - `tex/ps2_solution.tex`: added a 2c) subsection with the figure, a Sharpe ratio table (Table 1, values from the generated macros), and blank comment placeholders for the student (pattern description, explanation, and the Sharpe ratio discussion relating to the SDF property). The macro file is loaded in the preamble. Test-compiled with tectonic into a temporary directory outside the repository. The student's PDF was not rebuilt.
+- **Files inspected:** `spec/q2c.md`, `Problem Set 2.pdf` (Q2(c) statement, read earlier in this session), `src/sdf.py`, `src/q2a.py`, `src/q2b.py`, `tex/ps2_solution.tex`, `output/q2c_b_scatter.pdf` and the test build (visual checks)
+- **Files directly modified by AI:** `src/q2c.py` (new), `src/sdf.py` (`sharpe_ratio`, `plot_b_groups`), `tex/ps2_solution.tex` (preamble `\input` and 2c) subsection), `output/q2c_b_scatter.pdf`, `output/q2c_sdf_coefficients.csv`, `output/q2c_sharpe_ratios.csv`, `output/q2c_sharpe_ratios.tex` (all new, generated), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. Interpretations made explicit (not new choices):
+     - The Sharpe ratio is monthly, because the spec's formula E[xR*]/sigma(xR*) is applied to monthly data. It is not annualized, and the table caption says so.
+     - sigma divides by T, consistent with the spec's step 7 (E[.] estimated by the time average). The difference from dividing by T-1 is a factor of sqrt(1190/1189), or about 0.04%.
+     - The student can change either choice in the spec.
+  2. Not substantive: the Data section again names "10_Portfolios_Prior_12_2-ME.csv", which does not exist; the code uses `10_Portfolios_Prior_12_2.csv`. The output paragraph is stated twice in the spec; the two versions are consistent.
+  3. Not substantive: the student's spec does not include the 2c) instruction to "Explain what you observe [in the Sharpe ratios] and why it is (or it is not) in line with a key SDF property". The AI added a placeholder for it in the `.tex`, with no content.
+- **Substantive mathematical / economic / empirical suggestions made:** none. Presentation choices: blue circles and red squares (colors as required by the problem set; marker shapes added for grayscale print), the legend labels "Book-to-market (BM)" and "Momentum (MOM)", the x-axis label "Portfolio decile (1 = Lo, 10 = Hi)", and 3-decimal display in the table.
+- **Type of assistance:** empirical implementation; formatting/translation (LaTeX table and figure layout); other: methodological description drafted from the spec. The AI wrote both of these in `tex/ps2_solution.tex`:
+  - Figure caption: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 20 value-weighted portfolios in the merge of the book-to-market (blue circles) and momentum (red squares) decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units."
+  - Table caption and row labels: "Monthly Sharpe ratios $\widehat{SR}(xR^*) = \widehat{\mathbb{E}}[xR^*_t] / \widehat{\sigma}(xR^*_t)$ of the portfolios $xR^*_t = b'xR_t$ implied by the SDFs of 2a)--2c), July 1927 to August 2026 ($T = \QtwocT$ months). Not annualized." The rows are labeled "10 book-to-market deciles", "10 momentum deciles", and "20 book-to-market and momentum deciles".
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_

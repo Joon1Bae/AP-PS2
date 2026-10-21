@@ -77,6 +77,12 @@ def sdf_series(xr: pd.DataFrame, a: float, b: pd.Series) -> pd.Series:
     return pd.Series(a - xr.to_numpy() @ b.to_numpy(), index=xr.index, name="M*")
 
 
+def sharpe_ratio(xr: pd.DataFrame, b: pd.Series) -> float:
+    """Sharpe ratio E[xR*] / sigma(xR*) of xR* = b'xR, with time averages (sigma divides by T)."""
+    x_star = xr.to_numpy() @ b.to_numpy()
+    return x_star.mean() / x_star.std(ddof=0)
+
+
 def save_coefficients(a: float, b: pd.Series, path: Path) -> None:
     coefficients = pd.DataFrame({
         "parameter": ["a"] + ["b"] * len(b),
@@ -89,6 +95,16 @@ def save_coefficients(a: float, b: pd.Series, path: Path) -> None:
 
 def plot_b(b: pd.Series, path: Path, xlabel: str) -> None:
     """Scatterplot of b (y-axis) against portfolio decile 1..10 (x-axis)."""
+    plot_b_groups([(b, SERIES, "o", None)], path, xlabel)
+
+
+def plot_b_groups(
+    groups: list[tuple[pd.Series, str, str, str | None]], path: Path, xlabel: str
+) -> None:
+    """Scatterplot of b against decile 1..10 for one or more sorts.
+
+    Each group is (b, color, marker, legend label); a legend is drawn when labels are given.
+    """
     plt.rcParams.update({
         "font.family": "serif",
         "font.serif": ["cmr10"],
@@ -96,14 +112,21 @@ def plot_b(b: pd.Series, path: Path, xlabel: str) -> None:
         "axes.formatter.use_mathtext": True,
         "pdf.fonttype": 42,
     })
-    deciles = np.arange(1, len(b) + 1)
+    n = len(groups[0][0])
+    deciles = np.arange(1, n + 1)
 
     fig, ax = plt.subplots(figsize=(6.0, 3.6))
     ax.axhline(0.0, color=ZERO_LINE, linewidth=0.8, zorder=1)
-    ax.scatter(deciles, b.to_numpy(), s=48, color=SERIES, edgecolors=SURFACE, linewidths=1.5, zorder=3)
+    for b, color, marker, label in groups:
+        ax.scatter(
+            deciles, b.to_numpy(), s=48, color=color, marker=marker,
+            edgecolors=SURFACE, linewidths=1.5, zorder=3, label=label,
+        )
+    if any(label for *_, label in groups):
+        ax.legend(frameon=False, labelcolor=TEXT_PRIMARY, loc="best")
 
     ax.set_xticks(deciles)
-    ax.set_xlim(0.5, len(b) + 0.5)
+    ax.set_xlim(0.5, n + 0.5)
     ax.set_xlabel(xlabel, color=TEXT_PRIMARY)
     ax.set_ylabel("$b$ coefficient", color=TEXT_PRIMARY)
     ax.grid(axis="y", color=GRID, linewidth=0.6)

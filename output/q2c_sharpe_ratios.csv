@@ -1,0 +1,4 @@
+sdf,monthly_sharpe_ratio
+"2a (BM, 10 portfolios)",0.19192140054803636
+"2b (MOM, 10 portfolios)",0.25809858557354565
+"2c (BM + MOM, 20 portfolios)",0.3045255652447237
