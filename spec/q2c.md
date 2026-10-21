@@ -28,10 +28,6 @@ The index for Rp is from 1 to 20. (1 is Lo10, 10 is Hi 10, and 11 is Lo PRIOR an
 7. Note: E[.] operator can be estimated using the time average.
 
 
-Output should be a scatterplot with the porfolio deciles in the x-axis and the respective b coefficients in the y-axis.
-But, for this problem, the color of plot for the esimated b should be blue for j = 1 to j = 10, and red for j = 11 to 20.
-And plot each scatter dot with different sorting varialbes of which the total number of each x axis should be 10.
-
 The output should be a scatterplot with portfolio deciles (1 to 10) on the x-axis and the respective b coefficients in the y-axis.
 
 For this problem, one in blue (representing j = 1 to 10) and one in red (representing j = 11 to 20).
