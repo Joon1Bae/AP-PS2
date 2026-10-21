@@ -85,3 +85,28 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; other: specification check against the problem statement (omission identified); formatting/translation (LaTeX layout of the 2b) subsection); other: methodological description drafted from the spec (the AI wrote the figure caption in `tex/ps2_solution.tex`: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 10 value-weighted momentum (prior 12--2 month return) decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units.")
 - **Grouped follow-up requests:** none
 - **Git commit after:** 9a3bd6aec2b8586efaf8f49949c230121a55ad78
+
+## Interaction 4 — Q2(a), Q2(b) — 2026-10-20 23:24
+
+- **Problem set item:** Q2(a), Q2(b)
+- **Substantive prompt (verbatim):** "Let's do it the other way around. E[M] = 1 tells us that a = 1. Therefore, b = E[xR * xR']^-1 * E[xR]. Could you revise the codes for q2a and q2b, and rerun and replot the scatterplot?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** The student proposed a new derivation step for (a, b) and asked for the Q2(a) and Q2(b) code to be revised, rerun, and replotted.
+- **Git commit before:** 42aa1d93ab916b3bfe42c700afc9c7c19838cacd (working tree was clean; `spec/q2a.md` and `spec/q2b.md` unchanged, still stating the original two-equation system)
+- **Assistance provided:** Diagnosed the proposed step "E[M] = 1 tells us that a = 1" (math review: diagnosis of a specific step, without a corrected expression). Ran a numerical check of the proposed pair (a = 1, b = E[xR xR']^-1 E[xR]) in a throwaway command that changed no repository files:
+  - BM (2a): sample mean of M = 0.964475; b'E[xR] = 0.035525; max |sample E[M xR]| = 7.3e-17.
+  - MOM (2b): sample mean of M = 0.937546; b'E[xR] = 0.062454; max |sample E[M xR]| = 1.7e-17.
+
+  **No code was revised and no figures were replotted**, for two reasons:
+  1. The diagnosed step does not hold (see below).
+  2. Per `CLAUDE.md`, a design change must be in the student's spec before the AI implements it, and the specs were not updated.
+
+  The decision is left to the student.
+- **Files inspected:** `spec/q2a.md`, `spec/q2b.md` (unchanged), `src/q2a.py`, `src/q2b.py` (loaders used for the numerical check)
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Why the step "E[M] = 1 tells us that a = 1" is wrong: with M = a - b'xR, taking expectations gives E[M] = a - b'E[xR] (step 2 of the student's own spec). So E[M] = 1 implies a = 1 only if b'E[xR] = 0. The xR here are raw, not demeaned, excess returns, and their sample means are not zero. Under the proposed b, b'E[xR] is strictly positive (0.0355 for BM, 0.0625 for MOM), because b'E[xR] = E[xR]' E[xR xR']^-1 E[xR] and E[xR xR'] is positive definite. The step drops the b'E[xR] term without justification. As a result, the proposed (a, b) satisfies E[M xR] = 0 but violates the normalization E[M] = 1 required by footnote 3 of the problem set: the sample mean of M is 0.9645 (BM) and 0.9375 (MOM). The AI did not state a corrected expression.
+  2. The specs were not updated to reflect the proposal.
+- **Substantive mathematical / economic / empirical suggestions made:** The AI noted that, by step 5 of the student's own spec (b = a E[xR xR']^-1 E[xR]), the proposed b equals the currently implemented b divided by the currently implemented a (1.036834 for BM, 1.066615 for MOM). The proposed scatterplots would therefore show the same pattern, rescaled.
+- **Type of assistance:** math review (diagnosis of a specific step)
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
