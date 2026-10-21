@@ -46,6 +46,6 @@ Leave it as placeholder(blank) regarding the explanation why this pattern emereg
 1. We now know the vectors b1, b2 and b3 (calculated from BE/ME, Mom, and BE/ME + Mom, repectively), as well as the estimated parameters a1, a2, and a3.
 2. We also can recover M using the equation M = a - b'xR.
 3. Then, we can calculate Cov[-M, xR_j] using the sample covariance formula: 1/T \Sigma^{T}_{t=1} [(-M_t + M^bar) * (xR_j,t - xR^bar_j)] where the bar denotes the time average for each j.
-4. From the estimated Cov and E^[xR_j], we can calculate the pricing errors as alpha_j = E^[xR_j] - Cov^(-M, xR_j) for j = 1, ..., 20 (if BE/ME + Mom is the case. If not, index ends at 10)
+4. From the estimated covariance and E[xR_j], we can calculate the pricing errors as alpha_j = E[xR_j] - Cov(-M, xR_j)$ for all j = 1, ..., 20 under each of the three models.
 5. Write down a code to implement the procedure above.
 6. The output should include a table reporting a pricing error for BE/ME only, Mom only, and BE/ME + Mom cases for each porfolio in A NEATED MANNER!!!!!
