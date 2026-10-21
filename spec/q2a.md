@@ -25,3 +25,9 @@ xR = R_p - Rf where R_p is each portfolio return from Lo 10 to Hi 10 column in P
 Output should be a scatterplot with the porfolio deciles (Lo 10 to Hi 10) in the x-axis and the respective b coefficients in the y-axis.
 
 Leave it as placeholder(blank) regarding the explanation why this pattern emereges.
+
+# Additional Decisions
+
+1. Use the monthly value-weighted returns. The BE-ME file also has equal-weighted and annual versions of the same "Lo 10" to "Hi 10" columns.
+2. Use decimal units, dividing the percent returns by 100. This changes the size of b by a factor of 100.
+3. Also create a LaTeX skeleton, which doesn't need to go in the spec.
