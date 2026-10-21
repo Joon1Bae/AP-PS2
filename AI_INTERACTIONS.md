@@ -131,3 +131,29 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** math review (check of a completed derivation); economic reasoning review (critique of the statement "in theory, E[xR] = 0")
 - **Grouped follow-up requests:** none
 - **Git commit after:** 587ffc9a7fdda0024a09cd1388137418b7fd53cb
+
+## Interaction 6 — Q2(a), Q2(b) — 2026-10-20 23:34
+
+- **Problem set item:** Q2(a), Q2(b)
+- **Substantive prompt (verbatim):** "Then, can you confirm am I going a right direction until the scatter plot?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review the Q2(a) and Q2(b) work up to the scatterplots (specs, derivation, data choices, implementation, figures) against the problem statement.
+- **Git commit before:** cc24c9c6906fad22f89495b5c5532e81feb44968
+- **Assistance provided:** Compared `spec/q2a.md`, `spec/q2b.md`, the code, and the outputs with the "Datasets" section and Q2(a)-(b) of `Problem Set 2.pdf`. Reran `src/q2a.py` and `src/q2b.py` from a clean tree: all outputs reproduced byte-for-byte, with no changes in git. Conclusion given to the student: the work up to the scatterplots is consistent with the problem statement.
+  - **Data sources:** match the BM and MOM dataset definitions ("Lo 10" ... "Hi 10" from Portfolios Formed on Book-to-Market; "Lo PRIOR" ... "Hi PRIOR" from 10 Portfolios Formed on Momentum; RF from the Fama/French 3 Factors file).
+  - **Sample:** July 1927 to the latest date (2026-08), T = 1190.
+  - **Estimation:** full-sample (ex-post) unconditional estimation with the normalization E[M*] = 1 from footnote 3.
+  - **Correctness:** the derivation is correct (Interaction 5), and the moment conditions hold to machine precision.
+  - **Figures:** deciles 1-10 on the x-axis and b on the y-axis, as asked.
+- **Files inspected:** `Problem Set 2.pdf` (read earlier in this session), `spec/q2a.md`, `spec/q2b.md`, `src/q2a.py`, `src/q2b.py`, `src/sdf.py`, `output/q2a_*`, `output/q2b_*`, `tex/ps2_solution.tex`, `data/README.md`
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only). The rerun scripts regenerated `output/` files, but they were byte-identical.
+- **Errors, omissions, or ambiguities identified:**
+  1. Still open: the Q2(b) correlation between M*_t from 2b) and 2a) is not in `spec/q2b.md` and is not implemented (see Interaction 3).
+  2. Still open: the step 4 indexing in both specs is inconsistent (see Interaction 5).
+  3. Not substantive: file-name typos in the specs ("Portfolios_Formed_on_BE.csv", "F_Research_Data_Factors.csv", "10_Portfolios_Prior_12_2-ME.csv", "Rf").
+  4. Not substantive: the committed `tex/ps2_solution.pdf` was compiled before the 2b) subsection was added and is out of date.
+  5. Not substantive: `data/README.md` still says "(none yet)" and does not list the three data files.
+  6. Still to do, by the student: the description and explanation of the patterns (2a, 2b) and the economic interpretation of the correlation (2b).
+- **Substantive mathematical / economic / empirical suggestions made:** The problem statement does not specify value- versus equal-weighted returns or units, so the AI suggested the write-up state the student's choices (monthly value-weighted returns; decimal excess returns, which set the scale of b). The AI-drafted figure captions already mention both.
+- **Type of assistance:** other: review of specifications, implementation, and outputs against the problem statement; code check (reproducibility rerun)
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
