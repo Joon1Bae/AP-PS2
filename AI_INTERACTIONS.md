@@ -313,3 +313,27 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** formatting/translation (LaTeX caption placement)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 2af78f96919013c7fd79be58290d91230166da94
+
+## Interaction 14 — Q2(d) — 2026-10-21 00:54
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "and can you check the pricing errors? it seems there is only 0 when we use the M* from the combined be/me + mom model." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Check whether the all-zero 2c) column of the Q2(d) pricing-error table points to a bug in the computation.
+- **Git commit before:** c95ff9a80e927d1bddcf9f1f3e3a17157502000e
+- **Assistance provided:** Ran diagnostic checks in a throwaway command that changed no repository files:
+  1. Full-precision |α| from `output/q2d_pricing_errors.csv`:
+     - 2c) on both panels: at most 7.8e-17, i.e. zero up to floating-point error, not small values hidden by the 4-decimal display.
+     - 2a) on BE/ME and 2b) on momentum: equally zero (at most 7.8e-17).
+     - 2a) on momentum: 2.6e-4 to 1.0e-2. 2b) on BE/ME: 1.0e-4 to 3.5e-3.
+  2. Sanity check of `pricing_errors()`: with a constant M = 1 it returns exactly E[xR] (nonzero, min |α| = 0.0012). The function does not produce zeros mechanically.
+  3. The three M* series are distinct, each has sample mean 1.000000000000, and each is built from the intended assets (10, 10, and 20).
+  4. The smallest nonzero |α| outside the zero blocks is 0.000101, so the 4-decimal display (threshold 0.00005) hides no economically nonzero value.
+
+  Conclusion given to the student: there is no computational error. Each SDF has α = 0 (to machine precision) on exactly the portfolios it was estimated on. This follows from the moment conditions the SDF was constructed to satisfy (spec steps 1 and 3). The AI did not explain why those conditions imply α = 0; that is part of the student's own answer to Q2(d) ("Describe the results and explain what we learn from them").
+- **Files inspected:** `output/q2d_pricing_errors.csv`, `src/sdf.py`, `src/q2d.py`, `spec/q2d.md`
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:** none (no bug found)
+- **Substantive mathematical / economic / empirical suggestions made:** The AI pointed the student to their own spec steps 1 and 3 (E[M] = 1 and E[M xR_j] = 0) as the source of the zeros, and to the definition of α, leaving the derivation and interpretation to the student.
+- **Type of assistance:** code debugging (verification; no changes)
+- **Grouped follow-up requests:** none
+- **Git commit after:** _pending_
