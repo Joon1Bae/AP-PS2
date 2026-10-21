@@ -84,4 +84,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none. The AI's choices were limited to programming and presentation: shared-module layout, failing loudly on missing data instead of choosing a rule, reproducible PDF output, figure styling identical to Q2(a), and the x-axis label "Momentum decile (1 = Lo PRIOR, 10 = Hi PRIOR)".
 - **Type of assistance:** empirical implementation; other: specification check against the problem statement (omission identified); formatting/translation (LaTeX layout of the 2b) subsection); other: methodological description drafted from the spec (the AI wrote the figure caption in `tex/ps2_solution.tex`: "Coefficients $b$ of the SDF $M^*_t = a - b'xR_t$ that prices the monthly excess returns of the 10 value-weighted momentum (prior 12--2 month return) decile portfolios (July 1927 to August 2026), under the normalization $\widehat{\mathbb{E}}[M^*] = 1$. Excess returns are in decimal units.")
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** 9a3bd6aec2b8586efaf8f49949c230121a55ad78
