@@ -297,4 +297,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout, float placement); other: methodological description drafted from the spec. The AI wrote this table caption in `tex/ps2_solution.tex`: "Pricing errors $\hat{\alpha}_p = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*, xR_p]$ of the 20 book-to-market and momentum decile portfolios under the SDFs $M^*_t$ estimated in 2a) (10 book-to-market deciles), 2b) (10 momentum deciles) and 2c) (all 20 portfolios). Monthly excess returns in decimal units, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$." The AI also wrote the table headers and panel labels ("SDF $M^*_t$ estimated in", "2a) BM", "2b) MOM", "2c) BM + MOM", "Panel A: book-to-market deciles", "Panel B: momentum deciles").
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** d63028db8d78220341363f752dc514d2a8cba2a1
