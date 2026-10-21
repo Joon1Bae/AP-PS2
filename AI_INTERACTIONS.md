@@ -312,4 +312,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** formatting/translation (LaTeX caption placement)
 - **Grouped follow-up requests:** none
-- **Git commit after:** _pending_
+- **Git commit after:** 2af78f96919013c7fd79be58290d91230166da94
