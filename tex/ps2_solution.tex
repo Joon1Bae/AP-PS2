@@ -21,7 +21,90 @@
 \maketitle
 
 \section*{Question 1}
-% TODO (student)
+% Typeset by AI from the student's notes in spec/q1.md (formatting/transcription; AI_INTERACTIONS.md).
+% Bracketed italic placeholders mark content the student still has to write or compute.
+
+\subsection*{1a)}
+Yes.
+
+\textit{[Definition of Complete Markets will be here]}
+
+Let
+\[
+  X = \begin{pmatrix} 10 & 20 & 30 \\ 10 & 10 & 10 \\ 0 & 10 & 10 \end{pmatrix}
+\]
+(rows: assets $A$, $B$, $C$; columns: states $n = 1, 2, 3$). Then there exists $\Omega$ such
+that $X\Omega = I$, with $\Omega = X^{-1}$, if $X$ is invertible. Therefore, checking whether $X$
+is invertible is sufficient for Complete Markets in this economy. $X$ has full rank. Therefore,
+this market is complete.
+
+\subsection*{1b)}
+Let $P_c(n)$ denote the price of the contingent claim for state $n$. Then
+\begin{align*}
+  P(A) &= \sum_{n=1}^{3} P_c(n)\,\mathrm{Payoff}_A(n), \\
+  P(B) &= \sum_{n=1}^{3} P_c(n)\,\mathrm{Payoff}_B(n), \\
+  P(C) &= \sum_{n=1}^{3} P_c(n)\,\mathrm{Payoff}_C(n).
+\end{align*}
+Or, in matrix form,
+\[
+  P = X P_c,
+\]
+where $X$ is the payoff matrix from 1a), $P_c = \big(P_c(1), P_c(2), P_c(3)\big)'$, and
+$P = \big(P(A), P(B), P(C)\big)' = (16, 8, 6)'$.
+
+We confirmed in 1a) that the payoff matrix is invertible. So, we can calculate
+\[
+  P_c = X^{-1} P = \textit{[numerical values to be computed by the student]}.
+\]
+
+\subsection*{1c)}
+As calculated in 1b), $P_c = \textit{[values from 1b)]}$. Taking the inner product of
+$\mathrm{Payoff}(D) = (30, 20, 10)'$ with $P_c$ gives the price of asset $D$ in this economy:
+\[
+  P(D) = \mathrm{Payoff}(D)'\,P_c = \textit{[to be computed by the student]}.
+\]
+
+\subsection*{1d)}
+The SDF $M$ satisfies $\mathbb{E}[M \cdot \mathrm{Payoff}] = \mathrm{Price}$ for every asset in
+this economy:
+\begin{align*}
+  P(A) &= \sum_{n=1}^{3} \pi(n)\,M(n)\,\mathrm{Payoff}_A(n), \\
+  P(B) &= \sum_{n=1}^{3} \pi(n)\,M(n)\,\mathrm{Payoff}_B(n), \\
+  P(C) &= \sum_{n=1}^{3} \pi(n)\,M(n)\,\mathrm{Payoff}_C(n).
+\end{align*}
+Or, in matrix form,
+\[
+  P = X_\pi M, \qquad
+  X_\pi = \begin{pmatrix}
+    10 \cdot \frac{1}{4} & 20 \cdot \frac{1}{2} & 30 \cdot \frac{1}{4} \\[2pt]
+    10 \cdot \frac{1}{4} & 10 \cdot \frac{1}{2} & 10 \cdot \frac{1}{4} \\[2pt]
+    0 & 10 \cdot \frac{1}{2} & 10 \cdot \frac{1}{4}
+  \end{pmatrix},
+\]
+where $M = \big(M(1), M(2), M(3)\big)'$ and $P = \big(P(A), P(B), P(C)\big)'$.
+
+$X_\pi$ is invertible if $\det(X_\pi) \neq 0$:
+$\det(X_\pi) = \textit{[to be computed by the student]}$. Therefore, the SDF realizations are
+\[
+  M = X_\pi^{-1} P = \textit{[numerical values to be computed by the student]}.
+\]
+
+This economy satisfies No-Arbitrage.
+
+\textit{[Definition of No-Arbitrage will be here]}
+
+As in 1b), every contingent claim satisfies the No-Arbitrage condition above.
+
+As we can see, the realized SDF is the same in every state of the economy. It may imply that each
+state is equally valuable \textit{[?]}.
+
+\subsection*{1e)}
+Using the SDF from 1d), with $\mathrm{Payoff}_D(1) = 30$, $\mathrm{Payoff}_D(2) = 20$, and
+$\mathrm{Payoff}_D(3) = 10$,
+\[
+  P(D) = \sum_{n=1}^{3} \pi(n)\,M(n)\,\mathrm{Payoff}_D(n)
+       = \textit{[to be computed by the student; compare with 1c)]}.
+\]
 
 \section*{Question 2}
 

@@ -412,3 +412,27 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout); other: methodological description drafted from the spec. The AI wrote this Table 3 caption in `tex/ps2_solution.tex`: "Out-of-sample pricing errors $\hat{\alpha}_{OS,p} = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*_{OS}, xR_p]$ of the 20 book-to-market and momentum decile portfolios, in percent per month. $\hat{a}$ and $\hat{b}$ are estimated as in 2c) on July 1927 to December 1989 ($T = \QtwoeTis$ months); $M^*_{OS,t} = \hat{a} - \hat{b}'xR_t$ and the moments are computed on January 1990 to \QtwoeEnd{} ($T = \QtwoeTos$ months); covariances divide by $T$." The AI also wrote the table header and panel labels ("Portfolio", "$\hat{\alpha}_{OS,p}$", "Panel A: book-to-market deciles", "Panel B: momentum deciles").
 - **Grouped follow-up requests:** none
 - **Git commit after:** c14348f3b543d416580c83674b01a603ac014811
+
+## Interaction 18 — Q1(a)-(e) — 2026-10-23 00:52
+
+- **Problem set item:** Q1(a), Q1(b), Q1(c), Q1(d), Q1(e)
+- **Substantive prompt (verbatim):** "I wrote down some instruction for problem 1. Please take a look and write it down on the LaTeX file in A NEATED FORMAT!!!!!!!!!!!!!!!!!!!!!!!" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Typeset the student's handwritten-style notes for Question 1 (`spec/q1.md`) into `tex/ps2_solution.tex`.
+- **Git commit before:** 2ce40ee13d54ff81a1593f8bf10710a46db59139 (includes the student's new `spec/q1.md`)
+- **Assistance provided:**
+  - Transcribed the student's notes for 1a)-1e) into LaTeX: the payoff matrix, the pricing equations as sums and in matrix form, the probability-weighted payoff matrix, and the student's sentences with grammar fixes only. Like Q2, the sections do not restate the questions.
+  - Limits applied under the course AI policy (Q1 is mathematical derivation and economic reasoning, not data analysis). The notes asked the AI to compute and post numbers ("You should calculate it and post the calculated number on the LaTeX file", "[please check by yourself and write it down in the .tex file]", "please calculate the following and show that the price is the same as in c"). The AI did **not** compute them, because that would complete the student's derivation. The AI also did **not** write the definitions of Complete Markets and No-Arbitrage that the notes leave as placeholders, because that would generate economic reasoning. All of these are visible italic placeholders in the PDF: P_c = X^{-1}P, P(D) in 1c), det(X_pi), M = X_pi^{-1}P, P(D) in 1e), and the two definitions. The student's "(?)" after "each state is equally valuable" is kept as a visible "[?]".
+  - The AI did not check the correctness of the notes (not requested).
+  - Test-compiled with tectonic into the session scratchpad (outside the repository) and checked both pages visually. The student's PDF was not rebuilt by the AI.
+- **Files inspected:** `spec/q1.md`, `Problem Set 2.pdf` (Question 1 statement and footnotes), `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (Question 1 section), `AI_INTERACTIONS.md` (this entry). (`tex/ps2_solution.pdf` was already modified by the student before this request and is included in the "before" snapshot.)
+- **Errors, omissions, or ambiguities identified:** These are transcription-level corrections and notation choices. The AI made them while typesetting and reports them here so the student can review them:
+  1. Notation: the notes use X for the payoff matrix (1a), X(n) for the contingent-claim prices (1b), and X again for the SDF vector (1d). The typeset version uses X for the payoff matrix, P_c(n) for the contingent-claim prices (the problem statement's footnote 2 notation), M = (M(1), M(2), M(3))' for the SDF vector, and X_pi for the notes' "PAYOFF_MATRIX_BY_PROB". payoff_a(n) is written Payoff_A(n).
+  2. 1c): "inner product of P(D) with X" is typeset as the inner product of Payoff(D) with P_c, since P(D) is the price being calculated.
+  3. 1d) typo: matrix entry "10. * 1/2" is typeset as 10·1/2.
+  4. 1e) typo: "payoff_d(1) = 10" is typeset as Payoff_D(3) = 10, matching Payoff(D) = (30, 20, 10) in the problem statement.
+  5. Added from the problem statement: the price vector P = (16, 8, 6)' in 1b), and the label "(rows: assets A, B, C; columns: states n = 1, 2, 3)" under the payoff matrix in 1a). Both are restatements of the given data.
+  6. "Probably, it will be invertible. det(...) != 0 will hold." is typeset as "X_pi is invertible if det(X_pi) != 0: det(X_pi) = [to be computed by the student]".
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (transcription of the student's notes into LaTeX, grammar, notation consistency)
+- **Grouped follow-up requests:** none
