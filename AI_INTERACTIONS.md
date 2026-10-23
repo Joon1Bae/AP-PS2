@@ -361,3 +361,25 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** formatting/translation (display units of a reported table); other: methodological description drafted from the spec (revised wording of the AI-drafted Table 2 caption: "... and 2c) (all 20 portfolios), in percent per month. Monthly excess returns, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$.")
 - **Grouped follow-up requests:** none
 - **Git commit after:** a314c81adeb35c875a31316f803b3dca9a7e3b2b
+
+## Interaction 16 — Q2(e) — 2026-10-22 23:43
+
+- **Problem set item:** Q2(e)
+- **Substantive prompt (verbatim):** "I just wrote down the instruction for q2e. could you please take a look and write a analysis code for it?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review the student's new `spec/q2e.md` against the Q2(e) statement and implement the out-of-sample pricing-error analysis.
+- **Git commit before:** 4d53fdbba8450dd6a01a1676b89b25ee510346f8 (includes the student's new `spec/q2e.md`)
+- **Assistance provided:** Reviewed the spec against the Q2(e) statement and the existing Q2(d) code. The method (estimate a^, b^ from the 20 portfolios as in Q2(c) on the pre-1990 sample; M_OS,t = a^ - b^'xR_t; α_OS,j = E^[xR_j] - Cov^(-M_OS, xR_j) with 1/T sample moments on the post-1989 window) matches the problem statement. The AI found internal conflicts in the spec and one open presentation choice, and asked the student (answers below). **No code was written in this interaction.** Three of the decisions change or disambiguate the spec, so per `CLAUDE.md` ("the student updates the spec before AI implements it") implementation is deferred to a new `/TP` cycle after the student updates `spec/q2e.md`. Student decisions (selected options, verbatim):
+  1. Q: "Estimation sample for a^hat, b^hat: the Data section says 'Jul 1927 to Dec 1989', but Basics item 7 says 'JUL 1928 TO DEC 1989'. Which is it?" → **"Jul 1927 to Dec 1989"**
+  2. Q: "Out-of-sample window for M_OS, E[xR_j] and Cov(-M_OS, xR_j): the Data section says 'Jan 1990 to the latest date', but Sharpe-ratio item 3 says 't = Jan 1989 to the latest date'. Which is it?" → **"Jan 1990 to latest"**
+  3. Q: "Item 4 says 'under each of the three models' (carried over from q2d), but Q2(e) uses only the 2c-type SDF (20 portfolios). What columns should the table have?" → **"OOS alpha only"**
+  4. Q: "Display units for the table?" → **"Percent per month"** (display only; computation stays in decimal units per spec Additional Decision 2)
+- **Files inspected:** `spec/q2e.md`, `spec/q2d.md`, `Problem Set 2.pdf` (Q2(e) statement), `src/q2d.py`, `src/sdf.py`, `src/q2a.py`, `src/q2b.py` (sample-start constants), `tex/ps2_solution.tex` (2c)-2d) sections), `output/q2d_pricing_errors.csv`, `AI_INTERACTIONS.md` (Interactions 11-15)
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Conflict in the estimation sample: Data section "Jul 1927 to Dec 1989" vs Basics item 7 "JUL 1928 TO DEC 1989". Resolved by decision 1.
+  2. Conflict in the out-of-sample window: Data section "Jan 1990 to the latest date" vs pricing-error item 3 "t = Jan 1989 to the latest date" (the latter would overlap the estimation sample by 12 months). Resolved by decision 2.
+  3. Pricing-error item 4 says "under each of the three models", carried over from `spec/q2d.md`; Q2(e) uses a single SDF built from the 20 portfolios. Resolved by decision 3.
+  4. Not substantive: the pricing-error section is still headed "Additional analysis on sharpe ratio"; the Data section names "10_Portfolios_Prior_12_2-ME.csv", "Portfolios_Formed_on_BE.csv" and "F_Research_Data_Factors.csv", which do not exist (the actual files are `10_Portfolios_Prior_12_2.csv`, `Portfolios_Formed_on_BE-ME.csv`, `F-F_Research_Data_Factors.csv`).
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** other: specification review against the problem statement (conflicts identified; student decisions recorded)
+- **Grouped follow-up requests:** none
