@@ -384,3 +384,30 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** other: specification review against the problem statement (conflicts identified; student decisions recorded)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 046085211037c9b9c91cbe0e2f2a7f8b50ed02f0
+
+## Interaction 17 — Q2(e) — 2026-10-22 23:47
+
+- **Problem set item:** Q2(e)
+- **Substantive prompt (verbatim):** "I just revised it. please take a look" This continues the request logged in Interaction 16: "I just wrote down the instruction for q2e. could you please take a look and write a analysis code for it?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Implement the revised `spec/q2e.md`: out-of-sample pricing errors of the 20 portfolios under the SDF estimated on the pre-1990 sample, with a LaTeX skeleton for 2e).
+- **Git commit before:** 98ba5e6219f32e9b1ed917d99ea2572f814d4799 (includes the student's revision of `spec/q2e.md`)
+- **Assistance provided:**
+  - Confirmed that the revised spec matches the student's Interaction 16 decisions: estimation sample "JUL 1927 TO DEC 1989" (Basics item 7), out-of-sample window "t = Jan 1990 to the latest date" (item 3), "for all j = 1, ..., 20" with no "three models" (item 4).
+  - Additional Decision 2 now reads "Use Percent per month unit." (previously decimal units). The AI implemented this literally: xR = R_p - RF in percent. The AI told the student that this is not a substantive choice for the reported output: rescaling xR by 100 divides b by 100, leaves a and M_t unchanged, and so the percent alphas are exactly 100 times the decimal alphas.
+  - New `src/q2e.py`:
+    - Builds the 20-portfolio xR (j = 1..10 BE/ME, 11..20 momentum) with the existing Q2(a)/(b) loaders. It requires identical months in both files, as in Q2(d).
+    - Solves for (a^, b^) on 1927-07 to 1989-12 (T = 750) with the existing `solve_sdf`.
+    - Builds M_OS,t = a^ - b^'xR_t on 1990-01 to 2026-08 (T = 440), and computes α_OS,j = mean(xR_j) - (1/T) sum_t (-M_t + Mbar)(xR_j,t - xRbar_j) with the existing `pricing_errors`, with all moments over the out-of-sample months.
+    - Writes `output/q2e_sdf_coefficients.csv`, `output/q2e_pricing_errors.csv` (full precision), `output/q2e_pricing_errors_table.tex` (booktabs/siunitx, Panel A BE/ME and Panel B momentum, 2 decimals, the same layout as Table 2), and `output/q2e_samples.tex` (macros for the two sample sizes and the end month).
+    - Independent check (decimal units, closed-form b = a E[xR xR']^-1 E[xR], `np.cov(bias=True)`, then x100): max absolute difference 2.0e-14.
+  - `tex/ps2_solution.tex`: added `\input` of `q2e_samples.tex`, and a 2e) subsection with the placeholder "\textit{[Explanation will be here]}" and Table 3, which `\input`s the generated tabular. Test-compiled with tectonic into the session scratchpad (outside the repository) and checked the page visually. The student's PDF was not rebuilt.
+  - The AI did not interpret the results; describing them and explaining what we learn is the student's answer to Q2(e).
+- **Files inspected:** `spec/q2e.md` (revised), `src/q2a.py`, `src/q2c.py`, `output/q2c_sharpe_ratios.tex`, `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `src/q2e.py` (new), `output/q2e_sdf_coefficients.csv`, `output/q2e_pricing_errors.csv`, `output/q2e_pricing_errors_table.tex`, `output/q2e_samples.tex` (new, generated), `tex/ps2_solution.tex` (macro input, 2e) subsection), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. None substantive. The unit change in Additional Decision 2 does not affect the reported alphas (see above).
+  2. Not substantive, still in the spec: the section heading "Additional analysis on sharpe ratio" and the file names "10_Portfolios_Prior_12_2-ME.csv", "Portfolios_Formed_on_BE.csv", "F_Research_Data_Factors.csv". The code uses the actual files, as in Q2(a)-(d).
+  3. Observation, not a decision: the sample mean of M_OS over 1990-01 to 2026-08 is 1.038, not 1, because the normalization E[M*] = 1 holds only in the estimation sample. The covariance uses the out-of-sample Mbar, as spec item 3 states.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout); other: methodological description drafted from the spec. The AI wrote this Table 3 caption in `tex/ps2_solution.tex`: "Out-of-sample pricing errors $\hat{\alpha}_{OS,p} = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*_{OS}, xR_p]$ of the 20 book-to-market and momentum decile portfolios, in percent per month. $\hat{a}$ and $\hat{b}$ are estimated as in 2c) on July 1927 to December 1989 ($T = \QtwoeTis$ months); $M^*_{OS,t} = \hat{a} - \hat{b}'xR_t$ and the moments are computed on January 1990 to \QtwoeEnd{} ($T = \QtwoeTos$ months); covariances divide by $T$." The AI also wrote the table header and panel labels ("Portfolio", "$\hat{\alpha}_{OS,p}$", "Panel A: book-to-market deciles", "Panel B: momentum deciles").
+- **Grouped follow-up requests:** none
