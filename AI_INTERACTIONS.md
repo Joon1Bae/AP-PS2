@@ -250,3 +250,114 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** formatting/translation (LaTeX float placement)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 2f89b3a7f0f116a57540029f1a89ee1d9c99d358
+
+## Interaction 11 — Q2(d) — 2026-10-21 00:41
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "I just completed the notes for q2d. Please take a look and follow the instruction. After generating the table, you should include it in the .tex file and placeholder for the explanation (something like [Explanation will be here])." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review `spec/q2d.md` and implement the Q2(d) pricing-error table α_p = E^[xR_p] - Cov^[-M*, xR_p] under the three SDFs of 2a)-2c), with a visible placeholder for the explanation in the `.tex`.
+- **Git commit before:** 89f1f70de3753c13558bd44f07173e3ec58a7fc5 (includes the student's new `spec/q2d.md`)
+- **Assistance provided:** Reviewed the spec against the Q2(d) statement. The method in steps 1-4 (recover M = a - b'xR; sample covariance with 1/T; α_j = E^[xR_j] - Cov^(-M, xR_j)) matches the problem statement's definition. The AI found one discrepancy and one open presentation choice and asked the student (answers below). **No code was written in this interaction.** The first decision contradicts the current spec, so per `CLAUDE.md` ("the student updates the spec before AI implements it") implementation is deferred to a new `/TP` cycle after the student updates `spec/q2d.md`. Student decisions (selected options, verbatim):
+  1. Q: "Q2(d) asks for α_p 'for each portfolio p (covering the 20 portfolios from Question (2c))' under EACH of the three M* (2a, 2b, 2c). Your spec step 4 says the index 'ends at 10' for the BE/ME-only and Mom-only cases [...]. Which do you want?" → **"All 20 under each M*"**
+  2. Q: "In which units should the table report α?" → **"Decimal per month"** (already consistent with the spec's Additional Decision 2, so no spec change is needed for this one)
+- **Files inspected:** `spec/q2d.md`, `Problem Set 2.pdf` (Q2(d) statement, read earlier in this session)
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Discrepancy with the problem statement: spec step 4 restricts M*_2a to j = 1..10 and M*_2b to j = 11..20 ("If not, index ends at 10"). The problem statement asks for α_p for each of the 20 portfolios under each M*. The student chose the problem statement's version, and the spec needs updating.
+  2. Not substantive: the section with the pricing-error steps is headed "Additional analysis on sharpe ratio". The "Outputs" section repeats the Q2(c) scatterplot instruction, which Q2(d) does not ask for (the figure already exists from Q2(c)). The Data section again names "10_Portfolios_Prior_12_2-ME.csv", which does not exist.
+- **Substantive mathematical / economic / empirical suggestions made:** none. The AI pointed out the wording of the problem statement but did not discuss what the pricing errors would show.
+- **Type of assistance:** other: specification review against the problem statement (discrepancy identified; student decisions recorded)
+- **Grouped follow-up requests:** none
+- **Git commit after:** fedf3b212f8b737ee866201ea27da4a0192e200f
+
+## Interaction 12 — Q2(d) — 2026-10-21 00:50
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "I just revised the instruction file. please take a look" This continues the request logged in Interaction 11: "[...] After generating the table, you should include it in the .tex file and placeholder for the explanation (something like [Explanation will be here])." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Implement the revised `spec/q2d.md` (step 4 now covers all j = 1..20 under each of the three models). Report the pricing-error table in the `.tex` with a visible explanation placeholder.
+- **Git commit before:** 610e9ffc278e60fc4f5e7f8fcc5a130408f8c178 (includes the student's revision of spec step 4)
+- **Assistance provided:**
+  - Confirmed that the revised step 4 matches the student's decision in Interaction 11 ("All 20 under each M*"). Units remain decimal per month (spec Additional Decision 2; student answer "Decimal per month" in Interaction 11).
+  - Added `pricing_errors` to `src/sdf.py`: α_j = mean(xR_j) - (1/T) sum_t (-M_t + Mbar)(xR_j,t - xRbar_j), as in spec step 3.
+  - New `src/q2d.py`:
+    - Builds M_t for the 2a) (10 BE/ME), 2b) (10 momentum), and 2c) (all 20) models with the same `solve_sdf`.
+    - Computes α_j for all 20 portfolios under each model.
+    - Writes `output/q2d_pricing_errors.csv` (full precision) and `output/q2d_pricing_errors_table.tex`, a generated booktabs/siunitx tabular with Panel A (BE/ME deciles) and Panel B (momentum deciles), one column per SDF, and 4 decimals.
+    - The values match an independent numpy calculation (`np.cov(bias=True)`) to within 1e-16.
+  - `tex/ps2_solution.tex`:
+    - Added `siunitx`.
+    - Added a 2d) subsection with the visible placeholder "\textit{[Explanation will be here]}", as the student requested, and Table 2, which `\input`s the generated tabular.
+    - Added `\FloatBarrier` before the 2b), 2c), and 2d) subsection headings. In the test build, the 2c) figure had floated past the 2d) heading and table; with the barriers, each figure and table stays within its own sub-question.
+    - Test-compiled with tectonic into a temporary directory outside the repository and checked all pages visually. The student's PDF was not rebuilt.
+- **Files inspected:** `spec/q2d.md` (revised), `src/sdf.py`, `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `src/sdf.py` (`pricing_errors`), `src/q2d.py` (new), `output/q2d_pricing_errors.csv` (new, generated), `output/q2d_pricing_errors_table.tex` (new, generated), `tex/ps2_solution.tex` (siunitx, 2d) subsection, float barriers), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. Not substantive, still in the spec: the "Outputs" section repeats the Q2(c) scatterplot instruction. No duplicate figure was produced, because Q2(d) does not ask for one and the Q2(c) figure already exists. The pricing-error section is still headed "Additional analysis on sharpe ratio", and the Data section still names "10_Portfolios_Prior_12_2-ME.csv".
+  2. Presentation: the table shows 4 decimals, so values smaller than 0.00005 in absolute value display as 0.0000 (a displayed "-0.0000" is printed as "0.0000"). The CSV keeps full precision.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout, float placement); other: methodological description drafted from the spec. The AI wrote this table caption in `tex/ps2_solution.tex`: "Pricing errors $\hat{\alpha}_p = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*, xR_p]$ of the 20 book-to-market and momentum decile portfolios under the SDFs $M^*_t$ estimated in 2a) (10 book-to-market deciles), 2b) (10 momentum deciles) and 2c) (all 20 portfolios). Monthly excess returns in decimal units, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$." The AI also wrote the table headers and panel labels ("SDF $M^*_t$ estimated in", "2a) BM", "2b) MOM", "2c) BM + MOM", "Panel A: book-to-market deciles", "Panel B: momentum deciles").
+- **Grouped follow-up requests:** none
+- **Git commit after:** d63028db8d78220341363f752dc514d2a8cba2a1
+
+## Interaction 13 — Q2(d) — 2026-10-21 00:52
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "The caption of Table 2 should be below of the table." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Move the caption of Table 2 (Q2(d) pricing errors) below the table.
+- **Git commit before:** 0f5c1f5f79f6f8a5e89c1008fdcf3d74354434d1 (includes the student's recompiled `tex/ps2_solution.pdf`)
+- **Assistance provided:** In `tex/ps2_solution.tex`, moved the `\input` of the generated tabular above the `\caption{...}` and `\label{tab:q2d_alpha}` inside the Table 2 environment. The caption text is unchanged. Test-compiled with tectonic into a temporary directory outside the repository and checked visually that the caption now appears below the table. Table 1 (Q2(c) Sharpe ratios) still has its caption above the table; it was not changed because the request named only Table 2.
+- **Files inspected:** `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (caption position of Table 2), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (LaTeX caption placement)
+- **Grouped follow-up requests:** none
+- **Git commit after:** 2af78f96919013c7fd79be58290d91230166da94
+
+## Interaction 14 — Q2(d) — 2026-10-21 00:54
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "and can you check the pricing errors? it seems there is only 0 when we use the M* from the combined be/me + mom model." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Check whether the all-zero 2c) column of the Q2(d) pricing-error table points to a bug in the computation.
+- **Git commit before:** c95ff9a80e927d1bddcf9f1f3e3a17157502000e
+- **Assistance provided:** Ran diagnostic checks in a throwaway command that changed no repository files:
+  1. Full-precision |α| from `output/q2d_pricing_errors.csv`:
+     - 2c) on both panels: at most 7.8e-17, i.e. zero up to floating-point error, not small values hidden by the 4-decimal display.
+     - 2a) on BE/ME and 2b) on momentum: equally zero (at most 7.8e-17).
+     - 2a) on momentum: 2.6e-4 to 1.0e-2. 2b) on BE/ME: 1.0e-4 to 3.5e-3.
+  2. Sanity check of `pricing_errors()`: with a constant M = 1 it returns exactly E[xR] (nonzero, min |α| = 0.0012). The function does not produce zeros mechanically.
+  3. The three M* series are distinct, each has sample mean 1.000000000000, and each is built from the intended assets (10, 10, and 20).
+  4. The smallest nonzero |α| outside the zero blocks is 0.000101, so the 4-decimal display (threshold 0.00005) hides no economically nonzero value.
+
+  Conclusion given to the student: there is no computational error. Each SDF has α = 0 (to machine precision) on exactly the portfolios it was estimated on. This follows from the moment conditions the SDF was constructed to satisfy (spec steps 1 and 3). The AI did not explain why those conditions imply α = 0; that is part of the student's own answer to Q2(d) ("Describe the results and explain what we learn from them").
+- **Files inspected:** `output/q2d_pricing_errors.csv`, `src/sdf.py`, `src/q2d.py`, `spec/q2d.md`
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:** none (no bug found)
+- **Substantive mathematical / economic / empirical suggestions made:** The AI pointed the student to their own spec steps 1 and 3 (E[M] = 1 and E[M xR_j] = 0) as the source of the zeros, and to the definition of α, leaving the derivation and interpretation to the student.
+- **Type of assistance:** code debugging (verification; no changes)
+- **Grouped follow-up requests:** none
+- **Git commit after:** af8ace5a4be1f7779382339b8511f31f83435865
+
+## Interaction 15 — Q2(d) — 2026-10-21 00:57
+
+- **Problem set item:** Q2(d)
+- **Substantive prompt (verbatim):** "Then, could you make it in a % unit instead of current unit?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Report the Table 2 pricing errors in percent per month instead of decimal units. This changes only how the values are displayed; the computation is unchanged.
+- **Git commit before:** 4ec00cdfaa8b8c970e5f786478dca2ce26dbba24
+- **Assistance provided:**
+  - The student's verbatim instruction ("make it in a % unit instead of current unit") replaces the student's Interaction 11 display choice ("Decimal per month") for Table 2.
+  - Computation stays in decimal units, as spec Additional Decision 2 requires; only the displayed values change.
+  - `src/q2d.py`:
+    - The generated tabular now shows 100 x α with 2 decimals (the same resolution as the previous 4 decimals in decimal units). A displayed "-0.00" is shown as "0.00".
+    - The siunitx column format is now `-1.2`.
+    - The docstring and file header note the units.
+    - `output/q2d_pricing_errors.csv` is unchanged (decimal, full precision).
+  - In the AI-drafted Table 2 caption in `tex/ps2_solution.tex`, "Monthly excess returns in decimal units" became "..., in percent per month. Monthly excess returns".
+  - Regenerated `output/q2d_pricing_errors_table.tex`, test-compiled with tectonic into a temporary directory outside the repository, and checked the table visually.
+- **Files inspected:** `src/q2d.py`, `tex/ps2_solution.tex`, `output/q2d_pricing_errors_table.tex`, test build
+- **Files directly modified by AI:** `src/q2d.py` (display in percent), `output/q2d_pricing_errors_table.tex` (regenerated), `tex/ps2_solution.tex` (Table 2 caption units), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none. The AI suggested that the student may want to note the percent display of Table 2 in `spec/q2d.md`, for consistency with Additional Decision 2, which concerns computation units.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (display units of a reported table); other: methodological description drafted from the spec (revised wording of the AI-drafted Table 2 caption: "... and 2c) (all 20 portfolios), in percent per month. Monthly excess returns, July 1927 to August 2026 ($T = \QtwocT$ months); covariances divide by $T$.")
+- **Grouped follow-up requests:** none
+- **Git commit after:** a314c81adeb35c875a31316f803b3dca9a7e3b2b
