@@ -37,3 +37,12 @@ The index for Rw,t is 21
 1. The table should contain the estimated value of b as well as its standard error (standard errors should be based on Newey-West 1987 and 1994)
 
 
+# Additional Decisions
+
+1. Frequency: use the monthly portfolio excess returns (j = 1..20) as they are. Pair each month t with the EQ dataset's annual xR_w,t (j = 21) and R_w,t from the same month.
+
+2. Sample: use the months where all 21 excess returns and R_w are available, which is Dec 1927 – Dec 2021.
+
+3. Units: use decimals, dividing the Ken French percent returns by 100.
+
+4. Estimator: b = (Ĉov[F, xR]′Ĉov[F, xR])⁻¹ Ĉov[F, xR]′Ê[xR] with F = R_w,t, no intercept. Ĉov = 1/T \Sigma^T_{t=1} (F_t-F^hat)(xR_t - xR^hat).
