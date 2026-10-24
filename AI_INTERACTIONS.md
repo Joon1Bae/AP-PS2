@@ -594,3 +594,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** The explanation of the consequences of overlapping observations (item 1) and of the frequency mismatch (item 2), and the list of alternatives (A)-(C) in item 3. No alternative was recommended.
 - **Type of assistance:** other: explanation of the empirical implications of the data structure (design left to the student)
 - **Grouped follow-up requests:** none
+- **Git commit after:** e0d1c214dbbba0f80457427254e56e7128995911
