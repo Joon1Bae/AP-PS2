@@ -287,4 +287,23 @@ Therefore,
     sample (OS), is really difficult.
 \end{enumerate}
 
+\FloatBarrier
+\subsection*{4b)}
+% Produced by src/q4b.py (spec: spec/q4b.md). Values: output/q4b_b_estimate.csv.
+% Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\textit{[Standard error, pricing errors and $\chi^2$ test will be added]}
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q4b_b_table.tex}
+  \caption{GMM estimate of $b$ in $M_t = 1 - b\,(R_{w,t} - \mathbb{E}[R_w])$ from
+    $\widehat{\mathbb{E}}[M_t \cdot xR_t] = 0$ with an identity weighting matrix:
+    $\hat{b} = (\hat{d}'\hat{d})^{-1}\hat{d}'\,\widehat{\mathbb{E}}[xR]$ with
+    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$ (dividing by $T$). $xR$ stacks the monthly excess
+    returns of the 20 book-to-market and momentum decile portfolios and
+    $xR_w = e^{r_e} - e^{r_f}$ from the EQ Dataset (decimal units); $R_w = e^{r_e}$.}
+  \label{tab:q4b_b}
+\end{table}
+
 \end{document}
