@@ -46,3 +46,17 @@ The index for Rw,t is 21
 3. Units: use decimals, dividing the Ken French percent returns by 100.
 
 4. Estimator: b = (Ĉov[F, xR]′Ĉov[F, xR])⁻¹ Ĉov[F, xR]′Ê[xR] with F = R_w,t, no intercept. Ĉov = 1/T \Sigma^T_{t=1} (F_t-F^hat)(xR_t - xR^hat).
+
+
+Number of lags. "Newey–West (1994)" usually means the Bartlett kernel with lags chosen automatically from the data. The choices are:
+
+automatic (NW 1994) lag selection;
+the common rule of thumb floor(4(T/100)^(2/9)), about 6 lags here;
+a fixed number you choose.
+Keep in mind that row 21 uses the EQ annual returns, which are observed monthly and overlap by 11 months. That builds in autocorrelation up to 11 lags, so a small lag count may not capture it.
+
+If you pick automatic selection: the method needs one combined series. Should it combine all 21 moment series with equal weights, or use something else?
+
+E[R_w] in M. You can treat the sample mean as if it were known. Or you can add E[R_w − μ] = 0 as an extra moment and estimate μ jointly. This doesn't change b̂, but it can change its standard error.
+
+Demeaning. Should Ŝ be built from u_t as is, or after subtracting its sample mean?
