@@ -484,3 +484,20 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** math review; formatting/translation (transcription of the student's revision into LaTeX)
 - **Grouped follow-up requests:** none
 - **Git commit after:** ca1547da622dadff9df59120afd5c030818c53ed
+
+## Interaction 21 — Q4(a) — 2026-10-24 15:48
+
+- **Problem set item:** Q4(a)
+- **Substantive prompt (verbatim):** "I also revised some concerns regarding missing steps and wording." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Re-check the student's revision of `spec/q4a.md`, which addresses Interaction 19 items 3 and 4, and carry it into the typeset 4a) section.
+- **Git commit before:** ecc0bb8920c9f325edeec1bbd20ce9f1bfb5417d (includes the student's revision of `spec/q4a.md`)
+- **Assistance provided:**
+  - The student's revision (diff against the previous commit) changed the wording "above second-order term can be neglected" to "terms of second order and above can be neglected", and changed "=" to "~=" in the plug-in result.
+  - Interaction 19 item 4 (wording) is resolved; the typeset text already used this wording. The "≈" part of item 3 is resolved.
+  - Transcribed the "≈" into `tex/ps2_solution.tex`. Test-compiled with tectonic into the session scratchpad.
+- **Files inspected:** `spec/q4a.md` (diff), `tex/ps2_solution.tex`
+- **Files directly modified by AI:** `tex/ps2_solution.tex` ("=" changed to "\approx" in the 4a) plug-in result, transcribed from the student's revision), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** Still open: the intermediate step of Interaction 19 item 3 (evaluating M and M' at E_t[R_{w,t+1}] and collecting terms) is not in the revision. Items 5-10 on part 2 remain unchanged.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** math review; formatting/translation (transcription of the student's revision into LaTeX)
+- **Grouped follow-up requests:** none
