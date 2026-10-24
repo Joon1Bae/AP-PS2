@@ -6,7 +6,7 @@ It can be approximated by the Taylar expression as follows:
 
 M(F_{t+1}; \theta) = \Sigma^{\inf}_{n=0} M^(n)(E_t[F_{t+1}]; theta) / n! (F_{t+1} - E_t[F_{t+1}])^n
 
-And above second-order term can be neglected.
+And terms of second order and above can be neglected.
 
 Then, 
 
@@ -15,7 +15,7 @@ M(F_{t+1}; \theta) ~= M(E_t[F_{t+1}]; \theta) + M'(E_t[F_{t+1}]; \theta) * (F_{t
 
 If we plugged in M(F_t+1; theta) = F_{t+1}^{-gamma} where F_{t+1} = R_{w, t+1}, then
 
-M_{t+1} = -\gamma * E_t[R_{w, t+1}]^{-\gamma -1} * R_{w, t+1} + (\gamma + 1) * E_t[R_{w, t+1}]^{-\gamma}
+M_{t+1} ~= -\gamma * E_t[R_{w, t+1}]^{-\gamma -1} * R_{w, t+1} + (\gamma + 1) * E_t[R_{w, t+1}]^{-\gamma}
 
 Therefore, a_t = (\gamma + 1) * E_t[R_{w, t+1}]^{-\gamma} and b_t = \gamma * E_t[R_{w, t+1}]^{-\gamma -1}
 
