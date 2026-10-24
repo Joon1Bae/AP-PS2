@@ -466,3 +466,20 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** math review; economic reasoning review; formatting/translation (transcription of the student's notes into LaTeX)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 7e14a6f26511cacc01741a2c477541d73034a8b0
+
+## Interaction 20 — Q4(a) — 2026-10-24 15:47
+
+- **Problem set item:** Q4(a)
+- **Substantive prompt (verbatim):** "I chaged a litte bit on my .md file. Please take a look" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Re-check the student's revised derivation in `spec/q4a.md` after the Interaction 19 review, and carry the revision into the typeset 4a) section.
+- **Git commit before:** 9f3644a0f5bd41fa026eb538f0504ffd79ccae6c (includes the student's revision of `spec/q4a.md`)
+- **Assistance provided:**
+  - The student's revision (diff against the previous commit) changed only the plug-in result and the a_t, b_t line of part 1. It changed R_{w,t} and E_t[R_{w,t}] to R_{w,t+1} and E_t[R_{w,t+1}], and changed b_t from "-\gamma * E_t[...]^{-\gamma -1}" to "\gamma * E_t[R_{w, t+1}]^{-\gamma -1}".
+  - Math review: the student's corrected plug-in result follows from the first-order expansion, and a_t and b_t now match the target form M_{t+1} ≈ a_t - b_t R_{w,t+1}. Interaction 19 items 1 (timing) and 2 (sign of b_t) are resolved by the student.
+  - Updated the typeset 4a) part 1 in `tex/ps2_solution.tex` to mirror the student's revised notes verbatim (transcription only). Test-compiled with tectonic into the session scratchpad.
+- **Files inspected:** `spec/q4a.md` (diff), `tex/ps2_solution.tex`
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (4a) plug-in result and a_t, b_t, transcribed from the student's revision), `AI_INTERACTIONS.md` (this entry). (`tex/ps2_solution.pdf` was modified by the student before this request and is included in the "before" snapshot.)
+- **Errors, omissions, or ambiguities identified:** Still open from Interaction 19 (the student did not change these parts): item 3 (the evaluation of M and M' at E_t[R_{w,t+1}] and the collection of terms are not shown; the final line uses "=" rather than "≈"), item 4 (wording of the neglected terms), and items 5-10 on part 2. Item 10 now also concerns consistency with part 1, which uses E_t[R_{w,t+1}].
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** math review; formatting/translation (transcription of the student's revision into LaTeX)
+- **Grouped follow-up requests:** none

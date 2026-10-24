@@ -256,14 +256,14 @@ Terms of second order and above can be neglected. Then,
 \]
 If we plug in $M(F_{t+1}; \theta) = F_{t+1}^{-\gamma}$ with $F_{t+1} = R_{w,t+1}$, then
 \[
-  M_{t+1} = -\gamma\, \mathbb{E}_t[R_{w,t}]^{-\gamma-1} R_{w,t}
-  + (\gamma + 1)\, \mathbb{E}_t[R_{w,t}]^{-\gamma}.
+  M_{t+1} = -\gamma\, \mathbb{E}_t[R_{w,t+1}]^{-\gamma-1} R_{w,t+1}
+  + (\gamma + 1)\, \mathbb{E}_t[R_{w,t+1}]^{-\gamma}.
 \]
 Therefore,
 \[
-  a_t = (\gamma + 1)\, \mathbb{E}_t[R_{w,t}]^{-\gamma},
+  a_t = (\gamma + 1)\, \mathbb{E}_t[R_{w,t+1}]^{-\gamma},
   \qquad
-  b_t = -\gamma\, \mathbb{E}_t[R_{w,t}]^{-\gamma-1}.
+  b_t = \gamma\, \mathbb{E}_t[R_{w,t+1}]^{-\gamma-1}.
 \]
 
 \paragraph{Disadvantage relative to $M_{t+1} = R_{w,t+1}^{-\gamma}$.}
