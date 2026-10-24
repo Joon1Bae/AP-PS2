@@ -236,6 +236,55 @@ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to 
 % TODO (student)
 
 \section*{Question 4}
-% TODO (student)
+
+\subsection*{4a)}
+% Typeset by AI from the student's notes in spec/q4a.md (formatting/transcription; AI_INTERACTIONS.md).
+
+\paragraph{Conditionally linear CAPM.}
+Let $M_{t+1} = M(F_{t+1}; \theta)$. It can be approximated by a Taylor expansion around
+$\mathbb{E}_t[F_{t+1}]$:
+\[
+  M(F_{t+1}; \theta)
+  = \sum_{n=0}^{\infty} \frac{M^{(n)}\big(\mathbb{E}_t[F_{t+1}]; \theta\big)}{n!}
+    \big(F_{t+1} - \mathbb{E}_t[F_{t+1}]\big)^n .
+\]
+Terms of second order and above can be neglected. Then,
+\[
+  M(F_{t+1}; \theta)
+  \approx M\big(\mathbb{E}_t[F_{t+1}]; \theta\big)
+  + M'\big(\mathbb{E}_t[F_{t+1}]; \theta\big)\big(F_{t+1} - \mathbb{E}_t[F_{t+1}]\big).
+\]
+If we plug in $M(F_{t+1}; \theta) = F_{t+1}^{-\gamma}$ with $F_{t+1} = R_{w,t+1}$, then
+\[
+  M_{t+1} = -\gamma\, \mathbb{E}_t[R_{w,t}]^{-\gamma-1} R_{w,t}
+  + (\gamma + 1)\, \mathbb{E}_t[R_{w,t}]^{-\gamma}.
+\]
+Therefore,
+\[
+  a_t = (\gamma + 1)\, \mathbb{E}_t[R_{w,t}]^{-\gamma},
+  \qquad
+  b_t = -\gamma\, \mathbb{E}_t[R_{w,t}]^{-\gamma-1}.
+\]
+
+\paragraph{Disadvantage relative to $M_{t+1} = R_{w,t+1}^{-\gamma}$.}
+\begin{enumerate}
+  \item The original model, $M_{t+1} = R_{w,t+1}^{-\gamma}$, contains only the factor and the
+    parameter, so there is no concern about additional assumptions or time-varying coefficients.
+  \item After linearization, $a_t$ and $b_t$ become time-varying, so $\mathbb{E}[xR_j]$ can no
+    longer be written in the form $\mathbb{E}[b_t]'\,\mathrm{Cov}(F_t, xR_{j,t})$.
+  \item The time variation in $a_t$ and $b_t$ comes from $\mathbb{E}_t[R_{w,t+1}]$, as shown above.
+    This conditional expectation must be estimated, and the choice of how to estimate it (e.g.,
+    with a linear model or some other method) introduces estimation error. The model could be
+    wrong, or there could be estimation error even if the model is correct.
+  \item By imposing additional assumptions or a model on $a_t$ and $b_t$, they can be made
+    time-invariant. However, if that model is wrong or the assumptions are inconsistent with
+    reality, the estimates move further away from reality.
+  \item $\mathbb{E}_t[xR_{t+1}] = b_t'\,\mathrm{Cov}_t(F_{t+1}, xR_{t+1})$ holds, but from the
+    perspective of the unconditional implications used in GMM, it can be written as
+    $\mathbb{E}[xR_j] = \mathbb{E}\big[b_t'\,\mathrm{Cov}_t(F_{t+1}, xR_{j,t+1})\big]$.
+  \item But again, $b_t$ is determined by $\mathbb{E}_t[R_{w,t}]$. As in Problem Set 1, we already
+    checked that estimating the equity premium \emph{very well}, either in sample (IS) or out of
+    sample (OS), is really difficult.
+\end{enumerate}
 
 \end{document}
