@@ -15,9 +15,9 @@ M(F_{t+1}; \theta) ~= M(E_t[F_{t+1}]; \theta) + M'(E_t[F_{t+1}]; \theta) * (F_{t
 
 If we plugged in M(F_t+1; theta) = F_{t+1}^{-gamma} where F_{t+1} = R_{w, t+1}, then
 
-M_{t+1} = -\gamma * E_t[R_{w, t}]^{-\gamma -1} * R_{w, t} + (\gamma + 1) * E_t[R_{w, t}]^{-\gamma}
+M_{t+1} = -\gamma * E_t[R_{w, t+1}]^{-\gamma -1} * R_{w, t+1} + (\gamma + 1) * E_t[R_{w, t+1}]^{-\gamma}
 
-Therefore, a_t = (\gamma + 1) * E_t[R_{w, t}]^{-\gamma} and b_t = -\gamma * E_t[R_{w, t}]^{-\gamma -1}
+Therefore, a_t = (\gamma + 1) * E_t[R_{w, t+1}]^{-\gamma} and b_t = \gamma * E_t[R_{w, t+1}]^{-\gamma -1}
 
 # 2. Highlight a disadvantage of the M_{t+1} ~= a_{t} - b_{t} * R_{w, t+1} relative to the original M_{t+1} = R^{-gamma}_{w, t+1}
 
