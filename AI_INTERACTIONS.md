@@ -619,3 +619,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none beyond identifying the gaps above. No resolution was proposed.
 - **Type of assistance:** other: specification review (consistency and completeness)
 - **Grouped follow-up requests:** none
+- **Git commit after:** c4befaa5a35c3b9b0dbf8f3ae9b45248b34b2b13
