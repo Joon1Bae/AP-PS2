@@ -556,3 +556,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** empirical implementation; code debugging (pandas API fix)
 - **Grouped follow-up requests:** none
+- **Git commit after:** ae4ce5f3bc4171b0dac6acb389d441b4566a9612
