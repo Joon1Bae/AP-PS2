@@ -285,6 +285,25 @@ innocuous.
   \label{tab:q3b}
 \end{table}
 
+\FloatBarrier
+\subsection*{3c)}
+% Produced by src/q3c.py (specs: spec/q3c.md, spec/q34_common.md, spec/q2e_PS1.md).
+% Values: output/q3c_gamma_estimate.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3c_table.tex}
+  \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$ and
+    $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot (z_{t-1} \cdot xR_{w,t})] = 0$ with an identity weighting
+    matrix ($\hat{A} = \hat{G}'$). $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the
+    EQ Dataset (annual returns observed monthly); $z_{t-1} = \widehat{\mathbb{E}}^{OS}[xR_e]/\sigma^2_e$, where
+    $\widehat{\mathbb{E}}^{OS}[xR_e]$ is the Problem Set 1 (2e) out-of-sample forecast made twelve months
+    before $t$ (the forecast of $xR_{w,t}$) and $\sigma^2_e$ is the variance of $R_{e,t}$ over the sample.
+    Newey--West standard error in parentheses (Bartlett kernel, Newey--West (1994) automatic lag, rounded
+    down).}
+  \label{tab:q3c}
+\end{table}
+
 \section*{Question 4}
 
 \subsection*{4a)}

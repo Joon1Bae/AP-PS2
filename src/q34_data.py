@@ -6,7 +6,11 @@
   "Hi PRIOR" (momentum), in decimals, compounded to trailing 12-month gross returns
   R12_j,t = (1 + R_j,t) ... (1 + R_j,t-11); likewise R12_f,t from the monthly "RF".
   xR_j,t = R12_j,t - R12_f,t. Nominal returns (no deflation).
-- Common sample: 1928-06 to 2021-12.
+- Samples (item 6): Question 4 1928-06 to 2021-12; Question 3 1940-12 to 2021-12.
+- Instrument (item 7, spec/q2e_PS1.md): the PS1 2e out-of-sample forecast made at origin s,
+  E_OS_s[xR_e] = (G_s - 1) + G_s D_s/P_s, with G_s the mean of exp(dg_m) over m = 1927-12 ... s
+  and D_s/P_s = exp(dp_s); z_s = E_OS_s[xR_e] / sigma2_e. In the moment z_{t-1} xR_w,t the
+  instrument is the value from month t-12.
 """
 
 import numpy as np
@@ -20,16 +24,18 @@ from sdf import DATA
 FRENCH_START = pd.Period("1927-07", freq="M")
 SAMPLE_START = pd.Period("1928-06", freq="M")
 SAMPLE_END = pd.Period("2021-12", freq="M")
+Q3_SAMPLE_START = pd.Period("1940-12", freq="M")
+Z_LAG = 12  # months between the instrument date and the end month of the return it multiplies
 
 
 def load_eq() -> pd.DataFrame:
-    """R_w,t = exp(re_t) and xR_w,t = exp(re_t) - exp(rf_t) from the EQ Dataset, by month."""
+    """R_w,t = exp(re_t), xR_w,t = exp(re_t) - exp(rf_t), and dp, dg from the EQ Dataset, by month."""
     eq = pd.read_csv(DATA / "EQ Dataset.csv")
     eq.index = pd.PeriodIndex.from_fields(year=eq["YEAR"], month=eq["MONTH"], freq="M").rename("date")
-    if eq[["re", "rf"]].isna().any().any():
+    if eq[["re", "rf", "dp", "dg"]].isna().any().any():
         raise ValueError("Missing values in EQ Dataset.csv; the spec needs a rule for them.")
     r_w = np.exp(eq["re"])
-    return pd.DataFrame({"R_w": r_w, "xR_w": r_w - np.exp(eq["rf"])})
+    return pd.DataFrame({"R_w": r_w, "xR_w": r_w - np.exp(eq["rf"]), "dp": eq["dp"], "dg": eq["dg"]})
 
 
 def trailing_12m(monthly: pd.DataFrame) -> pd.DataFrame:
@@ -64,3 +70,30 @@ def load_q34_sample() -> tuple[pd.DataFrame, pd.Series]:
     if not months.equals(pd.period_range(SAMPLE_START, SAMPLE_END, freq="M")):
         raise ValueError("The common sample has gaps; the spec needs a rule for them.")
     return xr, eq.loc[months, "R_w"]
+
+
+def ps1_oos_forecast(eq: pd.DataFrame) -> pd.Series:
+    """E_OS_s[xR_e] = (G_s - 1) + G_s exp(dp_s), G_s = mean of exp(dg) from the first EQ month to s."""
+    g = np.exp(eq["dg"]).expanding().mean()
+    return (g - 1) + g * np.exp(eq["dp"])
+
+
+def load_q3_sample() -> pd.DataFrame:
+    """Question 3 data on 1940-12 to 2021-12: R_w, xR_w, and z_lag = z at month t-12.
+
+    z = E_OS[xR_e] / sigma2_e, with sigma2_e the variance of R_e = R_w over this sample
+    (1/(T-1) divisor, spec/q3c.md).
+    """
+    eq = load_eq()
+    if not eq.index.equals(pd.period_range(eq.index[0], eq.index[-1], freq="M")):
+        raise ValueError("The EQ data have missing months; the spec needs a rule for them.")
+    forecast_lag = ps1_oos_forecast(eq).shift(Z_LAG)  # value from month t-12, dated t
+    sample = eq.loc[Q3_SAMPLE_START:SAMPLE_END, ["R_w", "xR_w"]].copy()
+    if sample.index[0] != Q3_SAMPLE_START or sample.index[-1] != SAMPLE_END:
+        raise ValueError("The EQ data do not cover the Question 3 sample.")
+    sigma2_e = sample["R_w"].var(ddof=1)
+    sample["z_lag"] = forecast_lag.loc[sample.index] / sigma2_e
+    if sample["z_lag"].isna().any():
+        raise ValueError("The instrument is missing for some sample months.")
+    sample.attrs["sigma2_e"] = sigma2_e
+    return sample
