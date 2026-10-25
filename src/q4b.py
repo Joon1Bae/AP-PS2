@@ -9,7 +9,7 @@ Implements spec/q4b.md:
       u_22,t  = R_w,t - mu
   mu moment satisfied exactly (mu = mean R_w); b with identity weights on the pricing moments:
       d = Cov(F, xR) (dividing by T),   b = (d'd)^-1 d' E[xR].
-  This is A E[u] = 0 with A = [[-d', 0], [0', 1]] (2 x 22).
+  This is A E[u] = 0 with A = [[G_b', 0], [0', 1]] (2 x 22), G_b = dE[u_1..21]/db = -d at mu = mean R_w.
 - G = dE[u]/dtheta': dg_j/db = -E[(R_w - mu) xR_j], dg_j/dmu = b E[xR_j], dg_22/dmu = -1.
 - S: Newey-West, Bartlett kernel, NW (1994) automatic lag (see gmm.py).
 - aVar[theta] and aVar[E[eps]] from the A-form formulas; t_j = E[eps]_j / sqrt(aVar_jj);
@@ -51,7 +51,7 @@ def estimate(xr: pd.DataFrame, r_w: pd.Series) -> dict:
     g[:n, 1] = b * mean_x
     g[n, 1] = -1.0
     a = np.zeros((2, n + 1))
-    a[0, :n] = -d
+    a[0, :n] = g[:n, 0]  # G_b' (spec Sketch 3)
     a[1, n] = 1.0
 
     lag = nw94_lag(u)
