@@ -299,8 +299,9 @@ innocuous.
     EQ Dataset (annual returns observed monthly); $z_{t-1} = \widehat{\mathbb{E}}^{OS}[xR_e]/\sigma^2_e$, where
     $\widehat{\mathbb{E}}^{OS}[xR_e]$ is the Problem Set 1 (2e) out-of-sample forecast made twelve months
     before $t$ (the forecast of $xR_{w,t}$) and $\sigma^2_e$ is the variance of $R_{e,t}$ over the sample.
-    Newey--West standard error in parentheses (Bartlett kernel, Newey--West (1994) automatic lag, rounded
-    down).}
+    Standard error and $t$-statistics use Newey--West (Bartlett kernel, Newey--West (1994) automatic lag,
+    rounded down). $\chi^2$: test that the two pricing errors are jointly zero, using the Moore--Penrose
+    pseudo-inverse of their (rank-one) covariance matrix.}
   \label{tab:q3c}
 \end{table}
 
