@@ -970,3 +970,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** empirical implementation; code debugging (verification); formatting/translation (LaTeX table); other: methodological description drafted from the spec. The AI added this caption text: "Standard error and $t$-statistics use Newey--West (Bartlett kernel, Newey--West (1994) automatic lag, rounded down). $\chi^2$: test that the two pricing errors are jointly zero, using the Moore--Penrose pseudo-inverse of their (rank-one) covariance matrix." The AI also wrote the table labels ("Pricing error", "Market, $xR_{w,t}$", "Managed portfolio, $z_{t-1} \cdot xR_{w,t}$").
 - **Grouped follow-up requests:** none
+- **Git commit after:** b35e048d4914e306a9b55120973cc1b2d42cd66e
