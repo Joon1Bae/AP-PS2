@@ -28,3 +28,4 @@ xR_w,t = R_w,t - R_f,t where
 
 1. Refer to q34_common.md for the sample period (item 6) and the Newey-West lag selection (item 8).
 2. Ĝ: analytical derivative.
+3. Same as q4b (round down) Bartlett, equal weights, demeaned, lag rounded down -> lag 23 for Q3(b).
