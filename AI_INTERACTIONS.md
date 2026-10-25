@@ -1179,3 +1179,29 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; code debugging (verification); formatting/translation (LaTeX table); other: methodological description drafted from the spec. The AI wrote the Table 10 caption in `tex/ps2_solution.tex` under 4d), which describes the constant-R_f factor, λ-hat and its NW s.e., the time-series regressions and NW t-statistics, the undefined t-statistic for the factor, and the GRS formula with J = 20, K = 1 and the divisors. The AI also wrote the table labels.
 - **Grouped follow-up requests:** none
 - **Git commit after:** 4b8a91f4cade70ef651d29f4860dae4a427ba5c8
+
+## Interaction 49 — Q4(e) — 2026-10-25 17:46
+
+- **Problem set item:** Q4(e)
+- **Substantive prompt (verbatim):** "Could you take a look at q4e.md? This is a instruction for problem 4E. Please write an anlalysis code for it." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Implement the student's `spec/q4e.md`: Fama-MacBeth estimates of λ and α_j with Newey-West standard errors.
+- **Git commit before:** b307ddc9d0f37ce4f1821a32a2586ded4b574514 (includes the student's revision of `spec/q4e.md`)
+- **Assistance provided:**
+  - Reviewed the spec. It is complete: factor R_w,t (gross); full-sample first-pass OLS betas with an intercept; monthly cross-sectional OLS without an intercept; λ-hat and α-hat_j as time means; NW s.e. from regressions on a constant (lag per series). The spec's derivation in Sketch 0 is the student's and was not reviewed (not requested).
+  - New `src/q4e.py`:
+    - First-pass betas.
+    - λ_t = β'xR_t / β'β and α_j,t = xR_j,t - λ_t β_j for each month.
+    - NW standard errors via `nw_mean` from `src/q4d.py` (demeaned series, automatic lag, Bartlett, 1/T).
+    - Writes `output/q4e_estimates.csv`, `output/q4e_alphas.csv` (β, α, s.e., t, lag), `output/q4e_lambda_t.csv`, and `output/q4e_table.tex`.
+  - Results (1928-06 to 2021-12, T = 1123):
+    - λ-hat = 0.083213, s.e. 0.017931 (t = 4.64, lag 23).
+    - Largest |t(α)|: Lo PRIOR -7.76, PRIOR 2 -5.42, Hi PRIOR 5.24; xR_w: α = -0.0002, t = -0.03 (β = 0.997).
+  - Independent check (statsmodels OLS for each first-pass regression, a month-by-month cross-sectional loop, HAC on a constant with the same lags): betas within 7e-16, λ mean within 1e-16, λ s.e. identical, t(α) within 1e-14.
+  - Numerical observation reported to the student without interpretation: the α-hat_j coincide with the Q4(b) pricing errors (max abs difference printed by the verification command).
+  - The `.tex` was not changed (not requested); the table file is ready.
+- **Files inspected:** `spec/q4e.md`, `output/q4b_pricing_errors.csv` (comparison)
+- **Files directly modified by AI:** `src/q4e.py` (new), `output/q4e_estimates.csv`, `output/q4e_alphas.csv`, `output/q4e_lambda_t.csv`, `output/q4e_table.tex` (new, generated), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** Still open from Interaction 38: Q3(b) must be re-run on 1940-12 to 2021-12.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation; code debugging (verification)
+- **Grouped follow-up requests:** none
