@@ -14,6 +14,7 @@ Please calculate each variable as follows:
 z_t = Ê^OS_t[xR_e] / σ²_e where
 (1) Ê^OS_t[xR_e] is the out-of-sample forecast from Problem Set 1 (2e), computed exactly as in q2e_PS1.md: Ê^OS_t[xR_e] = (G_t − 1) + G_t · D_t/P_t
 (2) σ²_e is the unconditional variance of R_e,t over the sample
+    - Variance of R_e: σ²_e is computed with the 1/(T−1) divisor.
 
 # Sketch
 
@@ -28,6 +29,7 @@ z_t = Ê^OS_t[xR_e] / σ²_e where
    (the first-order condition of γ̂ = argmin Ê[ε(γ)]′ Ê[ε(γ)]).
 
 3. Estimate S (2 × 2) with Newey and West (1987, 1994) and use it in the asymptotic variance: aVar[γ̂] = (1/T)(AG)⁻¹ A S A′ (AG)⁻¹′ with A = G′.
+    - Newey–West: Bartlett kernel, moment series demeaned before building S, and the selected lag rounded down (same as Q3(b) and Q4(b)).
 
 # Output
 
