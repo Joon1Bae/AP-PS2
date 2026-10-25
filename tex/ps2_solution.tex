@@ -441,4 +441,26 @@ Therefore,
   \label{tab:q4c}
 \end{table}
 
+\FloatBarrier
+\subsection*{4d)}
+% Produced by src/q4d.py (specs: spec/q4d.md, spec/q4b.md, spec/q34_common.md). Values: output/q4d_estimates.csv,
+% output/q4d_alphas.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q4d_table.tex}
+  \caption{Time-series estimates of the linear beta pricing model implied by $M_t = a - b \cdot R_{w,t}$.
+    With $R_{f,t}$ treated as constant, $M_t = (a - b R_f) - b \cdot xR_{w,t}$, so the factor is the excess
+    return $F_t = xR_{w,t}$. $\hat{\lambda} = \widehat{\mathbb{E}}[F]$, with the Newey--West standard error
+    from a time-series regression of $F_t$ on a constant. $\hat{\alpha}_j$: intercept of the time-series
+    regression $xR_{j,t} = \alpha_j + \beta_j F_t + \varepsilon_{j,t}$, with Newey--West $t$-statistics
+    (Bartlett kernel, Newey--West (1994) automatic lag selected for each regression, rounded down); for the
+    factor itself $\hat{\alpha} = 0$ by construction and the $t$-statistic is undefined. GRS: Gibbons, Ross
+    and Shanken (1989) test that $\alpha_j = 0$ for the 20 decile portfolios,
+    $\frac{T-J-K}{J}\big(1 + \bar{F}'\hat{\Sigma}_F^{-1}\bar{F}\big)^{-1}\hat{\alpha}'\hat{\Sigma}_\varepsilon^{-1}\hat{\alpha}
+    \sim F(J, T-J-K)$ with $J = 20$, $K = 1$, $\hat{\Sigma}_\varepsilon$ dividing by $T - 2$ and
+    $\hat{\Sigma}_F$ by $T - 1$. Data and sample as in Table~\ref{tab:q4b}.}
+  \label{tab:q4d}
+\end{table}
+
 \end{document}
