@@ -46,6 +46,8 @@
 8. HAC standard errors: use Newey-West (1994) automatic lag selection for every
    Newey-West estimate in Questions 3 and 4.
     - With multiple moments, select a single lag from w'h_t with w = vector of ones (NW 1994 default).
+    - Details (same as q4b.md decision 5): Bartlett kernel; moment series demeaned before
+      building S; the selected lag is rounded down (e.g., m = 23.6 -> lag 23).
 
 9. E[R_w] in Question 4 (M_t = 1 - b(R_w,t - mu)):
     - Add the moment E[R_w,t - mu] = 0 and set it exactly to zero, so mu_hat = mean(R_w).

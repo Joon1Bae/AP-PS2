@@ -31,11 +31,20 @@ z_t = Ê^OS_t[xR_e] / σ²_e where
 3. Estimate S (2 × 2) with Newey and West (1987, 1994) and use it in the asymptotic variance: aVar[γ̂] = (1/T)(AG)⁻¹ A S A′ (AG)⁻¹′ with A = G′.
     - Newey–West: Bartlett kernel, moment series demeaned before building S, and the selected lag rounded down (same as Q3(b) and Q4(b)).
 
+4. Pricing errors and joint test (slides 2.8 and 2.10):
+   - Pricing errors: Ê[ε(γ̂)]_j for j = 1, 2 (1: xR_w,t; 2: the managed portfolio z_{t-1} · xR_w,t).
+   - aVar[Ê[ε(γ̂)]] = (1/T)[I − G(AG)⁻¹A] S [I − G(AG)⁻¹A]′ with A = G′,
+     using the same S as in Sketch 3.
+   - This 2 × 2 matrix has rank 1 (Q − K = 2 − 1), so it is singular.
+
 # Output
 
 1. The estimated value of γ.
 2. Its standard error, based on the Newey-West (1987, 1994) estimate of S.
-(Pricing errors and the χ² test are skipped for now.)
+3. The pricing errors Ê[ε]_j for the 2 moments.
+   Each one's t-stat, Ê[ε]_j / √aVar_jj.
+4. The χ² test on both moments jointly, using the Moore–Penrose pseudo-inverse
+   with 1 degree of freedom (size(J) − K = 2 − 1), and its p-value.
 
 # Additional Decisions
 
