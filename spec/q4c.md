@@ -30,6 +30,10 @@ Same as q4b.md: xR_w,t, the 20 portfolio excess returns, and the asset index
    A = [ Ĝ_b′ Ŵ  0 ]
        [ 0′      1 ]
    where Ŵ is the weighting matrix used to obtain that estimate.
+   - aVar[θ̂] = (1/T)(AG)⁻¹ A S A′ (AG)⁻¹′, with θ = (b, μ).
+   - Pricing errors: Ê[ε(θ̂)]_j for j = 1, ..., 21, evaluated at that estimate's b̂.
+   - aVar[Ê[ε]] = (1/T)[I − G(AG)⁻¹A] S [I − G(AG)⁻¹A]′, using the same S as for aVar[θ̂];
+     use its 21 × 21 pricing-moment block (rank 20) for the t-stats and the χ² test.
 
 # Output
 
@@ -51,9 +55,11 @@ and iterated. For each column:
    Ŵ = Ŝ⁻¹ (GLS), so no numerical optimization is needed. The slide 3.6 special case
    (b = Σ_F⁻¹E[F]) is not used: its conditions do not hold here (the factor R_w is not
    itself an excess return in xR, and Ŝ differs from Ĉov[xR]).
-4. Lag rule for the iterated estimate: select the lag once with the NW (1994) automatic rule
-   at b̂_1 and hold it fixed for all iterations (and for the sandwich S at the final b̂).
-   Reason: re-selecting the lag at every iteration can make b̂ oscillate between two values
-   (lag switching, e.g., 19 <-> 20).
+4. Lag rule for the iterated estimate: re-select the lag with the NW (1994) automatic rule
+   every time Ŝ is re-estimated (q34_common.md item 8). Report the lag at convergence and
+   check that b̂ converges (no oscillation from lag switching).
 5. S in the middle of the sandwich for 2 and 3: re-estimated at the final b̂ (as in q3d.md),
-   while A uses the Ŝ that served as the weighting matrix.
+   with its lag re-selected by the NW (1994) automatic rule, while A uses the Ŝ that served
+   as the weighting matrix.
+   - Two-step: the sandwich lag can differ from the weighting-matrix lag (e.g., 20 vs 22).
+   - Iterated: at convergence the sandwich S equals the last weighting Ŝ.

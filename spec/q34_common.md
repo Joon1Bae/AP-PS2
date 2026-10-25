@@ -63,5 +63,5 @@
     The iterated procedure is:
     - Start from the Question 4b estimate (W = I).
     - Re-estimate S at the current b, set W = S_hat^{-1} (21 x 21 pricing-error block), and re-estimate b.
-    - Repeat until b converges, holding the Newey-West lag fixed at its value selected at the
-      Question 4b estimate (q4c.md decision 4).
+    - Repeat until b converges, re-selecting the Newey-West lag automatically each time S is
+      re-estimated (q4c.md decision 4).
