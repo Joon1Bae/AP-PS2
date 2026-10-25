@@ -58,8 +58,10 @@
     - Standard errors and pricing-error tests use the full 22-moment GMM sandwich,
       so they account for estimating mu.
 
-10. Efficient GMM (Question 4c): iterated GMM.
+10. Efficient GMM (Question 4c): report two-step and iterated estimates, both computed with the
+    closed-form GLS expression (details in q4c.md).
+    The iterated procedure is:
     - Start from the Question 4b estimate (W = I).
     - Re-estimate S at the current b, set W = S_hat^{-1} (21 x 21 pricing-error block), and re-estimate b.
-    - Repeat until b converges.
-    - Also report the closed-form estimate and compare it with the iterated efficient GMM estimate.
+    - Repeat until b converges, holding the Newey-West lag fixed at its value selected at the
+      Question 4b estimate (q4c.md decision 4).
