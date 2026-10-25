@@ -305,6 +305,27 @@ innocuous.
   \label{tab:q3c}
 \end{table}
 
+\FloatBarrier
+\subsection*{3d)}
+% Produced by src/q3d.py (specs: spec/q3d.md, spec/q3c.md, spec/q34_common.md, spec/q2e_PS1.md).
+% Values: output/q3d_gamma_estimate.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3d_table.tex}
+  \caption{Two-step GMM estimate of $\gamma$ from the same two moment conditions as in 3c),
+    $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$ and
+    $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot (z_{t-1} \cdot xR_{w,t})] = 0$. Step 1 is the 3c) estimate
+    ($\hat{W} = I$); step 2 uses $\hat{W} = \hat{S}_1^{-1}$, with $\hat{S}_1$ the Newey--West estimate at the
+    step-1 estimate, and is not iterated further. Standard error, $t$-statistics and $\chi^2$ use the general
+    sandwich formulas with $\hat{A} = \hat{G}'\hat{S}_1^{-1}$, $\hat{G}$ at the step-2 estimate, and
+    $\hat{S}_2$, the Newey--West estimate re-computed at the step-2 estimate (Bartlett kernel,
+    Newey--West (1994) automatic lag, rounded down). $\chi^2$: test that the two pricing errors are jointly
+    zero, using the Moore--Penrose pseudo-inverse of their (rank-one) covariance matrix. Data, instrument
+    and sample as in 3c).}
+  \label{tab:q3d}
+\end{table}
+
 \section*{Question 4}
 
 \subsection*{4a)}
