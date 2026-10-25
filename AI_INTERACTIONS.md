@@ -1178,3 +1178,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** empirical implementation; code debugging (verification); formatting/translation (LaTeX table); other: methodological description drafted from the spec. The AI wrote the Table 10 caption in `tex/ps2_solution.tex` under 4d), which describes the constant-R_f factor, λ-hat and its NW s.e., the time-series regressions and NW t-statistics, the undefined t-statistic for the factor, and the GRS formula with J = 20, K = 1 and the divisors. The AI also wrote the table labels.
 - **Grouped follow-up requests:** none
+- **Git commit after:** 4b8a91f4cade70ef651d29f4860dae4a427ba5c8
