@@ -48,6 +48,7 @@
     - With multiple moments, select a single lag from w'h_t with w = vector of ones (NW 1994 default).
     - Details (same as q4b.md decision 5): Bartlett kernel; moment series demeaned before
       building S; the selected lag is rounded down (e.g., m = 23.6 -> lag 23).
+    - Divisor: Ω̂_ℓ = (1/T) Σ_{t=ℓ+1}^{T} (ε_t − ε̄)(ε_{t−ℓ} − ε̄)′, i.e., 1/T as in the original Newey-West (1987) definition (not 1/(T − ℓ) from Problem Set 1, footnote 3).
 
 9. E[R_w] in Question 4 (M_t = 1 - b(R_w,t - mu)):
     - Add the moment E[R_w,t - mu] = 0 and set it exactly to zero, so mu_hat = mean(R_w).
