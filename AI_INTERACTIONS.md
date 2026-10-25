@@ -1113,3 +1113,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none (the observation in item 3 is a factual result with no recommendation)
 - **Type of assistance:** other: specification review (student decision recorded; numerical check of whether the open choices matter)
 - **Grouped follow-up requests:** none
+- **Git commit after:** 5b190dd9fa9140561d5008879a18764b4548ef84
