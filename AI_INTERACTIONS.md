@@ -690,3 +690,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** The explanation of why the E[R_w] treatment affects inference, and the correction about when b-hat is unchanged. No option was recommended.
 - **Type of assistance:** other: specification review (student decisions recorded; explanation of an econometric consequence; correction of the AI's earlier statement)
 - **Grouped follow-up requests:** none
+- **Git commit after:** 941f7b4fc8bdabd59d64f0959ca88b9bd6b37833
