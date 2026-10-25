@@ -233,7 +233,117 @@ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to 
 \end{table}
 
 \section*{Question 3}
-% TODO (student)
+
+\subsection*{3a)}
+% Typeset by AI from the student's solution in src/q3a.md (formatting/transcription; AI_INTERACTIONS.md).
+
+From the maximization problem in Equation (3.2),
+\[
+  \varpi^*_t = \arg\max_{\varpi_t} \mathbb{E}_t\big[U(W_{t+1})\big]
+  \quad \text{s.t.} \quad W_{t+1} = W_t \cdot \big(R_{f,t+1} + \varpi_t' xR_{t+1}\big),
+\]
+where $R_{w,t+1} = R_{f,t+1} + \varpi^{*\prime}_t xR_{t+1}$ is the return on the optimal portfolio,
+so that $W_{t+1} = W_t \cdot R_{w,t+1}$.
+
+The first-order condition is
+\[
+  \frac{\partial\, \mathbb{E}_t[U(W_{t+1})]}{\partial \varpi_t}
+  = \mathbb{E}_t\big[U'(W_{t+1}) \cdot W_t \cdot xR_{t+1}\big] = \mathbf{0}
+  \quad\Longleftrightarrow\quad
+  \mathbb{E}_t\big[U'(W_{t+1}) \cdot xR_{t+1}\big] = \mathbf{0}.
+\]
+Since $W_t$ is the investor's wealth at time $t$, it is positive ($W_t > 0$) and known at time $t$,
+so it can be taken outside $\mathbb{E}_t[\cdot]$ and divided out.
+
+Because $U'(W_{t+1}) = W_{t+1}^{-\gamma} = (W_t \cdot R_{w,t+1})^{-\gamma}$,
+\[
+  \mathbb{E}_t\big[(W_t \cdot R_{w,t+1})^{-\gamma} \cdot xR_{t+1}\big] = \mathbf{0}
+  \;\Longleftrightarrow\;
+  W_t^{-\gamma}\, \mathbb{E}_t\big[R_{w,t+1}^{-\gamma} \cdot xR_{t+1}\big] = \mathbf{0}
+  \;\Longleftrightarrow\;
+  \mathbb{E}_t\big[R_{w,t+1}^{-\gamma} \cdot xR_{t+1}\big] = \mathbf{0},
+\]
+where the last step uses the same argument for $W_t^{-\gamma} > 0$.
+
+Therefore, $M_{t+1} = R_{w,t+1}^{-\gamma}$ prices the vector of excess returns. Because an SDF that
+prices only excess returns still does so after multiplication by any positive factor (here,
+$W_t^{-\gamma}$), the scale of $M$ is not identified; a normalization is therefore needed and is
+innocuous.
+
+\FloatBarrier
+\subsection*{3b)}
+% Produced by src/q3b.py (specs: spec/q3b.md, spec/q34_common.md). Values: output/q3b_gamma_estimate.csv.
+% Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3b_table.tex}
+  \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$,
+    with $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset
+    (annual returns observed monthly). Newey--West standard error in parentheses (Bartlett kernel,
+    Newey--West (1994) automatic lag, rounded down).}
+  \label{tab:q3b}
+\end{table}
+
+\FloatBarrier
+\subsection*{3c)}
+% Produced by src/q3c.py (specs: spec/q3c.md, spec/q34_common.md, spec/q2e_PS1.md).
+% Values: output/q3c_gamma_estimate.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3c_table.tex}
+  \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$ and
+    $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot (z_{t-1} \cdot xR_{w,t})] = 0$ with an identity weighting
+    matrix ($\hat{A} = \hat{G}'$). $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the
+    EQ Dataset (annual returns observed monthly); $z_{t-1} = \widehat{\mathbb{E}}^{OS}[xR_e]/\sigma^2_e$, where
+    $\widehat{\mathbb{E}}^{OS}[xR_e]$ is the Problem Set 1 (2e) out-of-sample forecast made twelve months
+    before $t$ (the forecast of $xR_{w,t}$) and $\sigma^2_e$ is the variance of $R_{e,t}$ over the sample.
+    Standard error and $t$-statistics use Newey--West (Bartlett kernel, Newey--West (1994) automatic lag,
+    rounded down). $\chi^2$: test that the two pricing errors are jointly zero, using the Moore--Penrose
+    pseudo-inverse of their (rank-one) covariance matrix.}
+  \label{tab:q3c}
+\end{table}
+
+\FloatBarrier
+\subsection*{3d)}
+% Produced by src/q3d.py (specs: spec/q3d.md, spec/q3c.md, spec/q34_common.md, spec/q2e_PS1.md).
+% Values: output/q3d_gamma_estimate.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3d_table.tex}
+  \caption{Two-step GMM estimate of $\gamma$ from the same two moment conditions as in 3c),
+    $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$ and
+    $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot (z_{t-1} \cdot xR_{w,t})] = 0$. Step 1 is the 3c) estimate
+    ($\hat{W} = I$); step 2 uses $\hat{W} = \hat{S}_1^{-1}$, with $\hat{S}_1$ the Newey--West estimate at the
+    step-1 estimate, and is not iterated further. Standard error, $t$-statistics and $\chi^2$ use the general
+    sandwich formulas with $\hat{A} = \hat{G}'\hat{S}_1^{-1}$, $\hat{G}$ at the step-2 estimate, and
+    $\hat{S}_2$, the Newey--West estimate re-computed at the step-2 estimate (Bartlett kernel,
+    Newey--West (1994) automatic lag, rounded down). $\chi^2$: test that the two pricing errors are jointly
+    zero, using the Moore--Penrose pseudo-inverse of their (rank-one) covariance matrix. Data, instrument
+    and sample as in 3c).}
+  \label{tab:q3d}
+\end{table}
+
+\FloatBarrier
+\subsection*{3e)}
+% Produced by src/q3e.py (specs: spec/q3e.md, spec/q34_common.md). Values: output/q3e_gamma_estimate.csv,
+% output/q3e_pricing_errors.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3e_table.tex}
+  \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{j,t}] = 0$,
+    $j = 1, \dots, 21$, with an identity weighting matrix ($\hat{A} = \hat{G}'$). $xR$ stacks trailing
+    12-month excess returns of the 20 book-to-market and momentum decile portfolios (value-weighted,
+    nominal, over the 12-month compounded risk-free rate) and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the
+    EQ Dataset, in decimals, observed monthly; $R_{w,t} = e^{r_{e,t}}$. Standard error and $t$-statistics use
+    Newey--West (Bartlett kernel, Newey--West (1994) automatic lag, rounded down). $\chi^2$: test that the
+    21 pricing errors are jointly zero, using the Moore--Penrose pseudo-inverse of their (rank-20)
+    covariance matrix.}
+  \label{tab:q3e}
+\end{table}
 
 \section*{Question 4}
 
@@ -289,21 +399,68 @@ Therefore,
 
 \FloatBarrier
 \subsection*{4b)}
-% Produced by src/q4b.py (spec: spec/q4b.md). Values: output/q4b_b_estimate.csv.
-% Table layout and caption drafted by AI (AI_INTERACTIONS.md).
-
-\textit{[Standard error, pricing errors and $\chi^2$ test will be added]}
+% Produced by src/q4b.py (specs: spec/q4b.md, spec/q34_common.md). Values: output/q4b_b_estimate.csv,
+% output/q4b_pricing_errors.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
 
 \begin{table}[htbp]
   \centering
-  \input{../output/q4b_b_table.tex}
-  \caption{GMM estimate of $b$ in $M_t = 1 - b\,(R_{w,t} - \mathbb{E}[R_w])$ from
-    $\widehat{\mathbb{E}}[M_t \cdot xR_t] = 0$ with an identity weighting matrix:
-    $\hat{b} = (\hat{d}'\hat{d})^{-1}\hat{d}'\,\widehat{\mathbb{E}}[xR]$ with
-    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$ (dividing by $T$). $xR$ stacks the monthly excess
-    returns of the 20 book-to-market and momentum decile portfolios and
-    $xR_w = e^{r_e} - e^{r_f}$ from the EQ Dataset (decimal units); $R_w = e^{r_e}$.}
-  \label{tab:q4b_b}
+  \input{../output/q4b_table.tex}
+  \caption{First-stage GMM estimate of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$, $\mu = \mathbb{E}[R_w]$,
+    from $\widehat{\mathbb{E}}[M_t \cdot xR_t] = 0$ with identity weights on the 21 pricing moments
+    ($\hat{b} = (\hat{d}'\hat{d})^{-1}\hat{d}'\,\widehat{\mathbb{E}}[xR]$,
+    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$) and the moment $\mathbb{E}[R_w - \mu] = 0$ satisfied
+    exactly. $xR$ stacks trailing 12-month excess returns of the 20 book-to-market and momentum decile
+    portfolios and $xR_w = e^{r_e} - e^{r_f}$ (EQ Dataset), in decimals, observed monthly; $R_w = e^{r_e}$.
+    Standard errors and $t$-statistics use Newey--West (Bartlett kernel, Newey--West (1994) automatic lag)
+    and account for the estimation of $\mu$. $\chi^2$: test that the 21 pricing errors are jointly zero,
+    using the Moore--Penrose pseudo-inverse of their covariance matrix.}
+  \label{tab:q4b}
+\end{table}
+
+\FloatBarrier
+\subsection*{4c)}
+% Produced by src/q4c.py (specs: spec/q4c.md, spec/q4b.md, spec/q34_common.md). Values: output/q4c_estimates.csv,
+% output/q4c_pricing_errors.csv, output/q4c_iterations.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \input{../output/q4c_table.tex}
+  \caption{Efficient GMM estimates of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$, with $\hat{\mu} = \overline{R}_w$
+    (moment $\mathbb{E}[R_w - \mu] = 0$ satisfied exactly) and the closed form
+    $\hat{b}(\hat{W}) = (\hat{d}'\hat{W}\hat{d})^{-1}\hat{d}'\hat{W}\,\widehat{\mathbb{E}}[xR]$,
+    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$, so no numerical optimization is needed. Q4(b): $\hat{W} = I$
+    (Table~\ref{tab:q4b}, for reference). Two-step: $\hat{W} = \hat{S}^{-1}$, with $\hat{S}$ the 21$\times$21
+    pricing-moment block of the Newey--West estimate at the Q4(b) estimate. Iterated: $\hat{S}$ and $\hat{b}$
+    updated until $|\hat{b}_{h+1} - \hat{b}_h| < 10^{-10}$. Standard errors (in parentheses), $t$-statistics
+    and $\chi^2$ use the general sandwich formulas with $\hat{A} = [\hat{G}_b'\hat{W},\, 0;\ 0',\, 1]$ and
+    $\hat{S}$ re-estimated at each estimate, so they account for the estimation of $\mu$. Newey--West: Bartlett
+    kernel, Newey--West (1994) automatic lag (re-selected each time $\hat{S}$ is estimated), rounded down.
+    $\chi^2$: test that the 21 pricing errors are jointly zero (Moore--Penrose pseudo-inverse). Data and
+    sample as in Table~\ref{tab:q4b}.}
+  \label{tab:q4c}
+\end{table}
+
+\FloatBarrier
+\subsection*{4d)}
+% Produced by src/q4d.py (specs: spec/q4d.md, spec/q4b.md, spec/q34_common.md). Values: output/q4d_estimates.csv,
+% output/q4d_alphas.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q4d_table.tex}
+  \caption{Time-series estimates of the linear beta pricing model implied by $M_t = a - b \cdot R_{w,t}$.
+    With $R_{f,t}$ treated as constant, $M_t = (a - b R_f) - b \cdot xR_{w,t}$, so the factor is the excess
+    return $F_t = xR_{w,t}$. $\hat{\lambda} = \widehat{\mathbb{E}}[F]$, with the Newey--West standard error
+    from a time-series regression of $F_t$ on a constant. $\hat{\alpha}_j$: intercept of the time-series
+    regression $xR_{j,t} = \alpha_j + \beta_j F_t + \varepsilon_{j,t}$, with Newey--West $t$-statistics
+    (Bartlett kernel, Newey--West (1994) automatic lag selected for each regression, rounded down); for the
+    factor itself $\hat{\alpha} = 0$ by construction and the $t$-statistic is undefined. GRS: Gibbons, Ross
+    and Shanken (1989) test that $\alpha_j = 0$ for the 20 decile portfolios,
+    $\frac{T-J-K}{J}\big(1 + \bar{F}'\hat{\Sigma}_F^{-1}\bar{F}\big)^{-1}\hat{\alpha}'\hat{\Sigma}_\varepsilon^{-1}\hat{\alpha}
+    \sim F(J, T-J-K)$ with $J = 20$, $K = 1$, $\hat{\Sigma}_\varepsilon$ dividing by $T - 2$ and
+    $\hat{\Sigma}_F$ by $T - 1$. Data and sample as in Table~\ref{tab:q4b}.}
+  \label{tab:q4d}
 \end{table}
 
 \end{document}

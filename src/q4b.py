@@ -1,97 +1,143 @@
-"""Q4(b): first-stage GMM (W = I) estimate of b in M_t = 1 - b (R_w,t - E[R_w]).
+"""Q4(b): first-stage GMM estimate of b in M_t = 1 - b (R_w,t - E[R_w]).
 
-Implements spec/q4b.md (point estimate of b only; standard errors, pricing errors and the
-chi-squared test are not specified yet):
-- j = 1..20: monthly value-weighted "Lo 10" ... "Hi 10" and "Lo PRIOR" ... "Hi PRIOR" excess
-  returns over RF from F-F_Research_Data_Factors.csv, in decimal units (as in Q2).
-- j = 21: xR_w,t = R_w,t - R_f,t with R_w,t = exp(re_t), R_f,t = exp(rf_t) from the EQ Dataset
-  (annual returns observed monthly), paired with the monthly portfolio returns of the same
-  month t (Additional Decision 1).
-- Sample: months in which all 21 excess returns and R_w are available, Dec 1927 - Dec 2021.
-- Estimator (no intercept), with F = R_w and Cov dividing by T:
-      d = Cov(F, xR),   b = (d'd)^-1 d' E[xR].
+Implements spec/q4b.md:
+- Data: the 21 excess returns of spec/q34_common.md, Jun 1928 - Dec 2021: j = 1..20 trailing
+  12-month BE/ME and momentum decile excess returns (French data, decimals), j = 21
+  xR_w = exp(re) - exp(rf); F = R_w = exp(re) (EQ Dataset).
+- Parameters theta = (b, mu), mu = E[R_w]. Moments (22):
+      u_j,t   = (1 - b (R_w,t - mu)) xR_j,t   j = 1..21 (pricing moments)
+      u_22,t  = R_w,t - mu
+  mu moment satisfied exactly (mu = mean R_w); b with identity weights on the pricing moments:
+      d = Cov(F, xR) (dividing by T),   b = (d'd)^-1 d' E[xR].
+  This is A E[u] = 0 with A = [[G_b', 0], [0', 1]] (2 x 22), G_b = dE[u_1..21]/db = -d at mu = mean R_w.
+- G = dE[u]/dtheta': dg_j/db = -E[(R_w - mu) xR_j], dg_j/dmu = b E[xR_j], dg_22/dmu = -1.
+- S: Newey-West, Bartlett kernel, NW (1994) automatic lag (see gmm.py).
+- aVar[theta] and aVar[E[eps]] from the A-form formulas; t_j = E[eps]_j / sqrt(aVar_jj);
+  chi-squared test on all 21 pricing moments: E[eps]' aVar^+ E[eps] (Moore-Penrose
+  pseudo-inverse), 20 degrees of freedom.
 
 Outputs (output/):
-- q4b_b_estimate.csv   b and the sample it was estimated on
-- q4b_b_table.tex      the same as a LaTeX tabular (input by tex/ps2_solution.tex); the standard
-                       error is a placeholder until the spec defines it
+- q4b_b_estimate.csv     b, its standard error, mu, the NW lag, chi2 statistic and p-value
+- q4b_pricing_errors.csv pricing error and t-statistic of each of the 21 pricing moments
+- q4b_table.tex          the same as a LaTeX tabular (input by tex/ps2_solution.tex)
 
 Run from the repository root:  uv run python src/q4b.py
 """
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
-from q2a import load_bm_excess_returns
-from q2b import load_mom_excess_returns
-from sdf import DATA, OUTPUT
+from gmm import gmm_avar, newey_west_s, nw94_lag
+from q34_data import load_q34_sample
+from sdf import OUTPUT
 
-
-def load_eq() -> pd.DataFrame:
-    """R_w,t = exp(re_t) and xR_w,t = exp(re_t) - exp(rf_t) from the EQ Dataset, by month."""
-    eq = pd.read_csv(DATA / "EQ Dataset.csv")
-    eq.index = pd.PeriodIndex.from_fields(year=eq["YEAR"], month=eq["MONTH"], freq="M").rename("date")
-    if eq[["re", "rf"]].isna().any().any():
-        raise ValueError("Missing values in EQ Dataset.csv; the spec needs a rule for them.")
-    r_w = np.exp(eq["re"])
-    return pd.DataFrame({"R_w": r_w, "xR_w": r_w - np.exp(eq["rf"])})
+CHI2_DF = 20  # spec: 21 pricing moments - 1
 
 
-def estimate_b(xr: pd.DataFrame, f: pd.Series) -> float:
-    """b = (d'd)^-1 d' E[xR] with d_j = 1/T sum_t (F_t - Fbar)(xR_j,t - xRbar_j)."""
+def estimate(xr: pd.DataFrame, r_w: pd.Series) -> dict:
     x = xr.to_numpy()
-    f = f.to_numpy()
-    d = ((f - f.mean())[:, None] * (x - x.mean(axis=0))).mean(axis=0)
-    return float(d @ x.mean(axis=0) / (d @ d))
+    f = r_w.to_numpy()
+    t, n = x.shape
+
+    mu = f.mean()
+    mean_x = x.mean(axis=0)
+    d = ((f - mu)[:, None] * (x - mean_x)).mean(axis=0)
+    b = d @ mean_x / (d @ d)
+
+    u = np.column_stack([(1 - b * (f - mu))[:, None] * x, f - mu])
+    g = np.zeros((n + 1, 2))
+    g[:n, 0] = -((f - mu)[:, None] * x).mean(axis=0)
+    g[:n, 1] = b * mean_x
+    g[n, 1] = -1.0
+    a = np.zeros((2, n + 1))
+    a[0, :n] = g[:n, 0]  # G_b' (spec Sketch 3)
+    a[1, n] = 1.0
+
+    lag = nw94_lag(u)
+    s = newey_west_s(u, lag)
+    avar_theta, avar_eps = gmm_avar(a, g, s, t)
+
+    eps = u.mean(axis=0)[:n]
+    avar_p = avar_eps[:n, :n]
+    chi2 = eps @ np.linalg.pinv(avar_p, hermitian=True) @ eps
+    return {
+        "b": b, "se_b": np.sqrt(avar_theta[0, 0]), "mu": mu, "lag": lag, "T": t,
+        "eps": eps, "t_eps": eps / np.sqrt(np.diag(avar_p)),
+        "chi2": chi2, "p_chi2": stats.chi2.sf(chi2, CHI2_DF),
+        "eig_avar_p": np.linalg.eigvalsh(avar_p),
+    }
 
 
-def latex_table(b: float, months: pd.PeriodIndex) -> str:
-    """booktabs tabular: b, a placeholder row for its standard error, and the sample."""
+def fmt(value: float, digits: int) -> str:
+    """Fixed decimals with a typeset minus sign; a value that rounds to zero has no sign."""
+    text = f"{value:.{digits}f}"
+    if float(text) == 0:
+        return text.lstrip("-")
+    return text.replace("-", "$-$")
+
+
+def latex_table(res: dict, labels: list[str], months: pd.PeriodIndex) -> str:
+    """booktabs tabular: b and s.e.; pricing error and t-stat per moment; chi2 test; sample."""
     start, end = (m.strftime("%b %Y") for m in (months[0], months[-1]))
-    return "\n".join([
+    lines = [
         "% Generated by src/q4b.py -- do not edit by hand.",
-        r"\begin{tabular}{lc}",
+        r"\begin{tabular}{lcc}",
         r"\toprule",
-        r" & GMM, $W = I$ \\",
+        r" & Estimate & s.e. \\",
         r"\midrule",
-        rf"$\hat{{b}}$ & {b:.3f} \\",
-        r" & \textit{[s.e.\ to be added]} \\",
+        rf"$\hat{{b}}$ & {fmt(res['b'], 3)} & {fmt(res['se_b'], 3)} \\",
         r"\midrule",
-        r"Moment conditions & 21 \\",
-        rf"Sample & {start} -- {end} \\",
-        rf"$T$ (months) & {len(months)} \\",
+        r" & $\widehat{\mathbb{E}}[\epsilon_j]$ & $t$-stat \\",
+        r"\midrule",
+    ]
+    panels = [
+        (r"\textit{Book-to-market deciles}", range(0, 10), {0: "1 (Lo 10)", 9: "10 (Hi 10)"}),
+        (r"\textit{Momentum deciles}", range(10, 20), {10: "1 (Lo PRIOR)", 19: "10 (Hi PRIOR)"}),
+        (r"\textit{Market}", range(20, 21), {20: "$xR_w$"}),
+    ]
+    for i, (title, rows, names) in enumerate(panels):
+        if i:
+            lines.append(r"\addlinespace")
+        lines.append(rf"\multicolumn{{3}}{{l}}{{{title}}} \\")
+        for k in rows:
+            label = names.get(k, str(k % 10 + 1))
+            lines.append(rf"\quad {label} & {fmt(res['eps'][k], 4)} & {fmt(res['t_eps'][k], 2)} \\")
+    lines += [
+        r"\midrule",
+        rf"$\chi^2({CHI2_DF})$ & {fmt(res['chi2'], 2)} & \\",
+        rf"$p$-value & {'$<$0.001' if res['p_chi2'] < 0.001 else fmt(res['p_chi2'], 3)} & \\",
+        rf"Newey--West lag & {res['lag']} & \\",
+        rf"Sample & \multicolumn{{2}}{{c}}{{{start} -- {end} ($T = {res['T']}$)}} \\",
         r"\bottomrule",
         r"\end{tabular}",
         "",
-    ])
+    ]
+    return "\n".join(lines)
 
 
 def main() -> None:
-    xr_bm = load_bm_excess_returns()
-    xr_mom = load_mom_excess_returns()
-    eq = load_eq()
-
-    # Common months of all 21 excess returns and R_w (Additional Decision 2).
-    months = xr_bm.index.intersection(xr_mom.index).intersection(eq.index)
-    xr = pd.concat([xr_bm.loc[months], xr_mom.loc[months], eq.loc[months, ["xR_w"]]], axis=1)
-    r_w = eq.loc[months, "R_w"]
-    if not months.equals(pd.period_range(months[0], months[-1], freq="M")):
-        raise ValueError("The common sample has gaps; the spec needs a rule for them.")
-
-    b = estimate_b(xr, r_w)
+    xr, r_w = load_q34_sample()
+    res = estimate(xr, r_w)
 
     OUTPUT.mkdir(exist_ok=True)
+    pd.DataFrame([{
+        "b": res["b"], "se_b": res["se_b"], "mu": res["mu"], "nw_lag": res["lag"],
+        "chi2": res["chi2"], "chi2_df": CHI2_DF, "p_value": res["p_chi2"],
+        "sample_start": str(xr.index[0]), "sample_end": str(xr.index[-1]), "T": res["T"],
+    }]).to_csv(OUTPUT / "q4b_b_estimate.csv", index=False, encoding="utf-8")
     pd.DataFrame({
-        "parameter": ["b"],
-        "estimate": [b],
-        "sample_start": [str(months[0])],
-        "sample_end": [str(months[-1])],
-        "T": [len(months)],
-    }).to_csv(OUTPUT / "q4b_b_estimate.csv", index=False, encoding="utf-8")
-    (OUTPUT / "q4b_b_table.tex").write_text(latex_table(b, months), encoding="utf-8")
+        "j": range(1, 22), "asset": list(xr.columns),
+        "pricing_error": res["eps"], "t_stat": res["t_eps"],
+    }).to_csv(OUTPUT / "q4b_pricing_errors.csv", index=False, encoding="utf-8")
+    (OUTPUT / "q4b_table.tex").write_text(latex_table(res, list(xr.columns), xr.index), encoding="utf-8")
 
-    print(f"Sample: {months[0]} to {months[-1]} (T = {len(months)} months, N = {xr.shape[1]} assets)")
-    print(f"b = {b:.6f}")
+    print(f"Sample: {xr.index[0]} to {xr.index[-1]} (T = {res['T']} months, N = {xr.shape[1]} assets)")
+    print(f"b = {res['b']:.6f}  se = {res['se_b']:.6f}  mu = {res['mu']:.6f}  NW lag = {res['lag']}")
+    print(f"chi2({CHI2_DF}) = {res['chi2']:.4f}  p = {res['p_chi2']:.4g}")
+    print("Eigenvalues of aVar[E[eps]] (pricing block), smallest 3:", res["eig_avar_p"][:3])
+    for name, e, tt in zip(xr.columns, res["eps"], res["t_eps"]):
+        print(f"  {name:10s} {e: .5f}  t = {tt: .2f}")
 
 
 if __name__ == "__main__":
