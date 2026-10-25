@@ -867,3 +867,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** empirical implementation; formatting/translation (LaTeX table layout); other: methodological description drafted from the spec. The AI wrote this caption: "GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$, with $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset (annual returns observed monthly). Newey--West standard error in parentheses (Bartlett kernel, Newey--West (1994) automatic lag, rounded down)." The AI also wrote the table labels.
 - **Grouped follow-up requests:** none
+- **Git commit after:** f3813a16a41da54c0edc4cecb57717deedd6f9d7
