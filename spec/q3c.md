@@ -27,8 +27,7 @@ z_t = Ê^OS_t[xR_e] / σ²_e where
    Ĝ = Ê[∂γ ε(γ)] (2 × 1) evaluated at γ̂
    (the first-order condition of γ̂ = argmin Ê[ε(γ)]′ Ê[ε(γ)]).
 
-3. Estimate S (2 × 2) with Newey and West (1987, 1994) and use it in the asymptotic variance:
-   aVar[γ̂] = (1/T)(AG)⁻¹ A S A′ (AG)⁻¹′ with A = G′.
+3. Estimate S (2 × 2) with Newey and West (1987, 1994) and use it in the asymptotic variance: aVar[γ̂] = (1/T)(AG)⁻¹ A S A′ (AG)⁻¹′ with A = G′.
 
 # Output
 
