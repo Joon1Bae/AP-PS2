@@ -738,3 +738,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** other: specification review
 - **Grouped follow-up requests:** none
+- **Git commit after:** ddc4207fcacbc54854ffdf5bd426e61759232121
