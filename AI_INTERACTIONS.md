@@ -645,3 +645,22 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** other: specification review (student decisions recorded; remaining gaps identified)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 1d14746f01661e0fd37b52ffc57eaae8d583296d
+
+## Interaction 28 — Q3, Q4 (data alignment) — 2026-10-24 20:06
+
+- **Problem set item:** Q3 and Q4 (shared data alignment; Q4(b))
+- **Substantive prompt (verbatim):** "Now all good?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review the student's revision of `spec/q34_common.md` against the open items of Interactions 26-27, and check `spec/q4b.md`.
+- **Git commit before:** 8a291b9e484cf9c786585293c3de2dc78456b58d (includes the student's revision of `spec/q34_common.md`; `spec/q4b.md` is unchanged)
+- **Assistance provided:**
+  - Specification review only; no code or spec changed.
+  - Resolved in `spec/q34_common.md`: item 6 (Jun 1928 start for all of Q3, including Q3(b)-(d)); new item 7 (z used in Q3(c) and Q3(d), "z is also used in Q3(e)", z_{t-1} = the value from month t-1); new item 8 (NW 1994 automatic lag selection for every NW estimate in Q3 and Q4).
+  - The Q3(e) statement in item 7 goes beyond the student's chat answer in Interaction 27 ("Z appears in the 3c adn 3d"). The AI took it as the student's decision as written in the spec.
+- **Files inspected:** `spec/q34_common.md` (diff), `spec/q4b.md`
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Item 8 still leaves open the NW (1994) implementation details listed in Interaction 27: the weights that combine the moment series for bandwidth selection, the kernel, demeaning of the moment series, and rounding of the selected lag.
+  2. `spec/q4b.md` is unchanged. Additional Decisions 1-2 (monthly as-is; Dec 1927 – Dec 2021) still conflict with `spec/q34_common.md` items 2, 5, and 6. The AI-written question list (Interaction 25, item 1) is still in place of decisions. E[R_w] in M (sample-mean plug-in or estimated moment) is still unspecified.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** other: specification review
+- **Grouped follow-up requests:** none
