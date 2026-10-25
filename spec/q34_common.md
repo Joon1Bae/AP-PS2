@@ -31,7 +31,26 @@
 7. Instrument z (Problem Set 1, 2e)
     - Used in Q3(c) and Q3(d).
     - z is also used in Q3(e).
-    - Timing: z_{t-1} is the value from month t-1 (the month before t).
+    - Timing: z_{t-1} in the moment z_{t-1} · xR_w,t is the value from month t-12.
+      xR_w,t is the 12-month return over months t-11 to t, so z must be known before
+      that window starts. This is the OOS forecast made at origin t-12 (q2e_PS1.md),
+      i.e., the forecast whose target is xR_e,t.
+    - Time index: in Questions 3 and 4, t indexes months. t+1 is the next month, and each
+      variable dated t+1 is the 12-month cumulative return ending in that month.
+      This intentionally differs from Problem Set 1, where t+1 is one year ahead of t.
 
 8. HAC standard errors: use Newey-West (1994) automatic lag selection for every
    Newey-West estimate in Questions 3 and 4.
+    - With multiple moments, select a single lag from w'h_t with w = vector of ones (NW 1994 default).
+
+9. E[R_w] in Question 4 (M_t = 1 - b(R_w,t - mu)):
+    - Add the moment E[R_w,t - mu] = 0 and set it exactly to zero, so mu_hat = mean(R_w).
+    - Estimate b from the 21 pricing-error moments, holding mu = mu_hat.
+    - Standard errors and pricing-error tests use the full 22-moment GMM sandwich,
+      so they account for estimating mu.
+
+10. Efficient GMM (Question 4c): iterated GMM.
+    - Start from the Question 4b estimate (W = I).
+    - Re-estimate S at the current b, set W = S_hat^{-1} (21 x 21 pricing-error block), and re-estimate b.
+    - Repeat until b converges.
+    - Also report the closed-form estimate and compare it with the iterated efficient GMM estimate.
