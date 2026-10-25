@@ -45,7 +45,7 @@ The χ² test on all 21 pricing moments, using the Moore–Penrose pseudo-invers
 
 1. Refer to the Q34_common.md for the excess return on the 20 decile portfolios.
 
-2. Sample: use the months where all 21 excess returns and R_w are available, which is Dec 1927 – Dec 2021.
+2. Sample: use the months where all 21 excess returns and R_w are available
 
 3. Units: use decimals, dividing the Ken French percent returns by 100.
 
