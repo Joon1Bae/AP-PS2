@@ -326,6 +326,25 @@ innocuous.
   \label{tab:q3d}
 \end{table}
 
+\FloatBarrier
+\subsection*{3e)}
+% Produced by src/q3e.py (specs: spec/q3e.md, spec/q34_common.md). Values: output/q3e_gamma_estimate.csv,
+% output/q3e_pricing_errors.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3e_table.tex}
+  \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{j,t}] = 0$,
+    $j = 1, \dots, 21$, with an identity weighting matrix ($\hat{A} = \hat{G}'$). $xR$ stacks trailing
+    12-month excess returns of the 20 book-to-market and momentum decile portfolios (value-weighted,
+    nominal, over the 12-month compounded risk-free rate) and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the
+    EQ Dataset, in decimals, observed monthly; $R_{w,t} = e^{r_{e,t}}$. Standard error and $t$-statistics use
+    Newey--West (Bartlett kernel, Newey--West (1994) automatic lag, rounded down). $\chi^2$: test that the
+    21 pricing errors are jointly zero, using the Moore--Penrose pseudo-inverse of their (rank-20)
+    covariance matrix.}
+  \label{tab:q3e}
+\end{table}
+
 \section*{Question 4}
 
 \subsection*{4a)}
