@@ -233,7 +233,42 @@ estimated in 2a) and $M^*_{\mathrm{MOM},t}$ estimated in 2b), over July 1927 to 
 \end{table}
 
 \section*{Question 3}
-% TODO (student)
+
+\subsection*{3a)}
+% Typeset by AI from the student's solution in src/q3a.md (formatting/transcription; AI_INTERACTIONS.md).
+
+From the maximization problem in Equation (3.2),
+\[
+  \varpi^*_t = \arg\max_{\varpi_t} \mathbb{E}_t\big[U(W_{t+1})\big]
+  \quad \text{s.t.} \quad W_{t+1} = W_t \cdot \big(R_{f,t+1} + \varpi_t' xR_{t+1}\big),
+\]
+where $R_{w,t+1} = R_{f,t+1} + \varpi^{*\prime}_t xR_{t+1}$ is the return on the optimal portfolio,
+so that $W_{t+1} = W_t \cdot R_{w,t+1}$.
+
+The first-order condition is
+\[
+  \frac{\partial\, \mathbb{E}_t[U(W_{t+1})]}{\partial \varpi_t}
+  = \mathbb{E}_t\big[U'(W_{t+1}) \cdot W_t \cdot xR_{t+1}\big] = \mathbf{0}
+  \quad\Longleftrightarrow\quad
+  \mathbb{E}_t\big[U'(W_{t+1}) \cdot xR_{t+1}\big] = \mathbf{0}.
+\]
+Since $W_t$ is the investor's wealth at time $t$, it is positive ($W_t > 0$) and known at time $t$,
+so it can be taken outside $\mathbb{E}_t[\cdot]$ and divided out.
+
+Because $U'(W_{t+1}) = W_{t+1}^{-\gamma} = (W_t \cdot R_{w,t+1})^{-\gamma}$,
+\[
+  \mathbb{E}_t\big[(W_t \cdot R_{w,t+1})^{-\gamma} \cdot xR_{t+1}\big] = \mathbf{0}
+  \;\Longleftrightarrow\;
+  W_t^{-\gamma}\, \mathbb{E}_t\big[R_{w,t+1}^{-\gamma} \cdot xR_{t+1}\big] = \mathbf{0}
+  \;\Longleftrightarrow\;
+  \mathbb{E}_t\big[R_{w,t+1}^{-\gamma} \cdot xR_{t+1}\big] = \mathbf{0},
+\]
+where the last step uses the same argument for $W_t^{-\gamma} > 0$.
+
+Therefore, $M_{t+1} = R_{w,t+1}^{-\gamma}$ prices the vector of excess returns. Because an SDF that
+prices only excess returns still does so after multiplication by any positive factor (here,
+$W_t^{-\gamma}$), the scale of $M$ is not identified; a normalization is therefore needed and is
+innocuous.
 
 \section*{Question 4}
 
