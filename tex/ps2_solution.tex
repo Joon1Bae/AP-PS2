@@ -270,6 +270,21 @@ prices only excess returns still does so after multiplication by any positive fa
 $W_t^{-\gamma}$), the scale of $M$ is not identified; a normalization is therefore needed and is
 innocuous.
 
+\FloatBarrier
+\subsection*{3b)}
+% Produced by src/q3b.py (specs: spec/q3b.md, spec/q34_common.md). Values: output/q3b_gamma_estimate.csv.
+% Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \input{../output/q3b_table.tex}
+  \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$,
+    with $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset
+    (annual returns observed monthly). Newey--West standard error in parentheses (Bartlett kernel,
+    Newey--West (1994) automatic lag, rounded down).}
+  \label{tab:q3b}
+\end{table}
+
 \section*{Question 4}
 
 \subsection*{4a)}
