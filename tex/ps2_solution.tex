@@ -417,4 +417,28 @@ Therefore,
   \label{tab:q4b}
 \end{table}
 
+\FloatBarrier
+\subsection*{4c)}
+% Produced by src/q4c.py (specs: spec/q4c.md, spec/q4b.md, spec/q34_common.md). Values: output/q4c_estimates.csv,
+% output/q4c_pricing_errors.csv, output/q4c_iterations.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \input{../output/q4c_table.tex}
+  \caption{Efficient GMM estimates of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$, with $\hat{\mu} = \overline{R}_w$
+    (moment $\mathbb{E}[R_w - \mu] = 0$ satisfied exactly) and the closed form
+    $\hat{b}(\hat{W}) = (\hat{d}'\hat{W}\hat{d})^{-1}\hat{d}'\hat{W}\,\widehat{\mathbb{E}}[xR]$,
+    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$, so no numerical optimization is needed. Q4(b): $\hat{W} = I$
+    (Table~\ref{tab:q4b}, for reference). Two-step: $\hat{W} = \hat{S}^{-1}$, with $\hat{S}$ the 21$\times$21
+    pricing-moment block of the Newey--West estimate at the Q4(b) estimate. Iterated: $\hat{S}$ and $\hat{b}$
+    updated until $|\hat{b}_{h+1} - \hat{b}_h| < 10^{-10}$. Standard errors (in parentheses), $t$-statistics
+    and $\chi^2$ use the general sandwich formulas with $\hat{A} = [\hat{G}_b'\hat{W},\, 0;\ 0',\, 1]$ and
+    $\hat{S}$ re-estimated at each estimate, so they account for the estimation of $\mu$. Newey--West: Bartlett
+    kernel, Newey--West (1994) automatic lag (re-selected each time $\hat{S}$ is estimated), rounded down.
+    $\chi^2$: test that the 21 pricing errors are jointly zero (Moore--Penrose pseudo-inverse). Data and
+    sample as in Table~\ref{tab:q4b}.}
+  \label{tab:q4c}
+\end{table}
+
 \end{document}
