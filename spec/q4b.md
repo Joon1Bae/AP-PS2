@@ -36,10 +36,14 @@ The index for Rw,t is 21
 
 1. The table should contain the estimated value of b as well as its standard error (standard errors should be based on Newey-West 1987 and 1994)
 
+2. The pricing errors Ê[ε]_j for the 21 pricing moments
+Each one's t-stat, Ê[ε]_j / √aVar_jj.
+The χ² test on all 21 pricing moments, using the Moore–Penrose pseudo-inverse with 20 degrees of freedom.
+
 
 # Additional Decisions
 
-1. Frequency: use the monthly portfolio excess returns (j = 1..20) as they are. Pair each month t with the EQ dataset's annual xR_w,t (j = 21) and R_w,t from the same month.
+1. Refer to the Q34_common.md for the excess return on the 20 decile portfolios.
 
 2. Sample: use the months where all 21 excess returns and R_w are available, which is Dec 1927 – Dec 2021.
 
