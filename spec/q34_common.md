@@ -20,13 +20,17 @@
 5. Portfolio excess returns: xR_j,t = R12_j,t - R12_f,t, where R12_f,t is the trailing
    12-month compounded "RF" from the Fama/French 3 Factors file (same compounding as item 2).
 
-6. Common sample period: 1928-06 to 2021-12 (1,123 monthly observations).
-    - Start: first R12 computed from French data beginning July 1927.
-    - End: last EQ observation.
-    - Applies to all of Question 3, including Q3(b)-(d), which use only EQ data:
-      start these in 1928-06 as well (not 1927-12), so results are comparable across subquestions.
-    - Note: the instrument z_{t-1} (item 7) may start later, depending on when the
-      OOS forecasts from Problem Set 1 (2e) begin.
+6. Sample periods.
+    - Question 3, all subquestions (b)-(e): 1940-12 to 2021-12 (973 monthly observations).
+        - Start: first t at which z_{t-1} exists (item 7: value from month t-12; the first
+          OOS forecast origin in q2e_PS1.md is 1939-12).
+        - Q3(b) does not use z, but it uses the same sample so that results are
+          comparable across subquestions.
+    - Question 4: 1928-06 to 2021-12 (1,123 monthly observations).
+        - Start: first R12 computed from French data beginning July 1927.
+    - End (both): last EQ observation.
+    - Reporting: always state the sample period explicitly in the .tex file
+      (in the text and in every table or figure note).
 
 7. Instrument z (Problem Set 1, 2e)
     - Used in Q3(c) and Q3(d).
