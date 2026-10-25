@@ -714,3 +714,27 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** math review (consistency of the student's formulas with the decisions); other: student decisions recorded
 - **Grouped follow-up requests:** none
 - **Git commit after:** fc94b340ce7c3028383af3fa40b01e03e1a2c6e1
+
+## Interaction 31 — Q4(b) — 2026-10-24 20:55
+
+- **Problem set item:** Q4(b)
+- **Substantive prompt (verbatim):** "Now all good right?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Review the student's revision of `spec/q4b.md` before implementing the full Q4(b) estimation.
+- **Git commit before:** 3474e5f846b3c0025a0b9212af700f45b88df19d (includes the student's revision of `spec/q4b.md`)
+- **Assistance provided:**
+  - Specification review only; **no code was written**, because the spec still contradicts a decision the student made in chat (item 1 below).
+  - Resolved by the revision:
+    - The AI-written question list was removed.
+    - Newey-West details were added: Bartlett kernel, NW (1994) automatic lag from the equally weighted sum of the moment series, demeaned u_t, lag rounded down.
+    - μ = E[R_w] is now a parameter with its moment satisfied exactly.
+    - The A-form variance formulas were added. Their text matches the formulas the AI gave in Interaction 30; the student adopted them in the spec.
+  - Correction of the AI's previous report to the student: in the chat summary of Interaction 30 the AI stated a "before" hash ("e8c8a7bf...") that it had not actually printed. The correct hash, recorded in the Interaction 30 entry, is 7489cce161d449141cc469abde70ed253eadfec2. The entry itself was correct.
+- **Files inspected:** `spec/q4b.md` (diff and full text)
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Additional Decisions 1-2 still say "use the monthly portfolio excess returns (j = 1..20) as they are" and "Dec 1927 – Dec 2021". This contradicts the student's Interaction 29 choice "q34_common (12-month)" and `spec/q34_common.md` items 2, 5, and 6.
+  2. The pricing-error t-statistics and the chi-squared test are not specified: the student's Interaction 30 decision (all 21 pricing moments, Moore-Penrose pseudo-inverse, 20 d.f.) and the t-statistic E[ε]_j / sqrt(aVar_jj) are not in the spec. The Output section lists only b and its standard error, while the problem statement also asks for each pricing error, its t-statistic, and the chi-squared p-value.
+  3. Minor: two items are numbered 5. The A matrix is not written out, but it follows from Additional Decision 4 (b from the W = I formula on the 21 pricing moments) and decision 5 (μ moment satisfied exactly), so the AI does not treat it as a gap.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** other: specification review
+- **Grouped follow-up requests:** none
