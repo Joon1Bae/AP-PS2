@@ -289,21 +289,22 @@ Therefore,
 
 \FloatBarrier
 \subsection*{4b)}
-% Produced by src/q4b.py (spec: spec/q4b.md). Values: output/q4b_b_estimate.csv.
-% Table layout and caption drafted by AI (AI_INTERACTIONS.md).
-
-\textit{[Standard error, pricing errors and $\chi^2$ test will be added]}
+% Produced by src/q4b.py (specs: spec/q4b.md, spec/q34_common.md). Values: output/q4b_b_estimate.csv,
+% output/q4b_pricing_errors.csv. Table layout and caption drafted by AI (AI_INTERACTIONS.md).
 
 \begin{table}[htbp]
   \centering
-  \input{../output/q4b_b_table.tex}
-  \caption{GMM estimate of $b$ in $M_t = 1 - b\,(R_{w,t} - \mathbb{E}[R_w])$ from
-    $\widehat{\mathbb{E}}[M_t \cdot xR_t] = 0$ with an identity weighting matrix:
-    $\hat{b} = (\hat{d}'\hat{d})^{-1}\hat{d}'\,\widehat{\mathbb{E}}[xR]$ with
-    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$ (dividing by $T$). $xR$ stacks the monthly excess
-    returns of the 20 book-to-market and momentum decile portfolios and
-    $xR_w = e^{r_e} - e^{r_f}$ from the EQ Dataset (decimal units); $R_w = e^{r_e}$.}
-  \label{tab:q4b_b}
+  \input{../output/q4b_table.tex}
+  \caption{First-stage GMM estimate of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$, $\mu = \mathbb{E}[R_w]$,
+    from $\widehat{\mathbb{E}}[M_t \cdot xR_t] = 0$ with identity weights on the 21 pricing moments
+    ($\hat{b} = (\hat{d}'\hat{d})^{-1}\hat{d}'\,\widehat{\mathbb{E}}[xR]$,
+    $\hat{d} = \widehat{\mathrm{Cov}}[R_w, xR]$) and the moment $\mathbb{E}[R_w - \mu] = 0$ satisfied
+    exactly. $xR$ stacks trailing 12-month excess returns of the 20 book-to-market and momentum decile
+    portfolios and $xR_w = e^{r_e} - e^{r_f}$ (EQ Dataset), in decimals, observed monthly; $R_w = e^{r_e}$.
+    Standard errors and $t$-statistics use Newey--West (Bartlett kernel, Newey--West (1994) automatic lag)
+    and account for the estimation of $\mu$. $\chi^2$: test that the 21 pricing errors are jointly zero,
+    using the Moore--Penrose pseudo-inverse of their covariance matrix.}
+  \label{tab:q4b}
 \end{table}
 
 \end{document}
