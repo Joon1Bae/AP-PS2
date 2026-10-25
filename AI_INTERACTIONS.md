@@ -620,3 +620,27 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** other: specification review (consistency and completeness)
 - **Grouped follow-up requests:** none
 - **Git commit after:** c4befaa5a35c3b9b0dbf8f3ae9b45248b34b2b13
+
+## Interaction 27 — Q3, Q4 (data alignment) — 2026-10-24 20:02
+
+- **Problem set item:** Q3 and Q4 (shared data alignment)
+- **Substantive prompt (verbatim):** "3. Let's use the EQ data that starts from Jun 1928. This is because at least for question 3, I want to make an comparision across a subproblem. 4. Yes. You are correct. Z appears in the 3c adn 3d. 5. The month before t 6. use Newey-West (1994) automatic lag selection" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Record the student's decisions on items 3-6 of the Interaction 26 review, and identify what the Newey-West decision still leaves open.
+- **Git commit before:** 962fb30904210a777bffbe37b60c25e0c3351c6e
+- **Assistance provided:**
+  - Recorded the decisions below (verbatim above). **No code or spec was changed.** Per the course AI policy, the student adds these decisions to `spec/q34_common.md` (and the question specs) before the AI implements them.
+  - Decisions:
+    - Item 3: all Q3 sub-questions start in Jun 1928, including the EQ-only Q3(b)-(d).
+    - Item 4: z is used in Q3(c) and Q3(d).
+    - Item 5: z_{t-1} is dated the month before t.
+    - Item 6: Newey-West (1994) automatic lag selection.
+  - Pointed out the implementation details that "NW (1994) automatic lag selection" does not pin down (listed below).
+- **Files inspected:** none beyond those in Interaction 26
+- **Files directly modified by AI:** `AI_INTERACTIONS.md` (this entry only)
+- **Errors, omissions, or ambiguities identified:**
+  1. Still open for item 6, NW (1994) automatic selection with more than one moment: (a) the weights that combine the moment series into the scalar series used for bandwidth selection (e.g. equal weights on all moments, or another choice); (b) the kernel (Bartlett in NW 1987); (c) whether the moment series are demeaned before building S; (d) whether the lag is rounded down or to the nearest integer. The NW (1994) procedure for the Bartlett kernel uses a pre-set initial lag n = floor(4(T/100)^(2/9)); the AI noted this as part of the published procedure, not as a choice.
+  2. Still open from Interaction 26: item 1 (`spec/q4b.md` decisions 1-2 conflict with `spec/q34_common.md`) and item 2 (`spec/q4b.md` still contains the AI-written question list instead of decisions). Also open: whether E[R_w] in M is a sample-mean plug-in or an estimated moment (Interaction 22 item 7).
+  3. Observation, already noted by the student in `spec/q34_common.md` item 6: Q3(c)-(d) can start only once the Problem Set 1 out-of-sample forecasts are available, so a common Jun 1928 start across all Q3 sub-questions depends on when those forecasts begin.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** other: specification review (student decisions recorded; remaining gaps identified)
+- **Grouped follow-up requests:** none
