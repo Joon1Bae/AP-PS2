@@ -431,15 +431,18 @@ and~\ref{q2b}.
 \task{(1) Repeat the $M^*$ construction in Question (2c), but using data until December 1989. Then, apply the $\hat{a}$ and $\hat{\mathbf{b}}$ obtained from this exercise to construct the out-of-sample SDF $M^*_{OS,t} = \hat{a} - \hat{\mathbf{b}}'\mathbf{xR}_t$ from January 1990 to the end of the sample. For each portfolio $p$ (covering the 20 portfolios from Question (2c)), calculate (and report in a table) the pricing error $\hat{\alpha}_{OS,p} = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*_{OS}, xR_p]$ using data from January 1990 to the end of the sample to estimate $\hat{\alpha}_{OS,p}$.\par (2) Describe the results and explain what we learn from them.}
 % Table layout and caption drafted by AI (AI_INTERACTIONS.md). Values: output/q2e_pricing_errors.csv.
 \paragraph{Setup.}
-Out-of-sample pricing errors of the 20 portfolios of Question~\ref{q2c}. Data: monthly returns
-(one-month horizon); estimation sample July 1927 to December 1989 ($T = \QtwoeTis$ months), evaluation
-sample January 1990 to \QtwoeEnd{} ($T = \QtwoeTos$ months).
+Out-of-sample pricing errors of the 20 portfolios of Question~\ref{q2c} under the BM + MOM SDF (the
+Question~\ref{q2c} construction with all 20 portfolios). Data: monthly returns (one-month horizon);
+estimation sample July 1927 to December 1989 ($T = \QtwoeTis$ months), evaluation sample January 1990 to
+\QtwoeEnd{} ($T = \QtwoeTos$ months).
 
 \paragraph{Method.}
 $\hat{a}$ and $\hat{\mathbf{b}}$ are estimated as in Question~\ref{q2c} on the estimation sample. The
 out-of-sample SDF is $M^*_{OS,t} = \hat{a} - \hat{\mathbf{b}}'\mathbf{xR}_t$ on the evaluation sample, and
 $\hat{\alpha}_{OS,p} = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*_{OS}, xR_p]$, with all
-moments computed on the evaluation sample and covariances dividing by $T$.
+moments computed on the evaluation sample and covariances dividing by $T$. For comparison,
+Table~\ref{tab:q2e_alpha} also reports the in-sample pricing errors of the BM + MOM SDF from
+Question~\ref{q2d} (estimated and evaluated on the full sample), which are zero by construction.
 
 \paragraph{Result (1).}
 Table~\ref{tab:q2e_alpha}.
@@ -447,11 +450,14 @@ Table~\ref{tab:q2e_alpha}.
 \begin{table}[htbp]
   \centering
   \input{../output/q2e_pricing_errors_table.tex}
-  \caption{Out-of-sample pricing errors
-    $\hat{\alpha}_{OS,p} = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*_{OS}, xR_p]$ of the
-    20 book-to-market and momentum decile portfolios. $\hat{a}$ and $\hat{\mathbf{b}}$ are estimated as in
-    Question~\ref{q2c} on July 1927 to December 1989 ($T = \QtwoeTis$ months);
-    $M^*_{OS,t} = \hat{a} - \hat{\mathbf{b}}'\mathbf{xR}_t$ and the moments are computed on January 1990 to
+  \caption{In-sample and out-of-sample pricing errors of the 20 book-to-market and momentum decile
+    portfolios under the BM + MOM SDF (the Question~\ref{q2c} construction with all 20 portfolios).
+    In-sample (Q2(d)): $\hat{\alpha}_p = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*, xR_p]$,
+    with the SDF estimated and evaluated on July 1927 to \QtwoeEnd{} ($T = \QtwocT$ months); zero by
+    construction. Out-of-sample (Q2(e)):
+    $\hat{\alpha}_{OS,p} = \widehat{\mathbb{E}}[xR_p] - \widehat{\mathrm{Cov}}[-M^*_{OS}, xR_p]$, with
+    $\hat{a}$ and $\hat{\mathbf{b}}$ estimated on July 1927 to December 1989 ($T = \QtwoeTis$ months) and
+    $M^*_{OS,t} = \hat{a} - \hat{\mathbf{b}}'\mathbf{xR}_t$ and the moments computed on January 1990 to
     \QtwoeEnd{} ($T = \QtwoeTos$ months). Data: monthly value-weighted returns (one-month horizon) in excess
     of the Fama--French risk-free rate. Units: percent per month. Covariances divide by $T$. No standard
     errors are reported.}

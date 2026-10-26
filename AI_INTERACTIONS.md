@@ -1599,3 +1599,23 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation (statistics requested in the spec); code debugging (verification of the student's description against the table); formatting/translation (transcription into LaTeX)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 24ec1073932c48f47769c79d99ed7833cc2d0aa2
+
+## Interaction 65 — Q2(e) — 2026-10-26 00:57
+
+- **Problem set item:** Q2(e)
+- **Substantive prompt (verbatim):** "I just added some notes on problem 2E." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Implement the student's new items 7-8 of `spec/q2e.md`: label the SDF as the "BM + MOM SDF", and add the in-sample (Q2(d)) pricing errors next to the out-of-sample ones in one table, both in percent per month, with each column's sample period.
+- **Git commit before:** 2b32a2a95291319542c6f471b0f30a813bba6bf5 (includes the student's revision of `spec/q2e.md`)
+- **Assistance provided:**
+  - `src/q2e.py`: computes the in-sample pricing errors of the BM + MOM SDF on the full sample (Q2(c) construction, percent units) and adds them as `alpha_is` to `output/q2e_pricing_errors.csv`.
+  - The table now has the header "BM + MOM SDF" over the columns "In-sample (Q2(d))" and "Out-of-sample (Q2(e))", with α̂_p / α̂_{OS,p} and each column's sample period (Jul 1927 -- Aug 2026; Jan 1990 -- Aug 2026), in percent per month with 3 decimals.
+  - Checks:
+    - The in-sample column equals 100 × the Q2(d) BM + MOM column (`output/q2d_pricing_errors.csv`, alpha_2c) to within 1.4e-14, and is zero by construction (max 9.7e-15).
+    - The out-of-sample values are unchanged (difference 0.0).
+  - `tex/ps2_solution.tex`: Setup, Method, and the table caption name the BM + MOM SDF, describe the in-sample column, and state both samples with T. Test-compiled and checked visually.
+- **Files inspected:** `spec/q2e.md` (diff), `src/q2e.py`, `output/q2d_pricing_errors.csv`, test build of the PDF
+- **Files directly modified by AI:** `src/q2e.py`, `output/q2e_pricing_errors.csv`, `output/q2e_pricing_errors_table.tex` (regenerated), `tex/ps2_solution.tex` (2(e) Setup, Method, caption), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation; formatting/translation (table layout); other: methodological description drafted from the spec (revised 2(e) Setup/Method sentences and caption)
+- **Grouped follow-up requests:** none
