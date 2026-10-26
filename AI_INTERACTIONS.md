@@ -1279,3 +1279,32 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** formatting/translation (table layout); code debugging (a LaTeX brace error introduced by the AI)
 - **Grouped follow-up requests:** none
 - **Git commit after:** b738a94728f70994693286b12aaa9ab783ad280b
+
+## Interaction 52 — All questions (Task excerpts; Q4(e) section) — 2026-10-25 22:08
+
+- **Problem set item:** All questions: problem-statement excerpts in `tex/ps2_solution.tex`; Q4(e) section added
+- **Substantive prompt (verbatim):** "And I added more format on my solution. Please take a look" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Apply the student's new "Problem statement excerpts" rules of `spec/solution_format.md` (a Task paragraph that quotes the problem verbatim at the start of every item).
+- **Git commit before:** 5dce2395ad5158838fa3fb423453de0d8efdfd0a (includes the student's revision of `spec/solution_format.md`)
+- **Assistance provided:**
+  - Added a `\task` macro (small-font quote with a bold "Task." label) and inserted a Task block at the start of all 21 items (1(a)-4(e)). Each block quotes `Problem Set 2.pdf` verbatim (text extracted from the PDF); math is typeset with the solution's notation (bold vectors and matrices).
+  - Omitted non-instruction sentences are marked [...]: the context sentence of 4(a) ("The SDF ... reflects a non-linear CAPM.") and its motivation sentence ("The advantage of a linear SDF ..."), and the parts of footnotes that are not instructions.
+  - Footnotes are included only where they contain an instruction:
+    - footnote 2 in 1(b) ("[...] You need to use the LOP to solve for P_c as a function of X and P.");
+    - footnote 3 in 2(a) ("Let's use the normalization E[M*] = 1 (throughout Question 2). [...]");
+    - footnote 5 in 3(b) (the GMM minimization rule);
+    - footnote 6 in 3(c) (the σ²_e and E^OS definitions).
+    Footnotes 1 and 4 are explanatory and left out.
+  - Typos in the problem statement are kept verbatim (e.g., the missing final periods in 1(c) and 1(e); "aVar[γ̂]" in 4(b)).
+  - Items with several instructions are split into numbered tasks (1), (2), (3): 1(d), 2(a)-2(e), 3(b), 3(c), 4(a), 4(b), 4(d), 4(e).
+  - The task numbers are repeated in the paragraph labels of the answer (e.g., "Result (1)--(2).", "Interpretation (3)."; 4(a): "(1) Conditionally linear CAPM.", "(2) Disadvantage ...", matching the student's own numbering "# 1." / "# 2." in `spec/q4a.md`). No student-written sentence was changed.
+  - Added the missing 4(e) subsection (the guide requires one subsection per item): Task block, Setup and Method paragraphs drafted from `spec/q4e.md`, Result with the existing `output/q4e_table.tex` (Interaction 49 results, Interaction 51 layout), and an AI-drafted table note following the guide. No interpretation was written.
+  - Test-compiled (25 pages, no errors or overfull boxes) and checked all pages visually.
+- **Files inspected:** `spec/solution_format.md` (diff), `Problem Set 2.pdf` (full text), `../AP-PS1/tex/ps1_solution.tex` (Task-block style referenced by the guide), `tex/ps2_solution.tex`, test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (Task blocks, paragraph labels, 4(e) subsection), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. Judgment calls on what counts as an "instruction": the definition of z_t in 3(c) and the model statement of 4(b) ("For simplicity, let's consider ...") are kept because they define what is to be estimated; the 4(a) context and motivation sentences are omitted with [...]. The student should review them.
+  2. Still open: Q3(b) re-run on 1940-12 to 2021-12 (flagged in the file).
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (verbatim problem excerpts, layout, labels); other: methodological description drafted from the spec (4(e) Setup, Method, and table note)
+- **Grouped follow-up requests:** none
