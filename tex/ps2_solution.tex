@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb,bm}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{caption}
 \usepackage{siunitx} % decimal-aligned table columns
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -523,9 +524,11 @@ Table~\ref{tab:q3e}.
     December 1940 to December 2021 ($T = 973$ months). Data: monthly observations of 12-month returns: the
     20 decile portfolios (value-weighted, nominal, over the 12-month compounded risk-free rate) and
     $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ (EQ Dataset, real); $R_{w,t} = e^{r_{e,t}}$. Units: decimals.
-    Standard error next to the estimate and $t$-statistics: Newey--West (1987, 1994), Bartlett kernel,
-    Newey--West (1994) automatic lag rounded down (selected lag in the table). $\chi^2$: test that the 21
-    pricing errors are jointly zero (Moore--Penrose pseudo-inverse).}
+    Panel A: estimate with its standard error in the next column; Panel B: pricing errors with
+    $t$-statistics, book-to-market and momentum deciles side by side and the market below; Panel C: joint
+    test. Standard error and $t$-statistics: Newey--West (1987, 1994), Bartlett kernel, Newey--West (1994)
+    automatic lag rounded down (selected lag in Panel C). $\chi^2$: test that the 21 pricing errors are
+    jointly zero (Moore--Penrose pseudo-inverse).}
   \label{tab:q3e}
 \end{table}
 
@@ -619,9 +622,11 @@ Table~\ref{tab:q4b}.
     ($T = 1123$ months). Data: monthly observations of 12-month returns: the 20 decile portfolios
     (value-weighted, nominal, over the 12-month compounded risk-free rate) and
     $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ (EQ Dataset, real); $R_{w,t} = e^{r_{e,t}}$. Units: decimals.
-    Standard error next to the estimate and $t$-statistics: Newey--West (1987, 1994), Bartlett kernel,
-    Newey--West (1994) automatic lag rounded down (selected lag in the table). $\chi^2$: test that the 21
-    pricing errors are jointly zero (Moore--Penrose pseudo-inverse).}
+    Panel A: estimate with its standard error in the next column; Panel B: pricing errors with
+    $t$-statistics, book-to-market and momentum deciles side by side and the market below; Panel C: joint
+    test. Standard error and $t$-statistics: Newey--West (1987, 1994), Bartlett kernel, Newey--West (1994)
+    automatic lag rounded down (selected lag in Panel C). $\chi^2$: test that the 21 pricing errors are
+    jointly zero (Moore--Penrose pseudo-inverse).}
   \label{tab:q4b}
 \end{table}
 
@@ -650,17 +655,21 @@ and $\hat{\mathbf{S}}$ re-estimated at each estimate.
 \paragraph{Result.}
 Table~\ref{tab:q4c}.
 
-\begin{table}[htbp]
+\begin{table}[p]
   \centering
-  \small
+  \footnotesize
+  \renewcommand{\arraystretch}{0.9}
+  \captionsetup{font=footnotesize}
   \input{../output/q4c_table.tex}
   \caption{Efficient GMM estimates of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$: Question~\ref{q4b}
     ($\hat{\mathbf{W}} = \mathbf{I}$, Table~\ref{tab:q4b}, for reference), two-step, and iterated. Sample:
     June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
-    Table~\ref{tab:q4b}. Units: decimals. Standard errors in parentheses below the estimates and
+    Table~\ref{tab:q4b}. Units: decimals. Panel A: estimates with their standard errors in the next column;
+    Panel B: pricing errors with $t$-statistics for each estimate, book-to-market and momentum deciles side by
+    side and the market below; Panel C: joint tests, Newey--West lags and iterations. Standard errors and
     $t$-statistics: Newey--West (1987, 1994), Bartlett kernel, Newey--West (1994) automatic lag rounded down
     and re-selected each time $\hat{\mathbf{S}}$ is estimated (lags of the weighting matrix and of the
-    sandwich in the table). $\chi^2$: test that the 21 pricing errors are jointly zero (Moore--Penrose
+    sandwich in Panel C). $\chi^2$: test that the 21 pricing errors are jointly zero (Moore--Penrose
     pseudo-inverse). ``--'': not applicable.}
   \label{tab:q4c}
 \end{table}
@@ -694,10 +703,11 @@ Table~\ref{tab:q4d}.
   \input{../output/q4d_table.tex}
   \caption{Time-series estimates of $\lambda$ and $\alpha_j$ with the factor $F_t = xR_{w,t}$. Sample: June
     1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
-    Table~\ref{tab:q4b}. Units: decimals. Standard error of $\hat{\lambda}$ next to the estimate and
+    Table~\ref{tab:q4b}. Units: decimals. Panel A: $\hat{\lambda}$ with its standard error in the next
+    column; Panel B: $\hat{\alpha}_j$ with $t$-statistics, book-to-market and momentum deciles side by side and
+    the market below; Panel C: GRS test and Newey--West lags. Standard error of $\hat{\lambda}$ and
     $t$-statistics of $\hat{\alpha}_j$: Newey--West (1987, 1994), Bartlett kernel, Newey--West (1994)
-    automatic lag rounded down, selected for each regression (lag 23 for $\hat{\lambda}$; 19 to 23 for the
-    $\hat{\alpha}_j$). GRS: $F(20, 1102)$ test that the 20 decile-portfolio $\alpha_j$ are jointly zero.
+    automatic lag rounded down, selected for each regression (lags in Panel C). GRS: $F(20, 1102)$ test that the 20 decile-portfolio $\alpha_j$ are jointly zero.
     ``--'': undefined (for the factor itself $\hat{\alpha} = 0$ by construction).}
   \label{tab:q4d}
 \end{table}
