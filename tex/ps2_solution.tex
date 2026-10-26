@@ -378,7 +378,13 @@ coefficients are close to those in Question~\ref{q2b} (the correlation between t
 estimates is \QtwocCorrBM{} for both sets). In particular, the momentum extremes keep the long-winner /
 short-loser pattern ($\hat{b} \approx \QtwocbLoPrior$ for Lo PRIOR and $\approx \QtwocbHiPrior$ for Hi PRIOR).
 
-\ph{[Why this pattern emerges: to be written by me.]}
+Within each set, the erratic coefficients arise for the same reason as in Questions~\ref{q2a}
+and~\ref{q2b}: adjacent deciles are highly correlated, so inverting $\hat{\bm{\Sigma}}$ in
+$\hat{\mathbf{b}} = \hat{\bm{\Sigma}}^{-1}\widehat{\mathbb{E}}[\mathbf{xR}]$ can make the weights of adjacent
+deciles vary greatly. The joint estimates look like the two separate estimates overlaid because, as seen in
+Question~\ref{q2b}, the book-to-market SDF and the momentum SDF (equivalently, the two maximum Sharpe ratio
+portfolios $xR^*$) have a low correlation (about \QtwobCorr). The two sets carry different pricing
+information, so combining them changes the weights within each set little.
 
 The Sharpe ratio of $xR^*$ in Question~\ref{q2c} is higher than those in Questions~\ref{q2a} and~\ref{q2b}
 (Table~\ref{tab:q2c_sr}), as expected when the set of assets expands from 10 to 20 portfolios: any portfolio
