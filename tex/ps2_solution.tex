@@ -114,13 +114,15 @@ i.e., $P_c(1) = 0.2$, $P_c(2) = 0.4$, and $P_c(3) = 0.2$, where
 \subsection{}\label{q1c}
 \task{Suppose that the LOP holds in this economy and introduce a new asset (referred to as asset $D$) with payoff vector $\mathrm{Payoff}(D) = (30, 20, 10)$ for our three states of nature $n = (1, 2, 3)$. Calculate the price of asset $D$ in this economy}
 \paragraph{Method.}
-As calculated in Question~\ref{q1b}, $\mathbf{P}_c = \ph{[values from 1b)]}$. Taking the inner product of
+As calculated in Question~\ref{q1b}, $\mathbf{P}_c = (0.2, 0.4, 0.2)'$. Taking the inner product of
 $\mathbf{Payoff}(D) = (30, 20, 10)'$ with $\mathbf{P}_c$ gives the price of asset $D$ in this economy:
 
 \paragraph{Result.}
-\[
-  P(D) = \mathbf{Payoff}(D)'\,\mathbf{P}_c = \ph{[to be computed by the student]}.
-\]
+\begin{align*}
+  P(D) &= \mathbf{Payoff}(D)'\,\mathbf{P}_c
+        = \begin{bmatrix} 30 & 20 & 10 \end{bmatrix} \begin{bmatrix} 0.2 \\ 0.4 \\ 0.2 \end{bmatrix} \\
+       &= 30 \cdot 0.2 + 20 \cdot 0.4 + 10 \cdot 0.2 = 16.
+\end{align*}
 
 \subsection{}\label{q1d}
 \task{(1) Calculate the Stochastic Discount Factor (SDF) realization under each of the three states of nature in this economy.\par (2) Does this economy satisfy No-Arbitrage (explain)?\par (3) Is there anything interesting about the SDF in this economy (if so, explain what it means in economy terms)?}
