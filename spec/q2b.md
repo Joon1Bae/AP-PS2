@@ -27,6 +27,17 @@ Output should be a scatterplot with the porfolio deciles (Lo PRIOR to Hi PRIOR) 
 
 Leave it as placeholder(blank) regarding the explanation why this pattern emereges.
 
+# Interpretation (3): pattern (use this text as written)
+
+The estimated coefficients b̂ for the momentum deciles show no monotonic pattern.
+In the middle deciles (2 to 9), as in Question 2(a), there is no clear pattern: the
+coefficients change sign without a systematic order (e.g., b̂_5 ≈ 2.5 and b̂_6 ≈ −0.8).
+The two extreme deciles, however, resemble the familiar momentum pattern: the SDF takes
+a large short position in the loser decile (b̂_1 ≈ −4.0) and a large long position in the
+winner decile (b̂_10 ≈ 3.4), i.e., long past winners and short past losers.
+
+[Why this pattern emerges: to be written by me.]
+
 # Additional Decisions
 
 1. Use the monthly value-weighted returns. The 10_Portfolios_Prior_12_2 file also has equal-weighted and annual versions of the same "Lo PRIOR" to "Hi PRIOR" columns.
