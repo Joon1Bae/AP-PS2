@@ -1308,3 +1308,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** formatting/translation (verbatim problem excerpts, layout, labels); other: methodological description drafted from the spec (4(e) Setup, Method, and table note)
 - **Grouped follow-up requests:** none
+- **Git commit after:** a5ff1376161f030420a8b71329b8307300795f7f
