@@ -86,7 +86,7 @@ def latex_table(res: dict, labels: list[str], months: pd.PeriodIndex) -> str:
         r"\toprule",
         r" & Estimate & s.e. \\",
         r"\midrule",
-        rf"$\hat{{b}}$ & {fmt(res['b'], 3)} & {fmt(res['se_b'], 3)} \\",
+        rf"$\hat{{b}}$ & {fmt(res['b'], 4)} & {fmt(res['se_b'], 4)} \\",
         r"\midrule",
         r" & $\widehat{\mathbb{E}}[\epsilon_j]$ & $t$-stat \\",
         r"\midrule",
@@ -94,7 +94,7 @@ def latex_table(res: dict, labels: list[str], months: pd.PeriodIndex) -> str:
     panels = [
         (r"\textit{Book-to-market deciles}", range(0, 10), {0: "1 (Lo 10)", 9: "10 (Hi 10)"}),
         (r"\textit{Momentum deciles}", range(10, 20), {10: "1 (Lo PRIOR)", 19: "10 (Hi PRIOR)"}),
-        (r"\textit{Market}", range(20, 21), {20: "$xR_w$"}),
+        (r"\textit{Market}", range(20, 21), {20: "$xR_{w,t}$"}),
     ]
     for i, (title, rows, names) in enumerate(panels):
         if i:

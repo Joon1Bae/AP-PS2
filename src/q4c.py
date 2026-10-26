@@ -37,7 +37,7 @@ from sdf import OUTPUT
 CHI2_DF = 20   # spec: 21 pricing moments - 1
 TOL = 1e-10    # convergence tolerance on |b_{h+1} - b_h| (numerical choice)
 MAX_ITER = 1000
-ESTIMATES = {"q4b": "Q4(b), $\\hat{W} = I$", "two_step": "Two-step", "iterated": "Iterated"}
+ESTIMATES = {"q4b": "4(b), $\\hat{\\mathbf{W}} = \\mathbf{I}$", "two_step": "Two-step", "iterated": "Iterated"}
 
 
 class Q4Model:
@@ -101,8 +101,8 @@ def latex_table(res: dict, months: pd.PeriodIndex) -> str:
         r"\toprule",
         " & " + " & ".join(rf"\multicolumn{{2}}{{c}}{{{ESTIMATES[k]}}}" for k in keys) + r" \\",
         "".join(rf"\cmidrule(lr){{{2 + 2 * i}-{3 + 2 * i}}}" for i in range(len(keys))),
-        r"$\hat{b}$ & " + " & ".join(rf"\multicolumn{{2}}{{c}}{{{fmt(res[k]['b'], 3)}}}" for k in keys) + r" \\",
-        r" & " + " & ".join(rf"\multicolumn{{2}}{{c}}{{({fmt(res[k]['se_b'], 3)})}}" for k in keys) + r" \\",
+        r"$\hat{b}$ & " + " & ".join(rf"\multicolumn{{2}}{{c}}{{{fmt(res[k]['b'], 4)}}}" for k in keys) + r" \\",
+        r" & " + " & ".join(rf"\multicolumn{{2}}{{c}}{{({fmt(res[k]['se_b'], 4)})}}" for k in keys) + r" \\",
         r"\midrule",
         r"Pricing error & " + " & ".join([r"$\widehat{\mathbb{E}}[\epsilon_j]$ & $t$"] * len(keys)) + r" \\",
         r"\midrule",
@@ -131,7 +131,7 @@ def latex_table(res: dict, months: pd.PeriodIndex) -> str:
         r"\midrule",
         row(rf"$\chi^2({CHI2_DF})$", [fmt(res[k]["chi2"], 2) for k in keys]),
         row(r"$p$-value", [p_text(res[k]["p_chi2"]) for k in keys]),
-        row(r"NW lag, $\hat{W}$ / sandwich", [res[k]["lag_weight"] + f" / {res[k]['lag_sandwich']}" for k in keys]),
+        row(r"NW lag, $\hat{\mathbf{W}}$ / sandwich", [res[k]["lag_weight"] + f" / {res[k]['lag_sandwich']}" for k in keys]),
         row("Iterations", ["--", "--", str(res["iterated"]["iterations"])]),
         rf"Sample & \multicolumn{{{ncol - 1}}}{{c}}{{{start} -- {end} ($T = {len(months)}$)}} \\",
         r"\bottomrule",

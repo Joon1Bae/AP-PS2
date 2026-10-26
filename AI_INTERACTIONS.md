@@ -1206,3 +1206,47 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation; code debugging (verification)
 - **Grouped follow-up requests:** none
 - **Git commit after:** afa7413ecf602a8b1e1785c3047e1887d2096ecd
+
+## Interaction 50 — All questions (solution formatting) — 2026-10-25 21:57
+
+- **Problem set item:** All questions (Q1-Q4): formatting of `tex/ps2_solution.tex` and of the generated tables/figures
+- **Substantive prompt (verbatim):** "I just wrote down the format for solution file. Could you please take a look and revise the final product based on this instruction?" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Apply the student's new formatting guide `spec/solution_format.md` to the solution file.
+- **Git commit before:** b58396b423533b162997ae2465e32aae25f35cce (includes the student's new `spec/solution_format.md`)
+- **Assistance provided:**
+  - The guide's paragraph structure (Setup / Method / Result / Interpretation) conflicts with its Rule 0 ("formatting only") for the data items, which had no Setup/Method text in the body. The AI asked the student. Answers (verbatim selections):
+    - Q: "... For the data items (2a-2e, 3b-3e, 4b-4d) there is currently no Setup/Method text in the body ... What should I do?" → **"Draft from specs"** (option text: "Add short Setup and Method paragraphs drafted from your spec files (object, data, estimator), logged in AI_INTERACTIONS.md as AI-drafted methodological description; no interpretation, no new numbers.")
+    - Q: "Title block needs a name. What should go there?" → **"Dustin Bae"**
+  - `tex/ps2_solution.tex` (rewritten layout):
+    - Title block with course, problem set, name ("Dustin Bae"), and date.
+    - Each Question is a numbered \section ("Question N", via titlesec) on a new page (\clearpage); each item is a \subsection labelled N(x) with \label, so items can be referenced with \ref. All text references to items ("1a)", "2a)--2c)", "Q4(b)", "as in 3c)") now use \ref.
+    - Paragraph labels: Setup / Method / Result / Interpretation for the data items. For the student-written items, labels are added only where the existing order already fits (1(b)-1(e), 3(a)). They are not applied to 1(a) or to 4(a)'s own paragraph headings, because Rule 0 forbids reordering. This is noted in a comment in the file.
+    - Placeholders: every placeholder written by the student ("[Definition of Complete Markets will be here]", "[numerical values to be computed by the student]", "[values from 1b)]", "[to be computed by the student]", "[?]", "[to be computed by the student; compare with 1c)]", "[Definition of No-Arbitrage will be here]", "[Explanation will be here]") is kept verbatim and shown in red (\textcolor{red}, macro \ph). The AI-written "% TODO (student)" comments of 2(a)-2(c) were turned into visible red placeholders in the Interpretation paragraphs, with the same wording.
+    - Math:
+      - Multi-step ⇔ chains in 3(a) are now align* environments, one step per line, aligned at ⇔.
+      - Two long inline formulas (1(b) vector definitions; 2(d) covariance) were moved into displays to remove overfull lines.
+      - Notation: bold for vectors and matrices (\mathbf{X}, \bm{\Omega}, \mathbf{I}, \mathbf{P}, \mathbf{P}_c, \mathbf{M}, \mathbf{X}_\pi, \mathbf{Payoff}(D), \bm{\varpi}_t, \mathbf{xR}_t, \hat{\mathbf{b}}, \hat{\mathbf{d}}, \hat{\mathbf{W}}, \hat{\mathbf{G}}, \hat{\mathbf{A}}, \hat{\mathbf{S}}, \bm{\epsilon}, \bm{\theta}, \hat{\bm{\alpha}}).
+      - Matrices: pmatrix replaced by bmatrix, with a row/column label added after X_π in 1(d) (as already given after X in 1(a)).
+      - The market excess return is written as xR_{w,t} throughout (previously also xR_w).
+    - Student-written text in Q1, Q3(a), and Q4(a) is otherwise word-for-word unchanged. The only notation change in 4(a) is that xR_{t+1} in point 5 is set in bold.
+    - Setup/Method paragraphs for 2(a)-2(e), 3(b)-3(e), and 4(b)-4(d) were drafted from the spec files and the existing AI-drafted captions (methodological description; no interpretation, no new numbers). The 4(d) GRS formula moved from the caption into the Method paragraph.
+    - Table and figure notes were rewritten so that each states the sample period, the data frequency and return horizon, the units, the standard-error method (with where the selected lag is shown), and symbols ("--"). Figure captions state the sample, the data, and the units.
+    - Comments in the file list items for the student to check (Rule 0): the 3(b) sample (see below); 4(a) points 2 and 6, which date F_t and E_t[R_{w,t}] at t while part 1 uses E_t[R_{w,t+1}]; and why 1(a) has no paragraph labels.
+  - Generators (presentation only):
+    - Estimates and standard errors are shown with 4 decimals (`src/q3b.py`, `q3c.py`, `q3d.py`, `q3e.py`, `q4b.py`, `q4c.py`; λ already had 4).
+    - The Q2(d)/(e) percent pricing errors are shown with 3 decimals (`src/q2d.py`, `q2e.py`), per the guide's "3 or 4 decimals".
+    - The Q2 figure y-axis label now includes units (`src/sdf.py`: "$b$ (per unit of monthly excess return, decimal)").
+    - The Q4(b) table labels the market as $xR_{w,t}$.
+    - Table headers use the N(x) item style (Q2(d): "2(a) BM"; Q4(c): "4(b), $\hat{\mathbf{W}} = \mathbf{I}$").
+  - Re-ran all scripts `src/q2a.py`-`src/q4e.py`. No reported number changed. The Q2 CSVs differ from the committed versions only at floating-point level (max abs difference 2.5e-14), because they were last generated on the student's other machine. The LaTeX macro files (`q2b_sdf_correlation.tex`, `q2c_sharpe_ratios.tex`) are unchanged.
+  - Test-compiled with tectonic (19 pages, no errors or overfull boxes) and checked every page visually.
+- **Files inspected:** `spec/solution_format.md`, `tex/ps2_solution.tex`, `spec/q2a.md`-`spec/q2e.md`, `src/q2a.py`-`src/q4e.py`, `src/sdf.py`, `output/*` (lags, samples), test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex`; `src/sdf.py`, `src/q2d.py`, `src/q2e.py`, `src/q3b.py`, `src/q3c.py`, `src/q3d.py`, `src/q3e.py`, `src/q4b.py`, `src/q4c.py` (display only); regenerated `output/` files (figures, tables; CSVs with floating-point-level differences only); `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:**
+  1. Rule 0 versus the Setup/Method structure. Resolved by the student's answer "Draft from specs".
+  2. The 3(b) table is still on Jun 1928 – Dec 2021, while `spec/q34_common.md` item 6 puts all of Question 3 on Dec 1940 – Dec 2021 (open since Interaction 38). Per Rule 0 it was left unchanged, the caption states its actual sample, and a comment flags it.
+  3. 4(a) points 2 and 6 timing (see Interaction 19, item 10). Left unchanged and flagged in a comment.
+  4. The Q4(e) results (Interaction 49) are not yet in the `.tex`; this was not requested here.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (layout, notation, cross-references, tables, figures); other: methodological description drafted from the spec (the Setup and Method paragraphs of 2(a)-2(e), 3(b)-3(e), 4(b)-4(d), and the rewritten table/figure notes, all in `tex/ps2_solution.tex`)
+- **Grouped follow-up requests:** none
