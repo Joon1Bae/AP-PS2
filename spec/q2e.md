@@ -42,3 +42,26 @@ The index for Rp is from 1 to 20. (1 is Lo10, 10 is Hi 10, and 11 is Lo PRIOR an
 4. From the estimated covariance and E[xR_j], we can calculate the pricing errors as alpha_j = E[xR_j] - Cov(-M, xR_j)$ for all j = 1, ..., 20.
 5. Write down a code to implement the procedure above.
 6. The output should include a table reporting a pricing error for each porfolio in A NEATED MANNER!!!!!
+7. Label the SDF explicitly in the table header and caption as the "BM + MOM SDF" (the Question 2(c)
+   construction with all 20 portfolios), estimated on Jul 1927 to Dec 1989 and evaluated on
+   Jan 1990 to the latest date.
+8. Next to the out-of-sample pricing errors, add a column with the in-sample pricing errors of the
+   BM + MOM SDF from Question 2(d) (full sample, all zero by construction), so the two can be
+   compared in one table. Label the columns "In-sample (Q2(d))" and "Out-of-sample (Q2(e))",
+   state each column's sample period, and report both columns in the same unit (percent per month).
+
+# Interpretation (use this text as written)
+
+In sample, the pricing errors of all 20 portfolios are zero because the SDF is fitted to the
+realized data, as if it had seen the answer key. Out of sample, without the answer key, sizable
+pricing errors appear. The zero in-sample pricing errors are therefore not evidence that the
+model is correct.
+
+[Comparison with an SDF without risk adjustment (M = 1): to be confirmed by me.]
+
+An in-sample fit also fits the noise in the sample, so out-of-sample performance tends to
+deteriorate. In this case it deteriorates sharply: the monthly Sharpe ratio of xR* (with b fixed
+at its in-sample estimate) falls from about 0.35 in sample to about 0.19 out of sample.
+
+- Replace the numbers in the text (0.35, 0.19) with the values computed from this code, and add
+  the in-sample and out-of-sample Sharpe ratios of xR* = b̂′xR (b̂ fixed) to the output.

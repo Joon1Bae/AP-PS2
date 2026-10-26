@@ -136,7 +136,7 @@ def plot_b_groups(
     ax.set_xticks(deciles)
     ax.set_xlim(0.5, n + 0.5)
     ax.set_xlabel(xlabel, color=TEXT_PRIMARY)
-    ax.set_ylabel("$b$ coefficient", color=TEXT_PRIMARY)
+    ax.set_ylabel("$b$ (per unit of monthly excess return, decimal)", color=TEXT_PRIMARY)
     ax.grid(axis="y", color=GRID, linewidth=0.6)
     ax.set_axisbelow(True)
     ax.tick_params(colors=TEXT_SECONDARY, length=0)

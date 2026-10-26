@@ -1,5 +1,8 @@
 # Data alignment spec (Questions 3 and 4)
 
+Precedence: if an individual spec (q3b.md-q4e.md) conflicts with this file, this file takes
+precedence. In particular, item 6 below overrides any sample period stated in an individual spec.
+
 1. EQ Dataset
     - Convert log returns to gross returns: R_e,t = exp(re_t), R_f,t = exp(rf_t).
     - Each value is the gross return over the 12 months ending in month t (months t-11 to t).
@@ -20,17 +23,32 @@
 5. Portfolio excess returns: xR_j,t = R12_j,t - R12_f,t, where R12_f,t is the trailing
    12-month compounded "RF" from the Fama/French 3 Factors file (same compounding as item 2).
 
-6. Sample periods.
-    - Question 3, all subquestions (b)-(e): 1940-12 to 2021-12 (973 monthly observations).
-        - Start: first t at which z_{t-1} exists (item 7: value from month t-12; the first
-          OOS forecast origin in q2e_PS1.md is 1939-12).
-        - Q3(b) does not use z, but it uses the same sample so that results are
-          comparable across subquestions.
-    - Question 4: 1928-06 to 2021-12 (1,123 monthly observations).
-        - Start: first R12 computed from French data beginning July 1927.
-    - End (both): last EQ observation.
-    - Reporting: always state the sample period explicitly in the .tex file
-      (in the text and in every table or figure note).
+6. Sample periods: two versions.
+    - Version (1) "Common": every subquestion of Questions 3 and 4 uses the same sample,
+      1940-12 to 2021-12 (the latest start, set by z in Q3(c)-(d)), so results are comparable
+      across subquestions and across the two Questions.
+    - Version (2) "Max": each subquestion uses the longest sample available for it.
+    - End (all): 2021-12, the last EQ observation.
+
+    | Item        | Constraint                                   | (1) Common                | (2) Max                    |
+    |-------------|----------------------------------------------|---------------------------|----------------------------|
+    | Q3(b)       | EQ only (first EQ observation 1927-12)       | 1940-12 to 2021-12 (973)  | 1927-12 to 2021-12 (1,129) |
+    | Q3(c), (d)  | z_{t-1} (item 7; first OOS origin 1939-12)   | 1940-12 to 2021-12 (973)  | 1940-12 to 2021-12 (973)   |
+    | Q3(e)       | French R12 (first R12 1928-06), no z         | 1940-12 to 2021-12 (973)  | 1928-06 to 2021-12 (1,123) |
+    | Q4(b)-(e)   | French R12 (first R12 1928-06), no z         | 1940-12 to 2021-12 (973)  | 1928-06 to 2021-12 (1,123) |
+
+    - Report both versions for Q3(b), Q3(e), and Q4(b)-(e). Q3(c) and Q3(d) are identical in
+      both versions, so report one set and say so.
+    - Reporting: always state the sample period and T explicitly in the .tex file
+      (in the text and in every table or figure note), and label each column or panel
+      with its version, "(1) Common" or "(2) Max".
+    - State the reason for the two versions explicitly in the text (at the start of
+      Question 3 and again at the start of Question 4):
+      Version (1) puts Questions 3 and 4 on the same sample, so that differences between the
+      non-linear SDF (Question 3, M_t = R_w,t^(-γ)) and its linearized version (Question 4,
+      M_t = a − b · R_w,t) are not driven by differences in the sample period; for example,
+      Q3(e) and Q4(b) use the same 21 moments. Version (2) uses all data available for each
+      subquestion, so each estimate is as precise as the data allow.
 
 7. Instrument z (Problem Set 1, 2e)
     - Used in Q3(c) and Q3(d).

@@ -26,6 +26,15 @@ Output should be a scatterplot with the porfolio deciles (Lo 10 to Hi 10) in the
 
 Leave it as placeholder(blank) regarding the explanation why this pattern emereges.
 
+# Interpretation (3): pattern (use this text as written)
+
+The estimated coefficients b̂ show no systematic pattern across the book-to-market deciles.
+First, b̂ is not monotonic in the decile: it neither increases nor decreases as the
+book-to-market ratio rises. Second, adjacent deciles sometimes have coefficients of opposite
+signs (e.g., b̂_6 ≈ 3.0 and b̂_7 ≈ −5.3).
+
+[Why this pattern emerges: to be written by me.]
+
 # Additional Decisions
 
 1. Use the monthly value-weighted returns. The BE-ME file also has equal-weighted and annual versions of the same "Lo 10" to "Hi 10" columns.

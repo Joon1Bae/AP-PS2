@@ -63,7 +63,7 @@ def latex_table(res: dict, months: pd.PeriodIndex) -> str:
         r"\toprule",
         r" & Estimate & s.e. \\",
         r"\midrule",
-        rf"$\hat{{\gamma}}$ (two-step) & {fmt(res['gamma_2'], 3)} & {fmt(res['se'], 3)} \\",
+        rf"$\hat{{\gamma}}$ (two-step) & {fmt(res['gamma_2'], 4)} & {fmt(res['se'], 4)} \\",
         r"\midrule",
         r"Pricing error & $\widehat{\mathbb{E}}[\epsilon_j]$ & $t$-stat \\",
         r"\midrule",
