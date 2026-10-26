@@ -34,6 +34,22 @@ For this problem, one in blue (representing j = 1 to 10) and one in red (represe
 
 Leave it as placeholder(blank) regarding the explanation why this pattern emereges.
 
+# Interpretation (pattern) (use this text as written)
+
+As in Questions 2(a) and 2(b), the coefficients b̂ show no clear systematic pattern across
+the deciles. One notable feature is that the joint estimates look like the two separate
+estimates overlaid: the book-to-market coefficients are close to those in Question 2(a),
+and the momentum coefficients are close to those in Question 2(b) (the correlation between
+the separate and the joint estimates is 0.98 for both sets). In particular, the momentum
+extremes keep the long-winner / short-loser pattern (b̂ ≈ −4.4 for Lo PRIOR and ≈ 3.5
+for Hi PRIOR).
+
+- Compute and report the two correlations quoted above (2(a) b̂ vs. the first 10 elements of
+  the 2(c) b̂; 2(b) b̂ vs. the last 10 elements) so that the numbers in the text come from this
+  code. If they differ from 0.98, −4.4, or 3.5, update the text with the computed values.
+
+[Why this pattern emerges: to be written by me.]
+
 # Additional Decisions
 
 1. Use the monthly value-weighted returns. The 10_Portfolios_Prior_12_2 file also has equal-weighted and annual versions of the same "Lo PRIOR" to "Hi PRIOR" columns, and the BE-ME file also has equal-weighted and annual versions of the same "Lo 10" to "Hi 10" columns.
@@ -46,3 +62,13 @@ Leave it as placeholder(blank) regarding the explanation why this pattern emereg
 1. We now know that b1, b2 and b3 vector (calculated from BE/ME, Mom, and BE/ME + Mom, repectively).
 2. Then, we can calculate the Sharpe Ratio of xR^* portfolios in such a way that (1) xR^* = b'xR, (2) SR(xR^\*) = E[xR^\*] / sigma(xR^\*)
 3. Write down a code for calculating the Sharpe Ratio of each xR^\* portfolio and write it down in the LaTeX file.
+
+# Interpretation (Sharpe ratios) (use this text as written)
+
+The Sharpe ratio of xR* in Question 2(c) is higher than those in Questions 2(a) and 2(b),
+as expected when the set of assets expands from 10 to 20 portfolios: any portfolio that can be
+formed with 10 of the assets can also be formed with all 20 assets, by setting the weights on
+the other 10 assets to zero, so the maximum Sharpe ratio with 20 assets cannot be lower. This is in line with the
+Hansen-Jagannathan bound, Vol(M) ≥ SR · E[M]: since the maximum Sharpe ratio is larger with
+20 assets, the lower bound on the volatility of an SDF that prices all 20 assets is larger than
+the bound for an SDF that prices only 10 of them.
