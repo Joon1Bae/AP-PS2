@@ -1352,3 +1352,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none (no interpretation of the version differences was written)
 - **Type of assistance:** empirical implementation; formatting/translation (tables, notes, layout); other: typesetting of the student's own reason text from `spec/q34_common.md` item 6
 - **Grouped follow-up requests:** none
+- **Git commit after:** eda72757ed229eaaaba8f0bfeed047e001d39f44
