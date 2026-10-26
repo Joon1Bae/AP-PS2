@@ -39,8 +39,6 @@
 % task numbers (1), (2), ... are repeated in the paragraph labels of the answer.
 %
 % Items flagged for the student to check (left unchanged, per Rule 0):
-%  - 3(b): the table is on Jun 1928 - Dec 2021 (src/q3b.py was run before spec/q34_common.md item 6
-%    moved all of Question 3 to Dec 1940 - Dec 2021); 3(c)-3(e) use Dec 1940 - Dec 2021.
 %  - 4(a), points 2 and 6: F_t and E_t[R_{w,t}] are dated t, while part 1 uses E_t[R_{w,t+1}].
 %  - 1(a): paragraph labels (Setup/Method/Result) are not applied because the answer ("Yes.")
 %    precedes the argument and Rule 0 forbids reordering.
@@ -366,6 +364,31 @@ Table~\ref{tab:q2e_alpha}.
 % ---------------------------------------------------------------------------------------------
 \clearpage
 \section{}\label{q3}
+\paragraph{Sample periods.}
+% From spec/q34_common.md item 6 (student-written reason; typeset by AI, AI_INTERACTIONS.md).
+Results are reported for two sample versions, both ending in December 2021 (the last EQ observation).
+Version (1) ``Common'' uses December 1940 to December 2021 for every subquestion of Questions 3 and 4 (the
+latest start, set by $z$ in Questions~\ref{q3c}--\ref{q3d}); version (2) ``Max'' uses the longest sample
+available for each subquestion. Version (1) puts Questions 3 and 4 on the same sample, so that differences
+between the non-linear SDF (Question~3, $M_t = R_{w,t}^{-\gamma}$) and its linearized version (Question~4,
+$M_t = a - b \cdot R_{w,t}$) are not driven by differences in the sample period; for example,
+Questions~\ref{q3e} and~\ref{q4b} use the same 21 moments. Version (2) uses all data available for each
+subquestion, so each estimate is as precise as the data allow.
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+  \toprule
+  Item & (1) Common & (2) Max \\
+  \midrule
+  Question~\ref{q3b}                    & Dec 1940 -- Dec 2021 ($T = 973$) & Dec 1927 -- Dec 2021 ($T = 1129$) \\
+  Questions~\ref{q3c}, \ref{q3d}        & Dec 1940 -- Dec 2021 ($T = 973$) & Dec 1940 -- Dec 2021 ($T = 973$) \\
+  Question~\ref{q3e}                    & Dec 1940 -- Dec 2021 ($T = 973$) & Jun 1928 -- Dec 2021 ($T = 1123$) \\
+  Questions~\ref{q4b}--\ref{q4e}        & Dec 1940 -- Dec 2021 ($T = 973$) & Jun 1928 -- Dec 2021 ($T = 1123$) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+Questions~\ref{q3c} and~\ref{q3d} are identical in both versions, so one set of results is reported.
 
 \subsection{}\label{q3a}
 \task{Using a power utility function, $U(W) = W^{1-\gamma}/(1-\gamma)$, with $\gamma$ representing the constant relative risk aversion, show that the SDF $M_t = R_{w,t}^{-\gamma}$ prices the vector of excess returns (i.e., show that $\mathbb{E}_t[R_{w,t+1}^{-\gamma} \cdot \mathbf{xR}_{t+1}] = \mathbf{0}$).}
@@ -410,11 +433,12 @@ innocuous.
 \task{(1) Estimate $\gamma$ by GMM using the unconditional SDF equation $\mathbb{E}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$. Use the proxies $R_{w,t} = R_{e,t} = e^{r_{e,t}}$ and $R_{f,t} = e^{r_{f,t}}$, with $r_e$ and $r_f$ from the EQ Dataset. [Footnote 5: [...] you still need to use the GMM minimization problem $\hat{\gamma} = \arg\min \widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}]$. This minimization problem implies that the GMM estimate solves $\hat{G} \cdot \widehat{\mathbb{E}}[R_{w,t}^{-\hat{\gamma}} \cdot xR_{w,t}] = 0$ where $\hat{G} = \widehat{\mathbb{E}}[\partial_\gamma (R_{w,t}^{-\hat{\gamma}} \cdot xR_{w,t})]$.]\par (2) Report the $\gamma$ estimate as well as its standard error. When estimating $\mathrm{aVar}[\hat{\gamma}]$, estimate $S$ using Newey and West (1987, 1994).}
 % Produced by src/q3b.py (specs: spec/q3b.md, spec/q34_common.md). Values: output/q3b_gamma_estimate.csv.
 % Setup/Method drafted by AI from the specs; table layout and caption drafted by AI (AI_INTERACTIONS.md).
-% CHECK: this table is on Jun 1928 - Dec 2021; spec/q34_common.md item 6 now puts Q3 on Dec 1940 - Dec 2021.
 \paragraph{Setup.}
 GMM estimate of $\gamma$ from the unconditional SDF equation
 $\mathbb{E}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$, with $R_{w,t} = e^{r_{e,t}}$ and
-$xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset (annual returns observed monthly).
+$xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset (annual returns observed monthly). Samples:
+(1) Common, December 1940 to December 2021 ($T = 973$); (2) Max, December 1927 to December 2021
+($T = 1129$).
 
 \paragraph{Method.}
 With one moment and one parameter, $\hat{\gamma}$ solves
@@ -429,9 +453,10 @@ Table~\ref{tab:q3b}.
   \centering
   \input{../output/q3b_table.tex}
   \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$, with
-    $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset. Sample: June 1928
-    to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month (annual) real returns.
-    Units: decimals. Standard error in parentheses below the estimate: Newey--West (1987, 1994), Bartlett
+    $R_{w,t} = e^{r_{e,t}}$ and $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ from the EQ Dataset, one column per
+    sample version. Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: December
+    1927 to December 2021 ($T = 1129$ months). Data: monthly observations of 12-month (annual) real returns.
+    Units: decimals. Standard errors in parentheses below the estimates: Newey--West (1987, 1994), Bartlett
     kernel, Newey--West (1994) automatic lag rounded down (selected lag in the table).}
   \label{tab:q3b}
 \end{table}
@@ -449,7 +474,8 @@ $\mathbb{E}[R_{w,t}^{-\gamma} \cdot (z_{t-1} \cdot xR_{w,t})] = 0$, with $R_{w,t
 Question~\ref{q3b}. The instrument is $z_{t-1} = \widehat{\mathbb{E}}^{OS}[xR_e] / \sigma^2_e$, where
 $\widehat{\mathbb{E}}^{OS}[xR_e]$ is the Problem Set 1 (2e) out-of-sample forecast made twelve months before
 $t$ (the forecast of $xR_{w,t}$) and $\sigma^2_e$ is the variance of $R_{e,t}$ over the sample (dividing by
-$T-1$). Sample: December 1940 to December 2021.
+$T-1$). Sample: December 1940 to December 2021 ($T = 973$), identical in versions (1) and (2), so one set
+of results is reported.
 
 \paragraph{Method.}
 With $\hat{\mathbf{W}} = \mathbf{I}$, so $\hat{\mathbf{A}} = \hat{\mathbf{G}}'$, $\hat{\gamma}$ solves
@@ -474,7 +500,7 @@ Table~\ref{tab:q3c}.
   \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{w,t}] = 0$ and
     $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot (z_{t-1} \cdot xR_{w,t})] = 0$ with an identity weighting
     matrix ($\hat{\mathbf{A}} = \hat{\mathbf{G}}'$); $z_{t-1}$ as defined in the text. Sample: December 1940
-    to December 2021 ($T = 973$ months). Data: monthly observations of 12-month (annual) real returns from
+    to December 2021 ($T = 973$ months), identical in versions (1) Common and (2) Max. Data: monthly observations of 12-month (annual) real returns from
     the EQ Dataset. Units: decimals. Standard error next to the estimate and $t$-statistics: Newey--West
     (1987, 1994), Bartlett kernel, Newey--West (1994) automatic lag rounded down (selected lag in the
     table). $\chi^2$: test that the two pricing errors are jointly zero (Moore--Penrose pseudo-inverse).}
@@ -507,7 +533,7 @@ Table~\ref{tab:q3d}.
   \caption{Two-step GMM estimate of $\gamma$ from the moment conditions of Question~\ref{q3c};
     $\hat{\mathbf{W}} = \hat{\mathbf{S}}_1^{-1}$ in step 2 and
     $\hat{\mathbf{A}} = \hat{\mathbf{G}}'\hat{\mathbf{S}}_1^{-1}$ in the sandwich. Sample: December 1940 to
-    December 2021 ($T = 973$ months). Data: monthly observations of 12-month (annual) real returns from the
+    December 2021 ($T = 973$ months), identical in versions (1) Common and (2) Max. Data: monthly observations of 12-month (annual) real returns from the
     EQ Dataset. Units: decimals. Standard error next to the estimate and $t$-statistics: Newey--West (1987,
     1994), Bartlett kernel, Newey--West (1994) automatic lag rounded down, re-selected for $\hat{\mathbf{S}}_1$
     and $\hat{\mathbf{S}}_2$ (selected lags in the table). $\chi^2$: test that the two pricing errors are
@@ -524,8 +550,7 @@ Table~\ref{tab:q3d}.
 \paragraph{Setup.}
 GMM estimate of $\gamma$ from $\mathbb{E}[R_{w,t}^{-\gamma} \cdot xR_{j,t}] = 0$ for $j = 1, \dots, 21$:
 the trailing 12-month excess returns of the 20 value-weighted book-to-market and momentum decile portfolios
-(nominal, over the 12-month compounded Fama--French risk-free rate) and $xR_{w,t}$. Sample: December 1940
-to December 2021.
+(nominal, over the 12-month compounded Fama--French risk-free rate) and $xR_{w,t}$. Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months).
 
 \paragraph{Method.}
 As in Question~\ref{q3c} with 21 moments: $\hat{\mathbf{W}} = \mathbf{I}$,
@@ -536,12 +561,15 @@ $\widehat{\mathbb{E}}[\bm{\epsilon}]'\,\mathrm{aVar}^{+}\,\widehat{\mathbb{E}}[\
 \paragraph{Result.}
 Table~\ref{tab:q3e}.
 
-\begin{table}[htbp]
+\begin{table}[p]
   \centering
+  \small
+  \renewcommand{\arraystretch}{0.9}
+  \captionsetup{font=small}
   \input{../output/q3e_table.tex}
   \caption{GMM estimate of $\gamma$ from $\widehat{\mathbb{E}}[R_{w,t}^{-\gamma} \cdot xR_{j,t}] = 0$,
-    $j = 1, \dots, 21$, with an identity weighting matrix ($\hat{\mathbf{A}} = \hat{\mathbf{G}}'$). Sample:
-    December 1940 to December 2021 ($T = 973$ months). Data: monthly observations of 12-month returns: the
+    $j = 1, \dots, 21$, with an identity weighting matrix ($\hat{\mathbf{A}} = \hat{\mathbf{G}}'$), for both
+    sample versions (rows and blocks labelled by version). Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns: the
     20 decile portfolios (value-weighted, nominal, over the 12-month compounded risk-free rate) and
     $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ (EQ Dataset, real); $R_{w,t} = e^{r_{e,t}}$. Units: decimals.
     Panel A: estimate with its standard error in the next column; Panel B: pricing errors with
@@ -555,6 +583,31 @@ Table~\ref{tab:q3e}.
 % ---------------------------------------------------------------------------------------------
 \clearpage
 \section{}\label{q4}
+\paragraph{Sample periods.}
+% Repeated from Question 3 as spec/q34_common.md item 6 requires; from item 6 (student-written reason; typeset by AI, AI_INTERACTIONS.md).
+Results are reported for two sample versions, both ending in December 2021 (the last EQ observation).
+Version (1) ``Common'' uses December 1940 to December 2021 for every subquestion of Questions 3 and 4 (the
+latest start, set by $z$ in Questions~\ref{q3c}--\ref{q3d}); version (2) ``Max'' uses the longest sample
+available for each subquestion. Version (1) puts Questions 3 and 4 on the same sample, so that differences
+between the non-linear SDF (Question~3, $M_t = R_{w,t}^{-\gamma}$) and its linearized version (Question~4,
+$M_t = a - b \cdot R_{w,t}$) are not driven by differences in the sample period; for example,
+Questions~\ref{q3e} and~\ref{q4b} use the same 21 moments. Version (2) uses all data available for each
+subquestion, so each estimate is as precise as the data allow.
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+  \toprule
+  Item & (1) Common & (2) Max \\
+  \midrule
+  Question~\ref{q3b}                    & Dec 1940 -- Dec 2021 ($T = 973$) & Dec 1927 -- Dec 2021 ($T = 1129$) \\
+  Questions~\ref{q3c}, \ref{q3d}        & Dec 1940 -- Dec 2021 ($T = 973$) & Dec 1940 -- Dec 2021 ($T = 973$) \\
+  Question~\ref{q3e}                    & Dec 1940 -- Dec 2021 ($T = 973$) & Jun 1928 -- Dec 2021 ($T = 1123$) \\
+  Questions~\ref{q4b}--\ref{q4e}        & Dec 1940 -- Dec 2021 ($T = 973$) & Jun 1928 -- Dec 2021 ($T = 1123$) \\
+  \bottomrule
+\end{tabular}
+\end{center}
+Questions~\ref{q3c} and~\ref{q3d} are identical in both versions, so one set of results is reported.
 
 \subsection{}\label{q4a}
 \task{[...] (1) Show that we also have (as an approximation) a conditionally linear CAPM, $M_{t+1} \approx a_t - b_t \cdot R_{w,t+1}$, and provide expressions for $a_t$ and $b_t$. [...]\par (2) Highlight a disadvantage of the $M_{t+1} \approx a_t - b_t \cdot R_{w,t+1}$ relative to the original $M_{t+1} = R_{w,t+1}^{-\gamma}$ (beyond the fact that the linear SDF is an approximation).}
@@ -616,7 +669,7 @@ Therefore,
 \paragraph{Setup.}
 SDF $M_t = 1 - b\,(R_{w,t} - \mu)$ with $\mu = \mathbb{E}[R_{w,t}]$ (normalization $\mathbb{E}[M] = 1$).
 Test assets: the 21 excess returns of Question~\ref{q3e} ($xR_{j,t}$, $j = 1, \dots, 20$, and $xR_{w,t}$),
-with $R_{w,t} = e^{r_{e,t}}$. Sample: June 1928 to December 2021.
+with $R_{w,t} = e^{r_{e,t}}$. Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months).
 
 \paragraph{Method.}
 The parameters $\bm{\theta} = (b, \mu)$ satisfy 22 moments: the pricing moments
@@ -636,12 +689,15 @@ $\mathrm{aVar}\big[\widehat{\mathbb{E}}[\bm{\epsilon}]\big]$ (rank 20), so they 
 \paragraph{Result (1)--(2).}
 Table~\ref{tab:q4b}.
 
-\begin{table}[htbp]
+\begin{table}[p]
   \centering
+  \small
+  \renewcommand{\arraystretch}{0.9}
+  \captionsetup{font=small}
   \input{../output/q4b_table.tex}
   \caption{First-stage GMM estimate of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$ with identity weights on the 21
-    pricing moments and $\mathbb{E}[R_{w,t} - \mu] = 0$ satisfied exactly. Sample: June 1928 to December 2021
-    ($T = 1123$ months). Data: monthly observations of 12-month returns: the 20 decile portfolios
+    pricing moments and $\mathbb{E}[R_{w,t} - \mu] = 0$ satisfied exactly, for both sample versions (rows and
+    blocks labelled by version). Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns: the 20 decile portfolios
     (value-weighted, nominal, over the 12-month compounded risk-free rate) and
     $xR_{w,t} = e^{r_{e,t}} - e^{r_{f,t}}$ (EQ Dataset, real); $R_{w,t} = e^{r_{e,t}}$. Units: decimals.
     Panel A: estimate with its standard error in the next column; Panel B: pricing errors with
@@ -676,17 +732,17 @@ $\hat{\mathbf{A}} = \begin{bmatrix} \hat{\mathbf{G}}_b'\hat{\mathbf{W}} & 0 \\ \
 and $\hat{\mathbf{S}}$ re-estimated at each estimate.
 
 \paragraph{Result.}
-Table~\ref{tab:q4c}.
+Tables~\ref{tab:q4c} ((1) Common) and~\ref{tab:q4c_max} ((2) Max).
 
 \begin{table}[p]
   \centering
   \footnotesize
   \renewcommand{\arraystretch}{0.9}
   \captionsetup{font=footnotesize}
-  \input{../output/q4c_table.tex}
+  \input{../output/q4c_table_common.tex}
   \caption{Efficient GMM estimates of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$: Question~\ref{q4b}
-    ($\hat{\mathbf{W}} = \mathbf{I}$, Table~\ref{tab:q4b}, for reference), two-step, and iterated. Sample:
-    June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
+    ($\hat{\mathbf{W}} = \mathbf{I}$, Table~\ref{tab:q4b}, for reference), two-step, and iterated; sample
+    version (1) Common. Sample: December 1940 to December 2021 ($T = 973$ months). Data: monthly observations of 12-month returns, as in
     Table~\ref{tab:q4b}. Units: decimals. Panel A: estimates with their standard errors in the next column;
     Panel B: pricing errors with $t$-statistics for each estimate, book-to-market and momentum deciles side by
     side and the market below; Panel C: joint tests, Newey--West lags and iterations. Standard errors and
@@ -695,6 +751,25 @@ Table~\ref{tab:q4c}.
     sandwich in Panel C). $\chi^2$: test that the 21 pricing errors are jointly zero (Moore--Penrose
     pseudo-inverse). ``--'': not applicable.}
   \label{tab:q4c}
+\end{table}
+
+\begin{table}[p]
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{0.9}
+  \captionsetup{font=footnotesize}
+  \input{../output/q4c_table_max.tex}
+  \caption{Efficient GMM estimates of $b$ in $M_t = 1 - b\,(R_{w,t} - \mu)$: Question~\ref{q4b}
+    ($\hat{\mathbf{W}} = \mathbf{I}$, Table~\ref{tab:q4b}, for reference), two-step, and iterated; sample
+    version (2) Max. Sample: June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
+    Table~\ref{tab:q4b}. Units: decimals. Panel A: estimates with their standard errors in the next column;
+    Panel B: pricing errors with $t$-statistics for each estimate, book-to-market and momentum deciles side by
+    side and the market below; Panel C: joint tests, Newey--West lags and iterations. Standard errors and
+    $t$-statistics: Newey--West (1987, 1994), Bartlett kernel, Newey--West (1994) automatic lag rounded down
+    and re-selected each time $\hat{\mathbf{S}}$ is estimated (lags of the weighting matrix and of the
+    sandwich in Panel C). $\chi^2$: test that the 21 pricing errors are jointly zero (Moore--Penrose
+    pseudo-inverse). ``--'': not applicable.}
+  \label{tab:q4c_max}
 \end{table}
 
 \FloatBarrier
@@ -706,7 +781,7 @@ Table~\ref{tab:q4c}.
 \paragraph{Setup.}
 Time-series estimates of the linear beta pricing model implied by $M_t = a - b \cdot R_{w,t}$. With
 $R_{f,t}$ treated as constant, $M_t = (a - b R_f) - b \cdot xR_{w,t}$, so the factor is the excess return
-$F_t = xR_{w,t}$. Test assets and sample as in Question~\ref{q4b} (June 1928 to December 2021).
+$F_t = xR_{w,t}$. Test assets as in Question~\ref{q4b}. Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months).
 
 \paragraph{Method.}
 $\hat{\lambda} = \widehat{\mathbb{E}}[F]$, with the Newey--West standard error from a time-series regression
@@ -722,11 +797,14 @@ with $J = 20$, $K = 1$, $\hat{\bm{\Sigma}}_\varepsilon$ dividing by $T - 2$ and 
 \paragraph{Result (1)--(3).}
 Table~\ref{tab:q4d}.
 
-\begin{table}[htbp]
+\begin{table}[p]
   \centering
+  \small
+  \renewcommand{\arraystretch}{0.9}
+  \captionsetup{font=small}
   \input{../output/q4d_table.tex}
-  \caption{Time-series estimates of $\lambda$ and $\alpha_j$ with the factor $F_t = xR_{w,t}$. Sample: June
-    1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
+  \caption{Time-series estimates of $\lambda$ and $\alpha_j$ with the factor $F_t = xR_{w,t}$, for both sample
+    versions (rows and blocks labelled by version). Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
     Table~\ref{tab:q4b}. Units: decimals. Panel A: $\hat{\lambda}$ with its standard error in the next
     column; Panel B: $\hat{\alpha}_j$ with $t$-statistics, book-to-market and momentum deciles side by side and
     the market below; Panel C: GRS test and Newey--West lags. Standard error of $\hat{\lambda}$ and
@@ -745,8 +823,8 @@ Table~\ref{tab:q4d}.
 % caption drafted by AI (AI_INTERACTIONS.md).
 \paragraph{Setup.}
 Fama--MacBeth estimates of the linear beta pricing model implied by $M_t = a - b \cdot R_{w,t}$, with the
-factor $F_t = R_{w,t}$ (the gross return; no constant-$R_f$ assumption). Test assets and sample as in
-Question~\ref{q4b} (June 1928 to December 2021).
+factor $F_t = R_{w,t}$ (the gross return; no constant-$R_f$ assumption). Test assets as in
+Question~\ref{q4b}. Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months).
 
 \paragraph{Method.}
 First pass: for each asset, the full-sample time-series regression
@@ -759,11 +837,14 @@ $\hat{\lambda}_t$ ($\hat{\alpha}_{j,t}$) on a constant.
 \paragraph{Result (1)--(2).}
 Table~\ref{tab:q4e}.
 
-\begin{table}[htbp]
+\begin{table}[p]
   \centering
+  \small
+  \renewcommand{\arraystretch}{0.9}
+  \captionsetup{font=small}
   \input{../output/q4e_table.tex}
-  \caption{Fama--MacBeth estimates of $\lambda$ and $\alpha_j$ with the factor $F_t = R_{w,t}$. Sample: June
-    1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
+  \caption{Fama--MacBeth estimates of $\lambda$ and $\alpha_j$ with the factor $F_t = R_{w,t}$, for both sample
+    versions (rows and blocks labelled by version). Samples: (1) Common: December 1940 to December 2021 ($T = 973$ months); (2) Max: June 1928 to December 2021 ($T = 1123$ months). Data: monthly observations of 12-month returns, as in
     Table~\ref{tab:q4b}. Units: decimals. Panel A: $\hat{\lambda}$ with its standard error in the next
     column; Panel B: $\hat{\alpha}_j$ with $t$-statistics, book-to-market and momentum deciles side by side and
     the market below; Panel C: Newey--West lags. Standard errors and $t$-statistics: Newey--West (1987, 1994)

@@ -2,15 +2,30 @@
 \begin{tabular}{l S[table-format=-1.4] S[table-format=-1.2] S[table-format=-1.4] S[table-format=-1.2]}
 \toprule
 \multicolumn{5}{l}{\textit{Panel A: Factor risk premium}} \\
- & \multicolumn{2}{c}{Estimate} & \multicolumn{2}{c}{s.e.} \\
+ & \multicolumn{2}{c}{$\hat{\lambda}$} & \multicolumn{2}{c}{s.e.} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
-$\hat{\lambda}$ & \multicolumn{2}{c}{0.0828} & \multicolumn{2}{c}{0.0186} \\
+(1) Common & \multicolumn{2}{c}{0.0874} & \multicolumn{2}{c}{0.0159} \\
+(2) Max & \multicolumn{2}{c}{0.0828} & \multicolumn{2}{c}{0.0186} \\
 \midrule
 \multicolumn{5}{l}{\textit{Panel B: Pricing errors}} \\
  & \multicolumn{2}{c}{Book-to-market} & \multicolumn{2}{c}{Momentum} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Decile & \multicolumn{1}{c}{$\hat{\alpha}_j$} & \multicolumn{1}{c}{$t$-stat} & \multicolumn{1}{c}{$\hat{\alpha}_j$} & \multicolumn{1}{c}{$t$-stat} \\
 \midrule
+\multicolumn{5}{l}{\textit{(1) Common}} \\
+\quad 1 (Lo) & -0.0122 & -1.38 & -0.1157 & -8.49 \\
+\quad 2 & 0.0059 & 1.15 & -0.0424 & -3.59 \\
+\quad 3 & 0.0011 & 0.15 & -0.0186 & -2.28 \\
+\quad 4 & 0.0043 & 0.50 & -0.0017 & -0.17 \\
+\quad 5 & 0.0163 & 1.65 & 0.0035 & 0.49 \\
+\quad 6 & 0.0239 & 2.25 & 0.0044 & 0.80 \\
+\quad 7 & 0.0089 & 0.66 & 0.0118 & 1.69 \\
+\quad 8 & 0.0308 & 2.33 & 0.0245 & 3.87 \\
+\quad 9 & 0.0395 & 2.68 & 0.0294 & 3.62 \\
+\quad 10 (Hi) & 0.0297 & 1.52 & 0.0597 & 5.02 \\
+\quad Market, $xR_{w,t}$ & 0.0000 & {--} & & \\
+\addlinespace
+\multicolumn{5}{l}{\textit{(2) Max}} \\
 \quad 1 (Lo) & -0.0052 & -0.64 & -0.1121 & -7.55 \\
 \quad 2 & 0.0171 & 2.90 & -0.0487 & -4.09 \\
 \quad 3 & 0.0064 & 0.97 & -0.0279 & -3.25 \\
@@ -24,10 +39,12 @@ Decile & \multicolumn{1}{c}{$\hat{\alpha}_j$} & \multicolumn{1}{c}{$t$-stat} & \
 \quad Market, $xR_{w,t}$ & 0.0000 & {--} & & \\
 \midrule
 \multicolumn{5}{l}{\textit{Panel C: GRS test and Newey--West lags}} \\
- & \multicolumn{1}{c}{GRS, $F(20, 1102)$} & \multicolumn{1}{c}{$p$-value} & \multicolumn{1}{c}{Lag, $\hat{\lambda}$} & \multicolumn{1}{c}{Lags, $\hat{\alpha}_j$} \\
+ & \multicolumn{1}{c}{GRS} & \multicolumn{1}{c}{$p$-value} & \multicolumn{1}{c}{Lag, $\hat{\lambda}$} & \multicolumn{1}{c}{Lags, $\hat{\alpha}_j$} \\
 \cmidrule(lr){2-5}
- & \multicolumn{1}{c}{49.65} & \multicolumn{1}{c}{$<$0.001} & \multicolumn{1}{c}{23} & \multicolumn{1}{c}{19--23} \\
+(1) Common, $F(20, 952)$ & \multicolumn{1}{c}{50.16} & \multicolumn{1}{c}{$<$0.001} & \multicolumn{1}{c}{22} & \multicolumn{1}{c}{21--23} \\
+(2) Max, $F(20, 1102)$ & \multicolumn{1}{c}{49.65} & \multicolumn{1}{c}{$<$0.001} & \multicolumn{1}{c}{23} & \multicolumn{1}{c}{19--23} \\
 \addlinespace
-Sample & \multicolumn{4}{c}{Jun 1928 -- Dec 2021 ($T = 1123$)} \\
+Sample, (1) Common & \multicolumn{4}{c}{Dec 1940 -- Dec 2021 ($T = 973$)} \\
+Sample, (2) Max & \multicolumn{4}{c}{Jun 1928 -- Dec 2021 ($T = 1123$)} \\
 \bottomrule
 \end{tabular}

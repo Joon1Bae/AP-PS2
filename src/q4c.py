@@ -1,6 +1,7 @@
 """Q4(c): efficient GMM estimates of b in M_t = 1 - b (R_w,t - mu): two-step and iterated.
 
-Implements spec/q4c.md (data, moments and the treatment of mu as in Q4(b)):
+Implements spec/q4c.md (data, moments and the treatment of mu as in Q4(b)), for both sample versions
+of spec/q34_common.md item 6: (1) Common Dec 1940 - Dec 2021, (2) Max Jun 1928 - Dec 2021:
 - mu_hat = mean(R_w) (moment 22 holds exactly). For a weighting matrix W on the 21 pricing
   moments, b has the closed form (GLS when W = S^-1):
       b(W) = (d'W d)^-1 d'W E[xR],   d = Cov(R_w, xR) (1/T).
@@ -20,7 +21,7 @@ Outputs (output/):
 - q4c_estimates.csv        b, s.e., chi2, p-value, lags and iterations for each estimate
 - q4c_pricing_errors.csv   pricing error and t-statistic of each of the 21 moments, per estimate
 - q4c_iterations.csv       the path of b and the lag over the iterations
-- q4c_table.tex            LaTeX tabular (input by tex/ps2_solution.tex)
+- q4c_table_common.tex, q4c_table_max.tex   LaTeX tabulars, one per sample version
 
 Run from the repository root:  uv run python src/q4c.py
 """
@@ -30,7 +31,7 @@ import pandas as pd
 from scipy import stats
 
 from gmm import gmm_avar, newey_west_s, nw94_lag
-from q34_data import load_q34_sample
+from q34_data import VERSIONS, load_q34_version
 from sdf import OUTPUT
 from tables import long_table, p_text, sample_text
 
@@ -90,16 +91,16 @@ class Q4Model:
                 "p_chi2": float(stats.chi2.sf(chi2, CHI2_DF)), "lag_sandwich": lag_mid}
 
 
-def latex_table(res: dict, months: pd.PeriodIndex) -> str:
+def latex_table(res: dict, months: pd.PeriodIndex, version: str) -> str:
     """Panels A (b per estimate), B (pricing errors per estimate, BM and MOM side by side), C (tests, lags)."""
     keys = list(ESTIMATES)
     return long_table(
         "src/q4c.py",
-        {"title": "Panel A: Parameter estimates", "header": (r"$\hat{b}$", "s.e."),
+        {"title": f"Panel A: Parameter estimates, {version}", "header": (r"$\hat{b}$", "s.e."),
          "rows": [(ESTIMATES[k], f"{res[k]['b']:.4f}", f"{res[k]['se_b']:.4f}") for k in keys]},
-        {"title": "Panel B: Pricing errors", "stat": r"$\widehat{\mathbb{E}}[\epsilon_j]$",
+        {"title": f"Panel B: Pricing errors, {version}", "stat": r"$\widehat{\mathbb{E}}[\epsilon_j]$",
          "blocks": [(rf"\textit{{{ESTIMATES[k]}}}", res[k]["eps"], res[k]["t_eps"]) for k in keys]},
-        {"title": "Panel C: Joint test and Newey--West lags",
+        {"title": f"Panel C: Joint test and Newey--West lags, {version}",
          "header": (rf"$\chi^2({CHI2_DF})$", "$p$-value", r"Lag, $\hat{\mathbf{W}}$ / sandwich", "Iterations"),
          "rows": [(ESTIMATES[k], f"{res[k]['chi2']:.2f}", p_text(res[k]["p_chi2"]),
                    f"{res[k]['lag_weight']} / {res[k]['lag_sandwich']}",
@@ -108,8 +109,7 @@ def latex_table(res: dict, months: pd.PeriodIndex) -> str:
     )
 
 
-def main() -> None:
-    xr, r_w = load_q34_sample()
+def run(xr: pd.DataFrame, r_w: pd.Series) -> tuple[dict, list, Q4Model]:
     model = Q4Model(xr, r_w)
     identity = np.eye(model.n)
 
@@ -130,34 +130,43 @@ def main() -> None:
         b = b_new
     if not converged:
         raise RuntimeError(f"Iterated GMM did not converge in {MAX_ITER} iterations.")
-    w_iter, lag_iter = w, lag
 
     res = {
         "q4b": {**model.inference(b_1, identity), "lag_weight": "--"},
         "two_step": {**model.inference(b_2s, w_1), "lag_weight": str(lag_1)},
-        "iterated": {**model.inference(b, w_iter), "lag_weight": str(lag_iter), "iterations": len(path)},
+        "iterated": {**model.inference(b, w), "lag_weight": str(lag), "iterations": len(path)},
     }
+    return res, path, model
 
+
+def main() -> None:
     OUTPUT.mkdir(exist_ok=True)
-    pd.DataFrame([{
-        "estimate": k, "b": r["b"], "se_b": r["se_b"], "chi2": r["chi2"], "chi2_df": CHI2_DF,
-        "p_value": r["p_chi2"], "nw_lag_weight": r["lag_weight"], "nw_lag_sandwich": r["lag_sandwich"],
-        "iterations": r.get("iterations", ""), "converged": converged if k == "iterated" else "",
-        "mu": model.mu, "T": model.t,
-    } for k, r in res.items()]).to_csv(OUTPUT / "q4c_estimates.csv", index=False, encoding="utf-8")
-    pd.DataFrame({
-        "j": range(1, 22), "asset": list(xr.columns),
-        **{f"{col}_{k}": res[k][key] for k in res for col, key in (("pricing_error", "eps"), ("t_stat", "t_eps"))},
-    }).to_csv(OUTPUT / "q4c_pricing_errors.csv", index=False, encoding="utf-8")
-    pd.DataFrame(path).to_csv(OUTPUT / "q4c_iterations.csv", index=False, encoding="utf-8")
-    (OUTPUT / "q4c_table.tex").write_text(latex_table(res, xr.index), encoding="utf-8")
+    estimates, errors, paths = [], [], []
+    for version, label in VERSIONS.items():
+        xr, r_w = load_q34_version(version)
+        res, path, model = run(xr, r_w)
+        estimates += [{
+            "version": version, "estimate": k, "b": r["b"], "se_b": r["se_b"], "chi2": r["chi2"],
+            "chi2_df": CHI2_DF, "p_value": r["p_chi2"], "nw_lag_weight": r["lag_weight"],
+            "nw_lag_sandwich": r["lag_sandwich"], "iterations": r.get("iterations", ""),
+            "mu": model.mu, "sample_start": str(xr.index[0]), "sample_end": str(xr.index[-1]), "T": model.t,
+        } for k, r in res.items()]
+        errors.append(pd.DataFrame({
+            "version": version, "j": range(1, 22), "asset": list(xr.columns),
+            **{f"{col}_{k}": res[k][key] for k in res for col, key in (("pricing_error", "eps"), ("t_stat", "t_eps"))},
+        }))
+        paths.append(pd.DataFrame(path).assign(version=version))
+        (OUTPUT / f"q4c_table_{version}.tex").write_text(latex_table(res, xr.index, label), encoding="utf-8")
 
-    print(f"Sample: {xr.index[0]} to {xr.index[-1]} (T = {model.t} months, N = {model.n} assets)")
-    for k, r in res.items():
-        print(f"{k:9s} b = {r['b']:.6f}  se = {r['se_b']:.6f}  chi2 = {r['chi2']:.3f}  p = {r['p_chi2']:.3g}  "
-              f"lag W/sandwich = {r['lag_weight']}/{r['lag_sandwich']}")
-    print(f"iterated: converged = {converged} after {len(path)} iterations; last lags: "
-          f"{[p['lag'] for p in path[-5:]]}")
+        print(f"{label}: {xr.index[0]} to {xr.index[-1]} (T = {model.t})")
+        for k, r in res.items():
+            print(f"  {k:9s} b = {r['b']:.6f}  se = {r['se_b']:.6f}  chi2 = {r['chi2']:.3f}  p = {r['p_chi2']:.3g}  "
+                  f"lag W/sandwich = {r['lag_weight']}/{r['lag_sandwich']}")
+        print(f"  iterated: {len(path)} iterations; lags used: {sorted(set(p['lag'] for p in path))}")
+
+    pd.DataFrame(estimates).to_csv(OUTPUT / "q4c_estimates.csv", index=False, encoding="utf-8")
+    pd.concat(errors).to_csv(OUTPUT / "q4c_pricing_errors.csv", index=False, encoding="utf-8")
+    pd.concat(paths).to_csv(OUTPUT / "q4c_iterations.csv", index=False, encoding="utf-8")
 
 
 if __name__ == "__main__":

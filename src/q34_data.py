@@ -6,7 +6,9 @@
   "Hi PRIOR" (momentum), in decimals, compounded to trailing 12-month gross returns
   R12_j,t = (1 + R_j,t) ... (1 + R_j,t-11); likewise R12_f,t from the monthly "RF".
   xR_j,t = R12_j,t - R12_f,t. Nominal returns (no deflation).
-- Samples (item 6): Question 4 1928-06 to 2021-12; Question 3 1940-12 to 2021-12.
+- Samples (item 6), two versions ending 2021-12: (1) "Common" 1940-12 for every subquestion;
+  (2) "Max" the longest sample per subquestion (Q3(b) 1927-12, Q3(c)-(d) 1940-12, Q3(e) and
+  Q4(b)-(e) 1928-06).
 - Instrument (item 7, spec/q2e_PS1.md): the PS1 2e out-of-sample forecast made at origin s,
   E_OS_s[xR_e] = (G_s - 1) + G_s D_s/P_s, with G_s the mean of exp(dg_m) over m = 1927-12 ... s
   and D_s/P_s = exp(dp_s); z_s = E_OS_s[xR_e] / sigma2_e. In the moment z_{t-1} xR_w,t the
@@ -24,7 +26,9 @@ from sdf import DATA
 FRENCH_START = pd.Period("1927-07", freq="M")
 SAMPLE_START = pd.Period("1928-06", freq="M")
 SAMPLE_END = pd.Period("2021-12", freq="M")
-Q3_SAMPLE_START = pd.Period("1940-12", freq="M")
+Q3_SAMPLE_START = pd.Period("1940-12", freq="M")   # first t with z_{t-1}; start of version (1)
+EQ_START = pd.Period("1927-12", freq="M")          # first EQ observation; Q3(b) version (2)
+VERSIONS = {"common": "(1) Common", "max": "(2) Max"}
 Z_LAG = 12  # months between the instrument date and the end month of the return it multiplies
 
 
@@ -97,3 +101,18 @@ def load_q3_sample() -> pd.DataFrame:
         raise ValueError("The instrument is missing for some sample months.")
     sample.attrs["sigma2_e"] = sigma2_e
     return sample
+
+
+def restrict(df, start: pd.Period):
+    """Rows from start to SAMPLE_END; checks that the months are complete."""
+    out = df.loc[start:SAMPLE_END]
+    if not out.index.equals(pd.period_range(start, SAMPLE_END, freq="M")):
+        raise ValueError(f"The sample {start} to {SAMPLE_END} is incomplete.")
+    return out
+
+
+def load_q34_version(version: str) -> tuple[pd.DataFrame, pd.Series]:
+    """21 excess returns and R_w for Q3(e) and Q4(b)-(e): version (1) from 1940-12, (2) from 1928-06."""
+    xr, r_w = load_q34_sample()
+    xr = restrict(xr, Q3_SAMPLE_START if version == "common" else SAMPLE_START)
+    return xr, r_w.loc[xr.index]

@@ -2,15 +2,17 @@
 \begin{tabular}{l S[table-format=-1.4] S[table-format=-1.2] S[table-format=-1.4] S[table-format=-1.2]}
 \toprule
 \multicolumn{5}{l}{\textit{Panel A: Parameter estimate}} \\
- & \multicolumn{2}{c}{Estimate} & \multicolumn{2}{c}{s.e.} \\
+ & \multicolumn{2}{c}{$\hat{\gamma}$} & \multicolumn{2}{c}{s.e.} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
-$\hat{\gamma}$ & \multicolumn{2}{c}{2.9920} & \multicolumn{2}{c}{0.7020} \\
+(1) Common & \multicolumn{2}{c}{2.9920} & \multicolumn{2}{c}{0.7020} \\
+(2) Max & \multicolumn{2}{c}{1.9710} & \multicolumn{2}{c}{0.5830} \\
 \midrule
 \multicolumn{5}{l}{\textit{Panel B: Pricing errors}} \\
  & \multicolumn{2}{c}{Book-to-market} & \multicolumn{2}{c}{Momentum} \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 Decile & \multicolumn{1}{c}{$\widehat{\mathbb{E}}[\epsilon_j]$} & \multicolumn{1}{c}{$t$-stat} & \multicolumn{1}{c}{$\widehat{\mathbb{E}}[\epsilon_j]$} & \multicolumn{1}{c}{$t$-stat} \\
 \midrule
+\multicolumn{5}{l}{\textit{(1) Common}} \\
 \quad 1 (Lo) & -0.0173 & -1.52 & -0.1048 & -7.70 \\
 \quad 2 & 0.0014 & 0.21 & -0.0436 & -4.92 \\
 \quad 3 & -0.0038 & -0.65 & -0.0199 & -2.30 \\
@@ -22,12 +24,27 @@ Decile & \multicolumn{1}{c}{$\widehat{\mathbb{E}}[\epsilon_j]$} & \multicolumn{1
 \quad 9 & 0.0401 & 3.89 & 0.0227 & 3.18 \\
 \quad 10 (Hi) & 0.0335 & 2.17 & 0.0500 & 4.32 \\
 \quad Market, $xR_{w,t}$ & -0.0033 & -0.78 & & \\
+\addlinespace
+\multicolumn{5}{l}{\textit{(2) Max}} \\
+\quad 1 (Lo) & -0.0102 & -1.01 & -0.1018 & -7.85 \\
+\quad 2 & 0.0103 & 1.44 & -0.0436 & -5.11 \\
+\quad 3 & 0.0021 & 0.35 & -0.0298 & -3.27 \\
+\quad 4 & -0.0015 & -0.26 & -0.0115 & -1.65 \\
+\quad 5 & 0.0085 & 1.23 & -0.0014 & -0.21 \\
+\quad 6 & 0.0151 & 1.83 & -0.0002 & -0.05 \\
+\quad 7 & -0.0006 & -0.07 & 0.0111 & 1.58 \\
+\quad 8 & 0.0227 & 2.82 & 0.0250 & 4.41 \\
+\quad 9 & 0.0333 & 3.42 & 0.0299 & 3.73 \\
+\quad 10 (Hi) & 0.0191 & 1.32 & 0.0614 & 4.69 \\
+\quad Market, $xR_{w,t}$ & -0.0040 & -1.04 & & \\
 \midrule
 \multicolumn{5}{l}{\textit{Panel C: Joint test}} \\
- & \multicolumn{1}{c}{$\chi^2(20)$} & \multicolumn{1}{c}{$p$-value} & \multicolumn{1}{c}{Newey--West lag} & \multicolumn{1}{c}{} \\
+ & \multicolumn{1}{c}{$\chi^2(20)$} & \multicolumn{1}{c}{$p$-value} & \multicolumn{1}{c}{Newey--West lag} & \multicolumn{1}{c}{$T$} \\
 \cmidrule(lr){2-5}
- & \multicolumn{1}{c}{197.88} & \multicolumn{1}{c}{$<$0.001} & \multicolumn{1}{c}{21} & \multicolumn{1}{c}{} \\
+(1) Common & \multicolumn{1}{c}{197.88} & \multicolumn{1}{c}{$<$0.001} & \multicolumn{1}{c}{21} & \multicolumn{1}{c}{973} \\
+(2) Max & \multicolumn{1}{c}{185.58} & \multicolumn{1}{c}{$<$0.001} & \multicolumn{1}{c}{23} & \multicolumn{1}{c}{1123} \\
 \addlinespace
-Sample & \multicolumn{4}{c}{Dec 1940 -- Dec 2021 ($T = 973$)} \\
+Sample, (1) Common & \multicolumn{4}{c}{Dec 1940 -- Dec 2021 ($T = 973$)} \\
+Sample, (2) Max & \multicolumn{4}{c}{Jun 1928 -- Dec 2021 ($T = 1123$)} \\
 \bottomrule
 \end{tabular}

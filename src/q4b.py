@@ -1,7 +1,8 @@
 """Q4(b): first-stage GMM estimate of b in M_t = 1 - b (R_w,t - E[R_w]).
 
 Implements spec/q4b.md:
-- Data: the 21 excess returns of spec/q34_common.md, Jun 1928 - Dec 2021: j = 1..20 trailing
+- Data: the 21 excess returns of spec/q34_common.md, two samples (item 6): (1) Common Dec 1940 -
+  Dec 2021, (2) Max Jun 1928 - Dec 2021: j = 1..20 trailing
   12-month BE/ME and momentum decile excess returns (French data, decimals), j = 21
   xR_w = exp(re) - exp(rf); F = R_w = exp(re) (EQ Dataset).
 - Parameters theta = (b, mu), mu = E[R_w]. Moments (22):
@@ -29,7 +30,7 @@ import pandas as pd
 from scipy import stats
 
 from gmm import gmm_avar, newey_west_s, nw94_lag
-from q34_data import load_q34_sample
+from q34_data import VERSIONS, load_q34_version
 from sdf import OUTPUT
 from tables import long_table, p_text, sample_text
 
@@ -78,42 +79,43 @@ def fmt(value: float, digits: int) -> str:
     return text.replace("-", "$-$")
 
 
-def latex_table(res: dict, labels: list[str], months: pd.PeriodIndex) -> str:
-    """Panels A (b), B (pricing errors, BM and MOM side by side), C (chi2 test, lag, sample)."""
+def latex_table(res: dict) -> str:
+    """Panels A (b), B (pricing errors, BM and MOM side by side), C (chi2 test, lag) for each version."""
+    keys = list(VERSIONS)
     return long_table(
         "src/q4b.py",
-        {"title": "Panel A: Parameter estimate", "header": ("Estimate", "s.e."),
-         "rows": [(r"$\hat{b}$", f"{res['b']:.4f}", f"{res['se_b']:.4f}")]},
+        {"title": "Panel A: Parameter estimate", "header": (r"$\hat{b}$", "s.e."),
+         "rows": [(VERSIONS[k], f"{res[k]['b']:.4f}", f"{res[k]['se_b']:.4f}") for k in keys]},
         {"title": "Panel B: Pricing errors", "stat": r"$\widehat{\mathbb{E}}[\epsilon_j]$",
-         "blocks": [(None, res["eps"], res["t_eps"])]},
-        {"title": "Panel C: Joint test", "header": (rf"$\chi^2({CHI2_DF})$", "$p$-value", "Newey--West lag", ""),
-         "rows": [("", f"{res['chi2']:.2f}", p_text(res["p_chi2"]), str(res["lag"]), "")]},
-        sample_text(months),
+         "blocks": [(rf"\textit{{{VERSIONS[k]}}}", res[k]["eps"], res[k]["t_eps"]) for k in keys]},
+        {"title": "Panel C: Joint test", "header": (rf"$\chi^2({CHI2_DF})$", "$p$-value", "Newey--West lag", "$T$"),
+         "rows": [(VERSIONS[k], f"{res[k]['chi2']:.2f}", p_text(res[k]["p_chi2"]), str(res[k]["lag"]),
+                   str(res[k]["T"])) for k in keys]},
+        [(f"Sample, {VERSIONS[k]}", sample_text(res[k]["months"])) for k in keys],
     )
 
 
 def main() -> None:
-    xr, r_w = load_q34_sample()
-    res = estimate(xr, r_w)
+    res = {}
+    for k in VERSIONS:
+        xr, r_w = load_q34_version(k)
+        res[k] = {**estimate(xr, r_w), "months": xr.index, "assets": list(xr.columns)}
 
     OUTPUT.mkdir(exist_ok=True)
     pd.DataFrame([{
-        "b": res["b"], "se_b": res["se_b"], "mu": res["mu"], "nw_lag": res["lag"],
-        "chi2": res["chi2"], "chi2_df": CHI2_DF, "p_value": res["p_chi2"],
-        "sample_start": str(xr.index[0]), "sample_end": str(xr.index[-1]), "T": res["T"],
-    }]).to_csv(OUTPUT / "q4b_b_estimate.csv", index=False, encoding="utf-8")
-    pd.DataFrame({
-        "j": range(1, 22), "asset": list(xr.columns),
-        "pricing_error": res["eps"], "t_stat": res["t_eps"],
-    }).to_csv(OUTPUT / "q4b_pricing_errors.csv", index=False, encoding="utf-8")
-    (OUTPUT / "q4b_table.tex").write_text(latex_table(res, list(xr.columns), xr.index), encoding="utf-8")
+        "version": k, "b": r["b"], "se_b": r["se_b"], "mu": r["mu"], "nw_lag": r["lag"],
+        "chi2": r["chi2"], "chi2_df": CHI2_DF, "p_value": r["p_chi2"],
+        "sample_start": str(r["months"][0]), "sample_end": str(r["months"][-1]), "T": r["T"],
+    } for k, r in res.items()]).to_csv(OUTPUT / "q4b_b_estimate.csv", index=False, encoding="utf-8")
+    pd.concat([pd.DataFrame({"version": k, "j": range(1, 22), "asset": r["assets"],
+                             "pricing_error": r["eps"], "t_stat": r["t_eps"]}) for k, r in res.items()]
+              ).to_csv(OUTPUT / "q4b_pricing_errors.csv", index=False, encoding="utf-8")
+    (OUTPUT / "q4b_table.tex").write_text(latex_table(res), encoding="utf-8")
 
-    print(f"Sample: {xr.index[0]} to {xr.index[-1]} (T = {res['T']} months, N = {xr.shape[1]} assets)")
-    print(f"b = {res['b']:.6f}  se = {res['se_b']:.6f}  mu = {res['mu']:.6f}  NW lag = {res['lag']}")
-    print(f"chi2({CHI2_DF}) = {res['chi2']:.4f}  p = {res['p_chi2']:.4g}")
-    print("Eigenvalues of aVar[E[eps]] (pricing block), smallest 3:", res["eig_avar_p"][:3])
-    for name, e, tt in zip(xr.columns, res["eps"], res["t_eps"]):
-        print(f"  {name:10s} {e: .5f}  t = {tt: .2f}")
+    for k, r in res.items():
+        print(f"{VERSIONS[k]:11s} {r['months'][0]} to {r['months'][-1]} (T = {r['T']}): b = {r['b']:.6f} "
+              f"(se {r['se_b']:.6f}, mu {r['mu']:.6f}, NW lag {r['lag']}); chi2({CHI2_DF}) = {r['chi2']:.3f}, "
+              f"p = {r['p_chi2']:.3g}; smallest eig {r['eig_avar_p'][:2]}")
 
 
 if __name__ == "__main__":
