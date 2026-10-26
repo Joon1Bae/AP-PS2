@@ -42,3 +42,10 @@ The index for Rp is from 1 to 20. (1 is Lo10, 10 is Hi 10, and 11 is Lo PRIOR an
 4. From the estimated covariance and E[xR_j], we can calculate the pricing errors as alpha_j = E[xR_j] - Cov(-M, xR_j)$ for all j = 1, ..., 20.
 5. Write down a code to implement the procedure above.
 6. The output should include a table reporting a pricing error for each porfolio in A NEATED MANNER!!!!!
+7. Label the SDF explicitly in the table header and caption as the "BM + MOM SDF" (the Question 2(c)
+   construction with all 20 portfolios), estimated on Jul 1927 to Dec 1989 and evaluated on
+   Jan 1990 to the latest date.
+8. Next to the out-of-sample pricing errors, add a column with the in-sample pricing errors of the
+   BM + MOM SDF from Question 2(d) (full sample, all zero by construction), so the two can be
+   compared in one table. Label the columns "In-sample (Q2(d))" and "Out-of-sample (Q2(e))",
+   state each column's sample period, and report both columns in the same unit (percent per month).
