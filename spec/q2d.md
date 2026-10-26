@@ -49,3 +49,35 @@ Leave it as placeholder(blank) regarding the explanation why this pattern emereg
 4. From the estimated covariance and E[xR_j], we can calculate the pricing errors as alpha_j = E[xR_j] - Cov(-M, xR_j)$ for all j = 1, ..., 20 under each of the three models.
 5. Write down a code to implement the procedure above.
 6. The output should include a table reporting a pricing error for BE/ME only, Mom only, and BE/ME + Mom cases for each porfolio in A NEATED MANNER!!!!!
+
+# Interpretation (use this text as written)
+
+Each SDF prices the portfolios used to construct it exactly: the SDF from Question 2(a) gives
+zero pricing errors for the 10 book-to-market portfolios, the SDF from Question 2(b) gives zero
+pricing errors for the 10 momentum portfolios, and the SDF from Question 2(c) gives zero pricing
+errors for all 20 portfolios. This holds by construction, since the coefficients b are chosen so
+that the sample pricing errors of these portfolios are exactly zero.
+
+When an SDF prices the other set of portfolios, the pricing errors show an increasing pattern
+across the deciles. Under the book-to-market SDF, the pricing errors of the momentum portfolios
+increase monotonically from Lo PRIOR to Hi PRIOR. Under the momentum SDF, the pricing errors of
+the book-to-market portfolios increase from Lo 10 to Hi 10, though not strictly monotonically.
+
+- Check the description above against the computed table (signs, monotonicity, and the end
+  points). If the computed values contradict it, flag this instead of changing the text.
+
+These patterns correspond to well-known strategies. A portfolio that is long Hi PRIOR and short
+Lo PRIOR is the momentum strategy, and its pricing error under the book-to-market SDF is
+α_HiPRIOR − α_LoPRIOR ≈ 0.54% − (−1.02%) = 1.56% per month: the book-to-market SDF does not
+explain the momentum strategy's return. Similarly, a portfolio that is long Hi 10 and short
+Lo 10 is the value strategy (HML), and its pricing error under the momentum SDF is
+α_Hi10 − α_Lo10 ≈ 0.32% − (−0.15%) = 0.47% per month: the momentum SDF does not explain the
+value strategy's return.
+
+This suggests that the two sets of portfolios contain different pricing information. When the
+20 portfolios are combined in Question 2(c), the SDF incorporates both sources of information,
+so the maximum Sharpe ratio portfolio xR* to which it is linear has a higher Sharpe ratio than
+those in Questions 2(a) and 2(b).
+
+- Compute the two long-short pricing errors above from the table (α_Hi − α_Lo for each case)
+  and use the computed values in the text.
