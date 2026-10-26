@@ -33,7 +33,15 @@ First, b̂ is not monotonic in the decile: it neither increases nor decreases as
 book-to-market ratio rises. Second, adjacent deciles sometimes have coefficients of opposite
 signs (e.g., b̂_6 ≈ 3.0 and b̂_7 ≈ −5.3).
 
-[Why this pattern emerges: to be written by me.]
+This pattern emerges from the closed form of b implied by the Method: b̂ = Σ̂⁻¹ Ê[xR],
+where Σ̂ is the covariance matrix of the 10 excess returns. Adjacent deciles are highly
+correlated (pairwise correlations of about 0.92 to 0.95). Inverting this nearly collinear Σ̂ and
+multiplying by Ê[xR] can make the weights of adjacent deciles vary greatly, even with opposite
+signs.
+
+- Compute the correlations between adjacent deciles and report their range; replace
+  "0.92 to 0.95" in the text with the computed range.
+- Show in the Method that the two moment conditions give b̂ = Σ̂⁻¹ Ê[xR] (with Σ̂ using 1/T).
 
 # Additional Decisions
 
