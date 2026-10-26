@@ -36,7 +36,18 @@ The two extreme deciles, however, resemble the familiar momentum pattern: the SD
 a large short position in the loser decile (b̂_1 ≈ −4.0) and a large long position in the
 winner decile (b̂_10 ≈ 3.4), i.e., long past winners and short past losers.
 
-[Why this pattern emerges: to be written by me.]
+In the middle deciles, the pattern emerges for the same reason as in Question 2(a): adjacent
+deciles are highly correlated (pairwise correlations of about 0.87 to 0.94) and have similar
+average excess returns, so inverting Σ̂ in b̂ = Σ̂⁻¹ Ê[xR] can make the weights of adjacent
+deciles vary greatly. At the extremes, however, the weights likely reflect the actual momentum
+premium. The difference in average excess returns between decile 10 and decile 1 is large
+(about 1.12% per month), which is hard to attribute to noise and is better viewed as a real
+signal, and deciles 1 and 10 are relatively less correlated (about 0.59). As a result, the weight
+on decile 10 is positive and the weight on decile 1 is negative.
+
+- Compute these numbers (range of adjacent-decile correlations, the mean excess return of
+  decile 10 minus decile 1, and the correlation between deciles 1 and 10) and replace the
+  values in the text with the computed ones.
 
 # Additional Decisions
 
@@ -51,3 +62,13 @@ winner decile (b̂_10 ≈ 3.4), i.e., long past winners and short past losers.
 2. We also know a1, a2.
 3. Then, we can recover M in such a way that M = a - b'xR.
 4. Write down a code for calculating correlation between M1 and M2. 
+
+# Interpretation (correlation) (use this text as written)
+
+The correlation between the SDF from Question 2(a) and the SDF from Question 2(b) is positive
+(about 0.355). Since a high SDF realization marks a high-marginal-utility ("bad") state, a
+positive correlation means that the two SDFs partly agree on which states are bad. However,
+the correlation is far from 1, which suggests that the two SDFs also capture different
+dimensions of risk.
+
+- Replace 0.355 with the computed correlation.
