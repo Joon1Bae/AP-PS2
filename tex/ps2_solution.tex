@@ -149,21 +149,45 @@ Or, in matrix form,
 $\pi(n)$), where $\mathbf{M} = \big(M(1), M(2), M(3)\big)'$ and $\mathbf{P} = \big(P(A), P(B), P(C)\big)'$.
 
 \paragraph{Result (1).}
-$\mathbf{X}_\pi$ is invertible if $\det(\mathbf{X}_\pi) \neq 0$:
-$\det(\mathbf{X}_\pi) = \ph{[to be computed by the student]}$. Therefore, the SDF realizations are
+Since $\det(\mathbf{X}_\pi) = 31.25 \neq 0$, $\mathbf{X}_\pi$ is invertible, with
 \[
-  \mathbf{M} = \mathbf{X}_\pi^{-1} \mathbf{P} = \ph{[numerical values to be computed by the student]}.
+  \mathbf{X}_\pi^{-1} = \begin{bmatrix} 0 & 0.4 & -0.4 \\ -0.2 & 0.2 & 0.4 \\ 0.4 & -0.4 & -0.4 \end{bmatrix}
 \]
+(rows: states $n = 1, 2, 3$; columns: assets $A$, $B$, $C$). Therefore, the realizations of the SDF are
+\[
+  \mathbf{M} = \mathbf{X}_\pi^{-1}\mathbf{P}
+  = \begin{bmatrix} 0 & 0.4 & -0.4 \\ -0.2 & 0.2 & 0.4 \\ 0.4 & -0.4 & -0.4 \end{bmatrix}
+    \begin{bmatrix} 16 \\ 8 \\ 6 \end{bmatrix}
+  = \begin{bmatrix} 0.8 \\ 0.8 \\ 0.8 \end{bmatrix},
+\]
+i.e., $M(1) = M(2) = M(3) = 0.8$.
 
-\paragraph{Interpretation (2)--(3).}
+\paragraph{Interpretation (2).}
 This economy satisfies No-Arbitrage.
 
-\ph{[Definition of No-Arbitrage will be here]}
+\textbf{Definition (No-Arbitrage).} (Module 2, slide 1.3)
+\begin{itemize}
+  \item An asset with $\mathrm{Payoff} \geq 0$ must have $\mathrm{Price} \geq 0$.
+  \item An asset with $\mathrm{Payoff} \geq 0$ and a chance for $\mathrm{Payoff} > 0$ must have
+    $\mathrm{Price} > 0$.
+\end{itemize}
 
-As in Question~\ref{q1b}, every contingent claim satisfies the No-Arbitrage condition above.
+Each Arrow-Debreu contingent claim has $\mathrm{Payoff} \geq 0$ with a chance for $\mathrm{Payoff} > 0$,
+and from Question~\ref{q1b} its price is positive ($P_c(1) = 0.2$, $P_c(2) = 0.4$, $P_c(3) = 0.2$). The
+contingent claims therefore satisfy the No-Arbitrage condition above. Moreover, with complete markets and the
+LOP, the price of any payoff is determined by
+\[
+  P = \sum_{n=1}^{3} P_c(n)\,\mathrm{Payoff}(n)
+\]
+(the formula used in Questions~\ref{q1b} and~\ref{q1c}). Since $P_c(n) > 0$ for all $n$, any asset with
+$\mathrm{Payoff} \geq 0$ has $\mathrm{Price} \geq 0$, and if its payoff is positive in at least one state,
+its price is positive. Hence No-Arbitrage holds in this economy.
 
-As we can see, the realized SDF is the same in every state of the economy. It may imply that each
-state is equally valuable \ph{[?]}.
+\paragraph{Interpretation (3).}
+As we can see, the realized SDF is the same in every state of the economy ($M(n) = 0.8$ for all $n$). Since
+$M$ is constant across states, its covariance with every asset's return is zero,
+$\mathrm{Cov}(M, R_j) = 0$. That is, this is an economy in which the expected excess return of every asset is
+zero (no risk premium).
 
 \subsection{}\label{q1e}
 \task{Show that the price that the SDF assigns to asset $D$ in this economy is the same as the price that you calculated in Question (1c)}
