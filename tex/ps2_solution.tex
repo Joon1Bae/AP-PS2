@@ -60,9 +60,17 @@ Let
   \mathbf{X} = \begin{bmatrix} 10 & 20 & 30 \\ 10 & 10 & 10 \\ 0 & 10 & 10 \end{bmatrix}
 \]
 (rows: assets $A$, $B$, $C$; columns: states $n = 1, 2, 3$). Then there exists $\bm{\Omega}$ such
-that $\mathbf{X}\bm{\Omega} = \mathbf{I}$, with $\bm{\Omega} = \mathbf{X}^{-1}$, if $\mathbf{X}$ is
-invertible. Therefore, checking whether $\mathbf{X}$ is invertible is sufficient for Complete Markets in
-this economy. $\mathbf{X}$ has full rank. Therefore, this market is complete.
+that $\mathbf{X}'\bm{\Omega} = \mathbf{I}$, with $\bm{\Omega} = (\mathbf{X}')^{-1}$, if $\mathbf{X}'$ is
+invertible.
+
+If the market is complete, each contingent claim can be replicated with the traded assets, and
+$\bm{\Omega}$ tells us how many units of each asset to hold to replicate the contingent claims (column $n$
+of $\bm{\Omega}$ is the replicating portfolio for the contingent claim of state $n$). Since
+$\mathbf{X}'\bm{\Omega} = \mathbf{I}$, if $\mathbf{X}'$ is invertible, then a replicating portfolio for
+each contingent claim exists in this economy.
+
+Therefore, checking whether $\mathbf{X}'$ is invertible is sufficient for Complete Markets in this
+economy. $\mathbf{X}'$ has full rank. Therefore, this market is complete.
 
 \subsection{}\label{q1b}
 \task{Suppose that the Law of One Price (LOP) holds in this economy. Calculate the price of each Contingent Claim (or Arrow-Debreu security) in this economy. [Footnote 2: [...] You need to use the LOP to solve for $\mathbf{P}_c$ as a function of $\mathbf{X}$ and $\mathbf{P}$.]}
