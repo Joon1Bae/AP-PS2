@@ -1667,3 +1667,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** empirical implementation (statistics requested in the spec); math review (numerical verification of the student's closed-form claim); formatting/translation (transcription into LaTeX)
 - **Grouped follow-up requests:** none
+- **Git commit after:** 9297cce1a04cca39f972d0661cbd2745bd52d0a5
