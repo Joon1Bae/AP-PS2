@@ -55,7 +55,7 @@ Yes.
 (Arrow-Debreu security) for each state of nature $n = 1, \dots, N$, where the contingent claim for
 state $n$ pays \$1 if state $n$ materializes and \$0 otherwise (Module 2, slide 1.3).
 
-Let
+Let's define the payoff matrix
 \[
   \mathbf{X} = \begin{bmatrix} 10 & 20 & 30 \\ 10 & 10 & 10 \\ 0 & 10 & 10 \end{bmatrix}
 \]
@@ -71,7 +71,8 @@ $\mathbf{X}'\bm{\Omega} = \mathbf{I}$, if $\mathbf{X}'$ is invertible, then a re
 each contingent claim exists in this economy.
 
 Therefore, checking whether $\mathbf{X}'$ is invertible is sufficient for Complete Markets in this
-economy. $\mathbf{X}'$ has full rank. Therefore, this market is complete.
+economy. Since $\det(\mathbf{X}') = 1000 \neq 0$, $\mathbf{X}'$ is invertible. Therefore, this market is
+complete.
 
 \subsection{}\label{q1b}
 \task{Suppose that the Law of One Price (LOP) holds in this economy. Calculate the price of each Contingent Claim (or Arrow-Debreu security) in this economy. [Footnote 2: [...] You need to use the LOP to solve for $\mathbf{P}_c$ as a function of $\mathbf{X}$ and $\mathbf{P}$.]}
@@ -95,10 +96,20 @@ where $\mathbf{X}$ is the payoff matrix from Question~\ref{q1a},
 \]
 
 \paragraph{Result.}
-We confirmed in Question~\ref{q1a} that the payoff matrix is invertible. So, we can calculate
+We confirmed in Question~\ref{q1a} that $\mathbf{X}$ is invertible. So, we can calculate
+$\mathbf{P}_c = \mathbf{X}^{-1}\mathbf{P}$. Therefore, the prices of the Contingent Claims are
 \[
-  \mathbf{P}_c = \mathbf{X}^{-1} \mathbf{P} = \ph{[numerical values to be computed by the student]}.
+  \mathbf{P}_c = \mathbf{X}^{-1}\mathbf{P}
+  = \begin{bmatrix} 0 & 0.1 & -0.1 \\ -0.1 & 0.1 & 0.2 \\ 0.1 & -0.1 & -0.1 \end{bmatrix}
+    \begin{bmatrix} 16 \\ 8 \\ 6 \end{bmatrix}
+  = \begin{bmatrix} 0.2 \\ 0.4 \\ 0.2 \end{bmatrix},
 \]
+i.e., $P_c(1) = 0.2$, $P_c(2) = 0.4$, and $P_c(3) = 0.2$, where
+\[
+  \mathbf{X}^{-1} = \begin{bmatrix} 0 & 0.1 & -0.1 \\ -0.1 & 0.1 & 0.2 \\ 0.1 & -0.1 & -0.1 \end{bmatrix}
+  \qquad (\det(\mathbf{X}) = 1000)
+\]
+(rows: states $n = 1, 2, 3$; columns: assets $A$, $B$, $C$).
 
 \subsection{}\label{q1c}
 \task{Suppose that the LOP holds in this economy and introduce a new asset (referred to as asset $D$) with payoff vector $\mathrm{Payoff}(D) = (30, 20, 10)$ for our three states of nature $n = (1, 2, 3)$. Calculate the price of asset $D$ in this economy}
@@ -132,8 +143,8 @@ Or, in matrix form,
     0 & 10 \cdot \frac{1}{2} & 10 \cdot \frac{1}{4}
   \end{bmatrix}
 \]
-(rows: assets $A$, $B$, $C$; columns: states $n = 1, 2, 3$), where
-$\mathbf{M} = \big(M(1), M(2), M(3)\big)'$ and $\mathbf{P} = \big(P(A), P(B), P(C)\big)'$.
+(rows: assets $A$, $B$, $C$; columns: states $n = 1, 2, 3$; $\mathbf{X}$ with column $n$ multiplied by
+$\pi(n)$), where $\mathbf{M} = \big(M(1), M(2), M(3)\big)'$ and $\mathbf{P} = \big(P(A), P(B), P(C)\big)'$.
 
 \paragraph{Result (1).}
 $\mathbf{X}_\pi$ is invertible if $\det(\mathbf{X}_\pi) \neq 0$:
