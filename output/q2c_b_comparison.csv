@@ -1,0 +1,5 @@
+statistic,value
+"corr(b_2a, b_2c[BE/ME])",0.9751839257446964
+"corr(b_2b, b_2c[MOM])",0.9810405558717796
+b_2c[Lo PRIOR],-4.416929228437265
+b_2c[Hi PRIOR],3.4473436837968734
