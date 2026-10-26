@@ -36,6 +36,15 @@
   the units, the standard-error method (e.g., Newey-West (1987, 1994) with the selected lag),
   and any symbol used in the table (e.g., "–").
 
+## Long tables (21 assets: Q3(e), Q4(b)-(e))
+- Put the book-to-market and momentum deciles side by side: rows = deciles 1-10,
+  column groups = "Book-to-market" and "Momentum" (each with Ê[ε_j] and t-stat, or α̂_j and
+  t-stat), headed with \cmidrule(lr). Put the market (xR_w,t) in a separate row below.
+- Split each table into panels: A (parameter estimate and s.e.), B (pricing errors),
+  C (joint test, Newey-West lag, sample), separated by \midrule or \addlinespace.
+- Align numbers at the decimal point with siunitx S columns.
+- Do not change any number; only the layout changes.
+
 ## Figures
 - Axis labels with units -- a legend only when there is more than one series.
 - Every caption should include the sample period, the data, and the units.
