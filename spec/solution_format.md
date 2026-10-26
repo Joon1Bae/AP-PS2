@@ -13,10 +13,22 @@
 - One \section per Question and one \subsection per item (1a, 1b, ...).
 - Start each Question on a new page.
 - Inside each item, use the same order of short paragraphs (omit any that do not apply):
+  0. Task: an excerpt of the problem statement (see "Problem statement excerpts" below).
   1. Setup: the object being computed and the data used.
   2. Method: the estimator or derivation steps.
   3. Result: the number, table, or figure.
   4. Interpretation: my discussion (text written by me only).
+
+## Problem statement excerpts (as in ps1_solution.pdf)
+- Start each item with a "Task." paragraph that quotes the problem statement verbatim
+  from Problem Set 2.pdf. Do not paraphrase or reword it.
+- Omit sentences that are not instructions (e.g., data descriptions, motivation) and mark
+  each omission with [...].
+- If an item contains several instructions, split them into numbered tasks (1), (2), ...,
+  and refer to the same numbers in the answer (e.g., "(2) Table 7 reports ...").
+- Typeset the Task paragraph so that it is visually distinct from the answer
+  (e.g., indented with a smaller font, or a quote environment).
+- Keep footnotes of the problem statement out of the excerpt unless they contain an instruction.
 
 ## Math
 - Use display environments (align or equation) for multi-step derivations, one step per line,
