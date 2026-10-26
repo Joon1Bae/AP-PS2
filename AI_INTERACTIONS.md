@@ -1278,3 +1278,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** formatting/translation (table layout); code debugging (a LaTeX brace error introduced by the AI)
 - **Grouped follow-up requests:** none
+- **Git commit after:** b738a94728f70994693286b12aaa9ab783ad280b
