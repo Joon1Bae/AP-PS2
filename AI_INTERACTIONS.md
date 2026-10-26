@@ -1250,3 +1250,4 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Substantive mathematical / economic / empirical suggestions made:** none
 - **Type of assistance:** formatting/translation (layout, notation, cross-references, tables, figures); other: methodological description drafted from the spec (the Setup and Method paragraphs of 2(a)-2(e), 3(b)-3(e), 4(b)-4(d), and the rewritten table/figure notes, all in `tex/ps2_solution.tex`)
 - **Grouped follow-up requests:** none
+- **Git commit after:** 8bc4024660ca68a8133731ec3a082215ae760e13
