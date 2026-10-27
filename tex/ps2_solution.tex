@@ -231,8 +231,26 @@ conditions
 \end{align*}
 where $\widehat{\mathbb{E}}[\cdot]$ is the time average.
 
-\ph{[Derivation that the two moment conditions give $\hat{\mathbf{b}} = \hat{\bm{\Sigma}}^{-1}\widehat{\mathbb{E}}[\mathbf{xR}]$
-(with $\hat{\bm{\Sigma}}$ dividing by $T$): to be written by the student.]}
+% Closed-form derivation written by the student in spec/q2a.md (typeset by AI, AI_INTERACTIONS.md).
+The two moment conditions are a scalar equation and a vector equation ($1 + 10$ equations for the 11 unknowns
+$a$ and $\mathbf{b}$). From the normalization,
+\[
+  a = 1 + \mathbf{b}'\,\widehat{\mathbb{E}}[\mathbf{xR}] = 1 + \widehat{\mathbb{E}}[\mathbf{xR}]'\,\mathbf{b},
+\]
+since $\mathbf{b}'\,\widehat{\mathbb{E}}[\mathbf{xR}]$ is a scalar. Substituting $a$ into the pricing
+condition,
+\begin{align*}
+  & \widehat{\mathbb{E}}[\mathbf{xR}]\,\big(1 + \widehat{\mathbb{E}}[\mathbf{xR}]'\,\mathbf{b}\big)
+    - \widehat{\mathbb{E}}[\mathbf{xR}\,\mathbf{xR}']\,\mathbf{b} = \mathbf{0} \\
+  \Longleftrightarrow\quad
+  & \widehat{\mathbb{E}}[\mathbf{xR}]
+    = \big(\widehat{\mathbb{E}}[\mathbf{xR}\,\mathbf{xR}'] - \widehat{\mathbb{E}}[\mathbf{xR}]\,\widehat{\mathbb{E}}[\mathbf{xR}]'\big)\,\mathbf{b}
+    = \hat{\bm{\Sigma}}_{xR}\,\mathbf{b} \\
+  \Longleftrightarrow\quad
+  & \hat{\mathbf{b}} = \hat{\bm{\Sigma}}_{xR}^{-1}\,\widehat{\mathbb{E}}[\mathbf{xR}],
+\end{align*}
+where $\hat{\bm{\Sigma}}_{xR}$ is the sample covariance matrix of the excess returns (dividing by $T$), assumed
+invertible.
 
 \paragraph{Result (1)--(2).}
 Figure~\ref{fig:q2a_b} plots $\hat{\mathbf{b}}$ by decile (estimates in \texttt{output/q2a\_sdf\_coefficients.csv}).
