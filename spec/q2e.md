@@ -57,11 +57,24 @@ realized data, as if it had seen the answer key. Out of sample, without the answ
 pricing errors appear. The zero in-sample pricing errors are therefore not evidence that the
 model is correct.
 
-[Comparison with an SDF without risk adjustment (M = 1): to be confirmed by me.]
+The out-of-sample pricing errors are positive for all 20 portfolios, ranging from about 0.43% to
+about 2.71% per month.
+
+- Replace 0.43% and 2.71% with the minimum and maximum computed out-of-sample pricing errors,
+  and check that all 20 are positive. If not, flag it instead of changing the text.
 
 An in-sample fit also fits the noise in the sample, so out-of-sample performance tends to
 deteriorate. In this case it deteriorates sharply: the monthly Sharpe ratio of xR* (with b fixed
 at its in-sample estimate) falls from about 0.35 in sample to about 0.19 out of sample.
 
+This result also clarifies the pattern in Question 2(a). There, adjacent deciles are highly
+correlated, so b̂ = Σ̂⁻¹ Ê[xR] reacts strongly to small differences in average excess returns.
+Out-of-sample results help tell whether those differences reflect estimation error or the true
+structure of returns: if they were real, they would persist after 1989, and the in-sample weights
+would keep pricing the portfolios well, with small pricing errors and a similar Sharpe ratio.
+Instead, the pricing errors become large and the Sharpe ratio of xR* falls sharply, so the
+evidence leans toward the former: the decline is consistent with large estimation error in b̂.
+
 - Replace the numbers in the text (0.35, 0.19) with the values computed from this code, and add
   the in-sample and out-of-sample Sharpe ratios of xR* = b̂′xR (b̂ fixed) to the output.
+  The in-sample value is for Jul 1927 to Dec 1989 (the estimation sample), not the full sample.
