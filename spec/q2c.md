@@ -48,7 +48,18 @@ for Hi PRIOR).
   the 2(c) b̂; 2(b) b̂ vs. the last 10 elements) so that the numbers in the text come from this
   code. If they differ from 0.98, −4.4, or 3.5, update the text with the computed values.
 
-[Why this pattern emerges: to be written by me.]
+Within each set, the erratic coefficients arise for the same reason as in Questions 2(a) and
+2(b): adjacent deciles are highly correlated, so inverting Σ̂ in b̂ = Σ̂⁻¹ Ê[xR] can make the
+weights of adjacent deciles vary greatly. The joint estimates look like the two separate
+estimates overlaid because, as seen in Question 2(b), the book-to-market SDF and the momentum
+SDF (equivalently, the two maximum Sharpe ratio portfolios xR*) have a low correlation
+(about 0.355). The two sets carry different pricing information, so combining them changes
+the weights within each set little.
+
+- Note: the individual book-to-market and momentum portfolios are themselves highly correlated
+  with each other; the low correlation refers to the two SDFs (xR* portfolios), not to the
+  individual portfolios. Do not state that the individual portfolios have low correlation.
+- Replace 0.355 with the computed correlation from Question 2(b).
 
 # Additional Decisions
 

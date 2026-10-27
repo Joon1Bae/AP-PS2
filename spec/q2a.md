@@ -20,6 +20,18 @@ xR = R_p - Rf where R_p is each portfolio return from Lo 10 to Hi 10 column in P
 5. By using matrix notation,  a * E[xR * xR']^-1 * E[xR] = b
 6. Therefore, we have two equations for a, b.
 
+# Method: closed form for b (use this derivation as written; it replaces the red placeholder)
+
+The two moment conditions are a scalar equation and a vector equation (1 + 10 equations for the
+11 unknowns a and b). From the normalization,
+    a = 1 + b′Ê[xR] = 1 + Ê[xR]′b,
+since b′Ê[xR] is a scalar. Substituting a into the pricing condition,
+    Ê[xR] (1 + Ê[xR]′b) − Ê[xR xR′] b = 0
+    ⇔ Ê[xR] = (Ê[xR xR′] − Ê[xR] Ê[xR]′) b = Σ̂_xR b
+    ⇔ b̂ = Σ̂_xR⁻¹ Ê[xR],
+where Σ̂_xR is the sample covariance matrix of the excess returns (dividing by T), assumed
+invertible.
+
 
 
 Output should be a scatterplot with the porfolio deciles (Lo 10 to Hi 10) in the x-axis and the respective b coefficients in the y-axis.
@@ -33,7 +45,15 @@ First, b̂ is not monotonic in the decile: it neither increases nor decreases as
 book-to-market ratio rises. Second, adjacent deciles sometimes have coefficients of opposite
 signs (e.g., b̂_6 ≈ 3.0 and b̂_7 ≈ −5.3).
 
-[Why this pattern emerges: to be written by me.]
+This pattern emerges from the closed form of b implied by the Method: b̂ = Σ̂⁻¹ Ê[xR],
+where Σ̂ is the covariance matrix of the 10 excess returns. Adjacent deciles are highly
+correlated (pairwise correlations of about 0.92 to 0.95). Inverting this nearly collinear Σ̂ and
+multiplying by Ê[xR] can make the weights of adjacent deciles vary greatly, even with opposite
+signs.
+
+- Compute the correlations between adjacent deciles and report their range; replace
+  "0.92 to 0.95" in the text with the computed range.
+- The Method uses the derivation in "Method: closed form for b" above.
 
 # Additional Decisions
 

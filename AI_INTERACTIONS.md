@@ -1643,3 +1643,115 @@ Environment: VS Code + Claude Code (Anthropic), workspace = this repository.
 - **Type of assistance:** empirical implementation (statistics requested in the spec); formatting/translation (transcription into LaTeX)
 - **Grouped follow-up requests:** none
 - **Git commit after:** 7c199a560391a75e566bfa71f1df306766dc4ab2
+
+## Interaction 67 — Q2(a) — 2026-10-26 19:21
+
+- **Problem set item:** Q2(a)
+- **Substantive prompt (verbatim):** "I added some explanation on q2a. Please take a look and replace the placeholder with this statement." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Typeset the student's new explanation of the b̂ pattern in 2(a) (`spec/q2a.md`) in place of the student's placeholder, and act on the two instructions that follow it in the spec.
+- **Git commit before:** 82487cd4990da66bc96a837a40a89a64fb3388a6 (includes the student's revision of `spec/q2a.md`; the snapshot also picked up `.DS_Store`)
+- **Assistance provided:**
+  - Spec instruction 1 ("Compute the correlations between adjacent deciles and report their range; replace '0.92 to 0.95' in the text with the computed range"):
+    - `src/q2a.py` computes the Pearson correlations of the monthly excess returns of adjacent deciles (Jul 1927 - Aug 2026, T = 1190) and writes `output/q2a_adjacent_corr.csv` and `output/q2a_adjacent_corr.tex` (macros \QtwoaCorrMin, \QtwoaCorrMax).
+    - Range 0.9184 to 0.9463, i.e. 0.92 to 0.95, as in the draft. The text uses the macros.
+    - The existing Q2(a) outputs are unchanged.
+  - Spec instruction 2 ("Show in the Method that the two moment conditions give b̂ = Σ̂⁻¹ Ê[xR] (with Σ̂ using 1/T)"):
+    - **Not done**, because it asks the AI to write a mathematical derivation, which the course AI policy reserves for the student ("Do not ask AI to rewrite, complete, or replace your derivation").
+    - Instead, a visible red placeholder was added at the end of the 2(a) Method paragraph: "[Derivation that the two moment conditions give b̂ = Σ̂⁻¹Ê[xR] (with Σ̂ dividing by T): to be written by the student.]".
+    - Numerical check of the student's claim (allowed: checking): Σ̂⁻¹Ê[xR], with Σ̂ dividing by T, reproduces the estimated b̂ to within 2.8e-13.
+  - `tex/ps2_solution.tex`: replaced the student's placeholder "[Why this pattern emerges: to be written by me.]" in 2(a) Interpretation (3) with the student's explanation, word for word (bold Σ̂, b̂, xR; the correlation range from the macros). The macro file is \input in the preamble. Test-compiled and checked visually.
+  - The explanation itself was not critiqued (not requested).
+- **Files inspected:** `spec/q2a.md` (diff), `src/q2a.py`, `output/q2a_sdf_coefficients.csv`, test build of the PDF
+- **Files directly modified by AI:** `src/q2a.py` (adjacent correlations), `output/q2a_adjacent_corr.csv`, `output/q2a_adjacent_corr.tex` (new, generated), regenerated Q2(a) outputs (unchanged), `tex/ps2_solution.tex` (preamble input; 2(a) Method placeholder and Interpretation), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** Spec instruction 2 asks for an AI-written derivation; declined under the AI policy, with the student's derivation left as a visible placeholder. The student's claim itself is numerically confirmed.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation (statistics requested in the spec); math review (numerical verification of the student's closed-form claim); formatting/translation (transcription into LaTeX)
+- **Grouped follow-up requests:** none
+- **Git commit after:** 9297cce1a04cca39f972d0661cbd2745bd52d0a5
+
+## Interaction 68 — Q2(b) — 2026-10-26 19:36
+
+- **Problem set item:** Q2(b)
+- **Substantive prompt (verbatim):** "I just added some detailed interpretation on the result and economic meaning in the correlation. Please take a look and include it in the .tex file." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Typeset the student's new 2(b) texts (`spec/q2b.md`: the reason for the b̂ pattern, and the economic interpretation of the SDF correlation), and compute the numbers the spec asks to come from code.
+- **Git commit before:** 6c17e3ed8bf715533b4ff15b299413b0d48445fd (includes the student's revision of `spec/q2b.md`)
+- **Assistance provided:**
+  - `src/q2b.py`, per the spec ("Compute these numbers (range of adjacent-decile correlations, the mean excess return of decile 10 minus decile 1, and the correlation between deciles 1 and 10) and replace the values in the text with the computed ones"):
+    - writes `output/q2b_momentum_stats.csv` and `output/q2b_momentum_stats.tex` (macros \QtwobCorrMin, \QtwobCorrMax, \QtwobSpread, \QtwobCorrExt; Pearson correlations of the monthly excess returns; Jul 1927 - Aug 2026).
+    - Results: adjacent correlations 0.8702-0.9391 (0.87-0.94); Hi PRIOR − Lo PRIOR mean excess return 1.1211% per month (1.12); corr(decile 1, decile 10) = 0.5866 (0.59). All equal the draft values.
+    - The SDF correlation uses the existing macro \QtwobCorr (0.355), as the spec asks ("Replace 0.355 with the computed correlation").
+    - The existing Q2(b) outputs are unchanged.
+  - `tex/ps2_solution.tex`: in 2(b) Interpretation (1), (3), the student's placeholder "[Why this pattern emerges: to be written by me.]" and the placeholder "[Interpret this correlation in economic terms.]" were replaced by the student's two texts, word for word (numbers from the macros; \ref for Questions 2(a)-(b); bold Σ̂, b̂, xR). The macro file is \input in the preamble. The spec bullets (instructions to the AI) were not typeset. Test-compiled and checked visually.
+  - The economic reasoning was typeset only; it was not critiqued (not requested).
+- **Files inspected:** `spec/q2b.md` (diff), `src/q2b.py`, `output/q2b_sdf_correlation.tex`, test build of the PDF
+- **Files directly modified by AI:** `src/q2b.py` (statistics; docstring), `output/q2b_momentum_stats.csv`, `output/q2b_momentum_stats.tex` (new, generated), regenerated Q2(b) outputs (unchanged), `tex/ps2_solution.tex` (preamble input; 2(b) Interpretation), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none (all computed values equal the draft's)
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation (statistics requested in the spec); formatting/translation (transcription into LaTeX)
+- **Grouped follow-up requests:** none
+- **Git commit after:** 46069d62731df9adf49d1dce3765b6ea1af439ba
+
+## Interaction 69 — Q2(c) — 2026-10-26 19:54
+
+- **Problem set item:** Q2(c)
+- **Substantive prompt (verbatim):** "I just added some explanation about the pattern in q2c. Please take a look" (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Typeset the student's explanation of the 2(c) b̂ pattern (`spec/q2c.md`) in place of the student's placeholder.
+- **Git commit before:** 9db00bf20fe8843c913ce098bbf3f7c04bf18db7 (includes the student's revision of `spec/q2c.md`; the snapshot also picked up `.DS_Store` and `tex/ps2_solution.pdf`)
+- **Assistance provided:**
+  - Replaced the red placeholder "[Why this pattern emerges: to be written by me.]" in 2(c) with the student's text, word for word (\ref for Questions 2(a)-(b); bold Σ̂, b̂, xR).
+  - The correlation comes from the existing Q2(b) macro \QtwobCorr (0.355), as the spec asks ("Replace 0.355 with the computed correlation from Question 2(b)").
+  - The spec's note (the low correlation refers to the two SDFs / xR* portfolios, not to the individual portfolios) was respected; the typeset text does not say otherwise. The spec bullets (instructions to the AI) were not typeset.
+  - Test-compiled.
+  - The explanation was typeset only; it was not critiqued (not requested).
+- **Files inspected:** `spec/q2c.md` (diff), test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (2(c) Interpretation), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (transcription into LaTeX)
+- **Grouped follow-up requests:** none
+- **Git commit after:** 7a79efca3a4f31d82f01b301e5328aa3638e95b4
+
+## Interaction 70 — Q2(e) — 2026-10-26 20:13
+
+- **Problem set item:** Q2(e)
+- **Substantive prompt (verbatim):** "I added more observational evidence? or interpretation on problem 2e. Please take a look and revise my solution file." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Typeset the student's new 2(e) sentences (`spec/q2e.md`), and check and compute the numbers the spec asks for.
+- **Git commit before:** a9524e1c617dbb09ea40f5f2a7201f4a91901a14 (includes the student's revision of `spec/q2e.md`)
+- **Assistance provided:**
+  - Check and computation, per the spec ("Replace 0.43% and 2.71% with the minimum and maximum computed out-of-sample pricing errors, and check that all 20 are positive. If not, flag it instead of changing the text."):
+    - All 20 out-of-sample pricing errors are positive.
+    - Min 0.4322% (PRIOR 9), max 2.7055% (Lo PRIOR), i.e. 0.43 and 2.71 at two decimals, as in the draft. Nothing to flag.
+    - `src/q2e.py` adds the macros \QtwoeAlphaMin and \QtwoeAlphaMax to `output/q2e_sharpe_ratios.tex` and prints the positivity check.
+    - The existing Q2(e) outputs are unchanged.
+  - The spec's added clarification that the in-sample Sharpe ratio is for the estimation sample (Jul 1927 - Dec 1989) matches the implementation from Interaction 66; noted in a comment in the `.tex`.
+  - `tex/ps2_solution.tex`:
+    - The student's placeholder "[Comparison with an SDF without risk adjustment (M = 1): to be confirmed by me.]" was replaced by the student's new sentence on the out-of-sample pricing errors (numbers from the macros).
+    - The student's new final paragraph (link to the Question 2(a) pattern and estimation error in b̂) was added word for word (\ref for Question 2(a); bold Σ̂, b̂, xR). The spec bullets (instructions to the AI) were not typeset.
+    - Test-compiled and checked visually.
+  - The interpretation was typeset only; it was not critiqued (not requested).
+- **Files inspected:** `spec/q2e.md` (diff), `output/q2e_pricing_errors.csv`, `src/q2e.py`, test build of the PDF
+- **Files directly modified by AI:** `src/q2e.py` (min/max macros, check output), `output/q2e_sharpe_ratios.tex` (regenerated, two new macros), regenerated Q2(e) outputs (unchanged), `tex/ps2_solution.tex` (2(e) Interpretation), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** none (all positive; the computed values equal the draft's)
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** empirical implementation (statistics requested in the spec); code debugging (verification of the student's statement against the table); formatting/translation (transcription into LaTeX)
+- **Grouped follow-up requests:** none
+- **Git commit after:** dbdc459bd21a30a0c5a66ec427dd462805a36182
+
+## Interaction 71 — Q2(a) — 2026-10-26 20:27
+
+- **Problem set item:** Q2(a)
+- **Substantive prompt (verbatim):** "I added the derivation for b in closed form. Please take a look and include it in the .tex file." (The student did not prefix the request with `/TP`; the AI ran the `/TP` procedure.)
+- **Purpose:** Typeset the student's closed-form derivation of b̂ (`spec/q2a.md`, "use this derivation as written; it replaces the red placeholder") in the 2(a) Method.
+- **Git commit before:** 4d9079cfbba3e645c36812d52205917153b8dd06 (includes the student's revision of `spec/q2a.md`)
+- **Assistance provided:**
+  - Replaced the red placeholder added in Interaction 67 ("[Derivation that the two moment conditions give b̂ = Σ̂⁻¹Ê[xR] ...: to be written by the student.]") with the student's derivation, word for word.
+  - Changes were LaTeX only: a = 1 + b′Ê[xR] = 1 + Ê[xR]′b as a display; the substitution steps as an align* environment, one step per line, aligned at ⇔ (format guide); bold vectors and matrices; Σ̂_xR as written by the student.
+  - Not re-checked step by step (not requested); the result agrees with the numerical check of Interaction 67 (Σ̂⁻¹Ê[xR] reproduces b̂ to within 2.8e-13).
+  - Test-compiled and checked visually.
+- **Files inspected:** `spec/q2a.md` (diff), test build of the PDF
+- **Files directly modified by AI:** `tex/ps2_solution.tex` (2(a) Method), `AI_INTERACTIONS.md` (this entry)
+- **Errors, omissions, or ambiguities identified:** Notation, flagged for the student and left unchanged (Rule 0 of the format guide; "use this derivation as written"): the derivation writes Σ̂_xR, while the student's interpretation texts in 2(a), 2(b), 2(c), and 2(e) write Σ̂ for the same matrix. The format guide asks for the same name for the same object.
+- **Substantive mathematical / economic / empirical suggestions made:** none
+- **Type of assistance:** formatting/translation (transcription of the student's derivation into LaTeX)
+- **Grouped follow-up requests:** none
+- **Git commit after:** d3237c973d293df488607f1d65701d039f5a5e2f
