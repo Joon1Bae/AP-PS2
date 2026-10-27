@@ -494,16 +494,26 @@ Table~\ref{tab:q2e_alpha}.
 
 \paragraph{Interpretation (2).}
 % Student-written text from spec/q2e.md (typeset by AI, AI_INTERACTIONS.md). The Sharpe ratios come from
-% output/q2e_sharpe_ratios.tex (src/q2e.py), as the spec asks.
+% output/q2e_sharpe_ratios.tex (src/q2e.py), as the spec asks; the in-sample Sharpe ratio is for the
+% estimation sample, July 1927 to December 1989.
 In sample, the pricing errors of all 20 portfolios are zero because the SDF is fitted to the realized data, as
 if it had seen the answer key. Out of sample, without the answer key, sizable pricing errors appear. The zero
 in-sample pricing errors are therefore not evidence that the model is correct.
 
-\ph{[Comparison with an SDF without risk adjustment ($M = 1$): to be confirmed by me.]}
+The out-of-sample pricing errors are positive for all 20 portfolios, ranging from about \QtwoeAlphaMin\% to
+about \QtwoeAlphaMax\% per month.
 
 An in-sample fit also fits the noise in the sample, so out-of-sample performance tends to deteriorate. In this
 case it deteriorates sharply: the monthly Sharpe ratio of $xR^*$ (with $\mathbf{b}$ fixed at its in-sample
 estimate) falls from about \QtwoeSRis{} in sample to about \QtwoeSRos{} out of sample.
+
+This result also clarifies the pattern in Question~\ref{q2a}. There, adjacent deciles are highly correlated, so
+$\hat{\mathbf{b}} = \hat{\bm{\Sigma}}^{-1}\widehat{\mathbb{E}}[\mathbf{xR}]$ reacts strongly to small
+differences in average excess returns. Out-of-sample results help tell whether those differences reflect
+estimation error or the true structure of returns: if they were real, they would persist after 1989, and the
+in-sample weights would keep pricing the portfolios well, with small pricing errors and a similar Sharpe ratio.
+Instead, the pricing errors become large and the Sharpe ratio of $xR^*$ falls sharply, so the evidence leans
+toward the former: the decline is consistent with large estimation error in $\hat{\mathbf{b}}$.
 
 % ---------------------------------------------------------------------------------------------
 \clearpage
